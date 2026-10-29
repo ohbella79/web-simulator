@@ -46,6 +46,22 @@ router.get('/meta', api((req, res) => {
   });
 }));
 
+// =================== NTL 2025 observed time series & comparisons ===================
+router.get('/ntl/timeseries', api((req, res) => {
+  const u = auth.currentUser(req);
+  if (!u) return res.status(401).json({ error: 'Authentication required. Please sign in.' });
+  if (u.role === 'resident') return res.status(403).json({ error: 'Resident role cannot access village-level analysis data.' });
+  const NTL = require('./data-real/ntl2025.json');
+  const rows = db.prepare(`SELECT vi.village_id, v.village_name, v.population,
+      vi.event2025_drop_pct, vi.event2025_rec_days, vi.event2025_ntl_pre,
+      vi.pv_detected_mw, vi.pv_detected_count
+    FROM village_indicators vi JOIN villages v ON v.id = vi.village_id`).all();
+  res.json(Object.assign({}, NTL, {
+    rows,
+    note: 'Weekly means of observed VIIRS DNB village radiance (nW/cm2/sr). Comparisons are descriptive, not causal.'
+  }));
+}));
+
 // =================== auth ===================
 router.post('/auth/login', api((req, res) => {
   const email = String((req.body || {}).email || '').trim().toLowerCase();
