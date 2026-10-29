@@ -74,6 +74,16 @@ function ensureSchema() {
       nearest_pv_distance_km REAL,
       pv_recent_capacity_kw  REAL,
       pv_recent_data_year    INTEGER,
+      vqi                  REAL,
+      event2025_ntl_pre    REAL,
+      event2025_ntl_event  REAL,
+      event2025_drop_pct   REAL,
+      event2025_rec_days   REAL,
+      pv_detected_mw       REAL,
+      pv_detected_count    INTEGER,
+      pv_detected_area_ha  REAL,
+      dist_bess_km         REAL,
+      exp_wind             REAL,
       water_storage_m3     REAL,
       water_sources        REAL,
       in_analytical_subset INTEGER DEFAULT 1,
@@ -288,5 +298,15 @@ function ensureSchema() {
 }
 
 ensureSchema();
+
+// 기존 DB 마이그레이션 (이미 생성된 테이블에 실측 데이터 컬럼 추가 — 멱등)
+(function migrateIndicators() {
+  const cols = ['vqi REAL', 'event2025_ntl_pre REAL', 'event2025_ntl_event REAL', 'event2025_drop_pct REAL',
+    'event2025_rec_days REAL', 'pv_detected_mw REAL', 'pv_detected_count INTEGER', 'pv_detected_area_ha REAL',
+    'dist_bess_km REAL', 'exp_wind REAL'];
+  for (const c of cols) {
+    try { db.exec('ALTER TABLE village_indicators ADD COLUMN ' + c); } catch (e) { /* already exists */ }
+  }
+})();
 
 module.exports = { db, ensureSchema, DATA_DIR };

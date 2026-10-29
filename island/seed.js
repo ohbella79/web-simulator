@@ -11,6 +11,8 @@ const { db } = require('./db');
 const { hashPassword } = require('./auth');
 const { todayStr, DEFAULT_WEIGHTS } = require('./lib/constants');
 const REAL = require('./data-real/villages.json');
+const REAL_IND = require('./data-real/indicators_real.json');
+const normName = (s) => String(s || '').toLowerCase().replace(/['’`\- ]/g, '');
 
 const round = (x, n) => Math.round(x * Math.pow(10, n)) / Math.pow(10, n);
 
@@ -68,8 +70,10 @@ function seed() {
       (village_id, gita2018_min_ratio, gita2018_rec_days, flood2025_min_ratio, log_median_hh_income,
        share_lt_hs, unemp_rate, share_65plus, dist_power_node_km, SIAI, EXP_flood, log_pop_dens,
        pv_capacity_kw, pv_data_year, nearest_pv_distance_km, pv_recent_capacity_kw, pv_recent_data_year,
-       water_storage_m3, water_sources, in_analytical_subset, data_status, source, vintage_label)
-      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`);
+       water_storage_m3, water_sources, in_analytical_subset, data_status, source, vintage_label,
+       vqi, event2025_ntl_pre, event2025_ntl_event, event2025_drop_pct, event2025_rec_days,
+       pv_detected_mw, pv_detected_count, pv_detected_area_ha, dist_bess_km, exp_wind)
+      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`);
     const insEA = db.prepare(`INSERT INTO electricity_assets (village_id, asset_type, capacity_kw, islanding_capable, condition_note, data_status, source) VALUES (?,?,?,?,?,?,?)`);
     const insWA = db.prepare(`INSERT INTO water_assets (village_id, asset_type, storage_m3, pumping_kw, treatment, data_status, source) VALUES (?,?,?,?,?,?,?)`);
     const insFac = db.prepare(`INSERT INTO critical_facilities (village_id, facility_type, name, critical_load_kw, water_demand_m3_day, data_status, source) VALUES (?,?,?,?,?,?,?)`);
@@ -93,29 +97,49 @@ function seed() {
         '), coordinates from GeoNames. Display polygon is an approximate shape for visualization, not official boundaries.');
       const vid = vInfo.lastInsertRowid;
 
-      // synthetic indicators (labeled)
-      const gitaMin = round(0.25 + rnd() * 0.65, 4);
-      const recDays = Math.round(4 + rnd() * 80);
-      const floodMin = round(0.38 + rnd() * 0.58, 4);
+      // OBSERVED-first indicators (2025 paper bundle) with synthetic fallback for unmatched villages
+      const real = REAL_IND.villages[normName(v.name)] || null;
       const income = round(Math.log(20000 + rnd() * 33000), 2);
       const ltHs = round(0.06 + rnd() * 0.27, 4);
       const unemp = round(0.02 + rnd() * 0.17, 4);
       const s65 = round(0.035 + rnd() * 0.11, 4);
-      const distNode = round(0.1 + rnd() * 5.0, 2);
-      const siai = round(0.25 + rnd() * 0.6, 4);
-      const expFlood = round(rnd() * rnd(), 4);
       const popDens = round(Math.log(Math.max(v.population, 30) / (2.5 + rnd() * 6)), 2);
-      const pv18 = rnd() < 0.3 ? Math.floor(rnd() * 250) : 0;
-      const pvRecent = rnd() < 0.2 ? Math.floor(rnd() * 450) : 0;
-      insInd.run(vid, gitaMin, subsetNames.has(v.name) ? recDays : null, floodMin, income, ltHs, unemp, s65,
-        distNode, siai, expFlood, popDens, pv18, pv18 ? 2018 : null, round(rnd() * 4.5, 2),
-        pvRecent, pvRecent ? 2024 : null, Math.floor(150 + rnd() * 2600), Math.floor(1 + rnd() * 3),
-        subsetNames.has(v.name) ? 1 : 0, 'synthetic',
-        'Synthetic demo indicators (patterned on published Tutuila analyses) attached to a REAL village',
-        'TC Gita 2018 + 2025 flood window (demo values) / Census-shaped demo values');
+      const siai = real && real.siai != null ? real.siai : round(0.25 + rnd() * 0.6, 4);
+      const vqi = real ? (real.vqi != null ? real.vqi : null) : null;
+      const expFlood = real && real.exp_flood != null ? round(real.exp_flood, 4) : round(rnd() * rnd(), 4);
+      const expWind = real ? (real.exp_wind != null ? round(real.exp_wind, 4) : null) : null;
+      const distNode = real && real.dist_power_node_km != null ? real.dist_power_node_km : round(0.1 + rnd() * 5.0, 2);
+      const distBess = real ? (real.dist_bess_km != null ? real.dist_bess_km : null) : null;
+      const pvNearest = real && real.pv_nearest_km != null ? real.pv_nearest_km : round(rnd() * 4.5, 2);
+      const pvMw = real ? (real.pv_mw > 0 ? real.pv_mw : 0) : null;
+      const pvCnt = real ? real.pv_count : null;
+      const pvHa = real ? real.pv_area_ha : null;
+      const pvRecentKw = pvMw != null ? Math.round(pvMw * 1000) : (rnd() < 0.2 ? Math.floor(rnd() * 450) : 0);
+      // Gita-2018 / flood-2025 demo columns retired to NULL — real 2025 NTL event values in event2025_* columns
+      insInd.run(vid, null, null, null, income, ltHs, unemp, s65,
+        distNode, siai, expFlood, popDens,
+        null, null, pvNearest, pvRecentKw, pvRecentKw != null && pvRecentKw > 0 ? 2025 : null,
+        Math.floor(150 + rnd() * 2600), Math.floor(1 + rnd() * 3),
+        subsetNames.has(v.name) ? 1 : 0,
+        real ? 'observed' : 'synthetic',
+        real ? 'Observed: VIIRS DNB nightly NTL 2025, Sentinel-2 PV detections (2025-09-12), SIAI/VQI (OSM · DEM · WorldCover). Synthetic: socioeconomic & water demo values.'
+             : 'Synthetic demo indicators attached to a REAL village (no 2025 paper-bundle match)',
+        real ? '2025 compound-disaster NTL event (observed) · Sentinel-2 PV 2025-09 (observed) · Census-shaped demo socioeconomic values'
+             : 'Demo values',
+        vqi, real ? real.ntl_pre : null, real ? real.ntl_event : null,
+        real ? real.drop_pct : null, real ? real.rec_days : null,
+        pvMw, pvCnt, pvHa, distBess, expWind);
 
-      insEA.run(vid, 'distribution feeder node', Math.floor(120 + rnd() * 640), rnd() < 0.12 ? 1 : 0,
-        'Synthetic demo asset — not a real feeder record.', 'synthetic', 'Synthetic demo dataset');
+      const oa = real ? real.official_asset : null;
+      if (oa) {
+        insEA.run(vid, oa.type, oa.capacity_kw, oa.type === 'solar_bess' ? 1 : 0,
+          oa.label + ' — documented utility-scale facility, ' + oa.dist_km + ' km from village center (observed)',
+          'observed', oa.source);
+      } else if (real && pvMw > 0) {
+        insEA.run(vid, 'rooftop / ground PV (detected)', Math.round(pvMw * 1000), 0,
+          'Sentinel-2 PV detections within village boundary: ' + pvCnt + ' object(s), ' + pvHa + ' ha (observed)',
+          'observed', 'Sentinel-2 L2A 2025-09-12 — user research bundle (samoa_pv_detections.csv)');
+      }
       insWA.run(vid, 'community storage tank', Math.floor(200 + rnd() * 2400), Math.floor(4 + rnd() * 26),
         rnd() < 0.5 ? 'chlorination (demo)' : 'unknown — no verified treatment data (demo)', 'synthetic', 'Synthetic demo dataset');
       const facTypes = ['clinic', 'school', 'emergency shelter', 'water pumping station'];

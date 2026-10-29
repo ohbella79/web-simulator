@@ -176,7 +176,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:12.8px}
       <span class="mono">planner@demo.islandresilience.ai</span> ·
       <span class="mono">resident@demo.islandresilience.ai</span>
     </div>
-    <p class="form-hint" style="margin:12px 0 0">All resilience indicators in this prototype are synthetic. Geography is real public data. Nothing here is an official emergency information service.</p>
+    <p class="form-hint" style="margin:12px 0 0">Nighttime lights (VIIRS DNB 2025), PV detections (Sentinel-2 2025) and SIAI/VQI are observed research data. Socioeconomic &amp; water indicators remain synthetic demo values. Nothing here is an official emergency information service.</p>
   </div>
 </div>
 <div class="app" id="app">
@@ -202,14 +202,14 @@ table.tbl{width:100%;border-collapse:collapse;font-size:12.8px}
       <a href="#governance" data-nav="governance">Governance &amp; Administration</a>
       <a href="#portal" data-nav="portal">Community Information Portal</a>
     </nav>
-    <div class="side-foot">SQLite demo database · role-based access<br>Geography: real public data · Indicators: synthetic demo</div>
+    <div class="side-foot">SQLite demo database · role-based access<br>Geography · NTL 2025 · PV 2025: observed data · Socioeconomic: synthetic demo</div>
   </aside>
   <div class="main">
     <header class="topbar">
       <button class="hamburger" id="hamburger" aria-label="Toggle navigation"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
       <h2 id="pageTitle">Village Disaster Intelligence Map</h2>
       <div class="topbar-right">
-        <span class="chip pr-synthetic" title="Geography is real public data (US Census 2020, GeoNames, geoBoundaries). Indicators and statuses are synthetic demo values."><i class="sw"></i>REAL GEOGRAPHY · DEMO INDICATORS</span>
+        <span class="chip pr-verified_operational" title="Geography (US Census 2020, GeoNames), 2025 nighttime lights (VIIRS DNB), PV detections (Sentinel-2) and SIAI/VQI are observed data. Socioeconomic &amp; water values are synthetic demo."><i class="sw"></i>OBSERVED DATA 2025 · NTL · PV</span>
         <span class="userchip"><span class="name" id="userName"></span><span class="chip role" id="userRole"></span></span>
         <label class="check" style="gap:5px">Demo role
           <select class="select" id="demoRole" style="height:28px;font-size:12px" title="Switch demo account without a password">
@@ -223,7 +223,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:12.8px}
       </div>
     </header>
     <main id="view" class="view" aria-live="polite"><div class="loading"><span class="spin"></span>Loading…</div></main>
-    <footer class="footer">IslandResilience AI — Phase 1 working prototype. <b>DEMONSTRATION MODE — NOT AN OFFICIAL EMERGENCY INFORMATION SERVICE.</b> Village geography &amp; populations: real public data (US Census 2020, GeoNames, geoBoundaries). Indicators &amp; statuses: synthetic. Screening outputs are decision-support indices, not validated outage predictions.</footer>
+    <footer class="footer">IslandResilience AI — Phase 1 working prototype. <b>DEMONSTRATION MODE — NOT AN OFFICIAL EMERGENCY INFORMATION SERVICE.</b> Village geography &amp; populations: real public data (US Census 2020, GeoNames, geoBoundaries). NTL·PV·SIAI 2025: observed research data (user bundle). Socioeconomic &amp; water indicators: synthetic demo. Screening outputs are decision-support indices, not validated outage predictions.</footer>
   </div>
 </div>
 <div id="modalRoot"></div>
@@ -390,15 +390,15 @@ async function renderPreview(name){
 /* ---------------- MAP (Module B) ---------------- */
 const LAYERS = [
   { key:'score', label:'Vulnerability screening index', unit:'/100', invert:false },
-  { key:'gita2018_min_ratio', label:'TC Gita 2018 light disruption (min ratio)', unit:'ratio', invert:true },
-  { key:'gita2018_rec_days', label:'TC Gita 2018 recovery duration', unit:'days', invert:false },
-  { key:'flood2025_min_ratio', label:'2025 flood-window light ratio', unit:'ratio', invert:true },
+  { key:'event2025_drop_pct', label:'2025 NTL event light drop (observed)', unit:'%', invert:false },
+  { key:'event2025_rec_days', label:'2025 NTL recovery duration (observed)', unit:'days', invert:false },
+  { key:'event2025_ntl_pre', label:'2025 NTL pre-event light level (observed)', unit:'nW/cm²sr', invert:true },
   { key:'population', label:'Population', unit:'persons', invert:false },
   { key:'share_65plus', label:'Elderly share (65+)', unit:'share', invert:false },
   { key:'dist_power_node_km', label:'Distance to power node', unit:'km', invert:false },
   { key:'EXP_flood', label:'Flood exposure index', unit:'index', invert:false },
-  { key:'pv_capacity_kw', label:'PV capacity (2018 estimate)', unit:'kW', invert:false },
-  { key:'pv_recent_capacity_kw', label:'PV capacity (later satellite detections)', unit:'kW', invert:false }
+  { key:'pv_detected_mw', label:'PV capacity detected (Sentinel-2 2025)', unit:'MW', invert:false },
+  { key:'dist_bess_km', label:'Distance to nearest PV+BESS site (observed)', unit:'km', invert:false }
 ];
 const ramp = ['#1a7f79', '#8ab84f', '#e8b83a', '#e07b2a', '#b3261e'];
 function colorFor(t){ return ramp[Math.min(ramp.length - 1, Math.floor(t * ramp.length))]; }
@@ -410,7 +410,7 @@ async function renderMap(){
   const indBy = {}; villages.rows.forEach((r) => indBy[r.village_id] = r);
 
   viewEl.innerHTML =
-    '<div class="banner"><span><b>Real geography, demo indicators.</b> Village names, 2020 census populations and coordinates are real public data (US Census 2020 · GeoNames · geoBoundaries). Resilience indicators are synthetic demo values. The screening index is a <b>decision-support ranking</b>, not a validated outage probability.</span><button class="btn" id="mapDismiss">Got it</button></div>' +
+        '<div class="banner"><span><b>Observed 2025 data loaded.</b> Geography (US Census 2020 · GeoNames), nightly nighttime lights (VIIRS DNB, 2025), PV detections (Sentinel-2, 2025-09) and SIAI/VQI are real observed data. Socioeconomic &amp; water indicators remain synthetic demo values. The screening index is a <b>decision-support ranking</b>, not a validated outage probability.</span><button class="btn" id="mapDismiss">Got it</button></div>' +
     '<div class="toolbar">' +
       '<label class="check">Map layer <select class="select" id="layerSel">' + LAYERS.map((l, i) => '<option value="' + i + '">' + esc(l.label) + '</option>').join('') + '</select></label>' +
       '<span class="spacer"></span><a class="btn small" href="/api/export/screening?format=csv">Download screening (CSV)</a>' +
@@ -501,9 +501,9 @@ async function villageDrawer(id){
   const v = d.village, ind = d.indicators;
   const rows = [
     ['Population', fmt(v.population, 'persons') + ' <span class="chip pr-observed"><i class="sw"></i>REAL · US Census 2020</span>'],
-    ['TC Gita 2018 min light ratio', fmt(ind.gita2018_min_ratio)],
-    ['TC Gita 2018 recovery days', ind.in_analytical_subset ? fmt(ind.gita2018_rec_days, 'days') : '<span class="form-hint">outside quality-screened subset</span>'],
-    ['2025 flood min light ratio', fmt(ind.flood2025_min_ratio)],
+    ['2025 NTL pre-event level (observed)', fmt(ind.event2025_ntl_pre, 'nW/cm²sr')],
+    ['2025 NTL light drop (observed)', ind.in_analytical_subset ? fmt(ind.event2025_drop_pct, '%') : '<span class="form-hint">outside quality-screened subset</span>'],
+    ['2025 NTL recovery days (observed)', fmt(ind.event2025_rec_days, 'days')],
     ['Median household income (log)', fmt(ind.log_median_hh_income, 'log USD')],
     ['Adults without high school', fmt(ind.share_lt_hs)],
     ['Unemployment rate', fmt(ind.unemp_rate)],
@@ -511,15 +511,15 @@ async function villageDrawer(id){
     ['Distance to power node', fmt(ind.dist_power_node_km, 'km')],
     ['SIAI (provided index)', fmt(ind.SIAI)],
     ['Flood exposure EXP_flood', fmt(ind.EXP_flood)],
-    ['PV capacity (2018 estimate)', fmt(ind.pv_capacity_kw, 'kW')],
-    ['PV capacity (later detection)', fmt(ind.pv_recent_capacity_kw, 'kW')],
+    ['PV detected (Sentinel-2 2025, observed)', fmt(ind.pv_detected_mw, 'MW')],
+    ['Distance to PV+BESS site (observed)', fmt(ind.dist_bess_km, 'km')],
     ['Verified water storage', fmt(ind.water_storage_m3, 'm3')],
     ['Water sources', fmt(ind.water_sources)]
   ];
   openDrawer(
     '<div class="drawer-head"><div><h3 style="font:600 18px var(--font-disp);color:var(--navy)">' + esc(v.village_name) + '</h3>' +
     '<div style="margin-top:4px;display:flex;gap:5px;flex-wrap:wrap"><span class="chip pr-observed"><i class="sw"></i>population: REAL Census 2020</span>' +
-    '<span class="chip pr-synthetic"><i class="sw"></i>indicators: synthetic demo</span>' +
+    '<span class="chip pr-verified_operational"><i class="sw"></i>NTL · PV 2025: observed</span>' +
     '<span class="chip pr-simulated"><i class="sw"></i>' + esc(v.village_code) + '</span></div></div>' +
     '<button class="x" onclick="document.getElementById(\'modalRoot\').innerHTML=\'\'">×</button></div>' +
     '<div class="drawer-body">' +
