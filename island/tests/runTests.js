@@ -61,7 +61,8 @@ async function runTests(baseUrl) {
     ['Every indicator row carries a provenance status from the allowed list', async () => {
       const rows = db.prepare('SELECT DISTINCT data_status FROM village_indicators').all();
       for (const r of rows) assert(PROVENANCE.includes(r.data_status), `provenance ${r.data_status} not allowed`);
-      eq(db.prepare(`SELECT COUNT(*) c FROM village_indicators WHERE data_status != 'synthetic'`).get().c, 0, 'all synthetic');
+      eq(db.prepare(`SELECT COUNT(*) c FROM village_indicators WHERE data_status='observed' AND (vintage_label IS NULL OR vintage_label NOT LIKE '%observed%')`).get().c, 0, 'observed rows must cite observed provenance');
+      eq(db.prepare(`SELECT COUNT(*) c FROM village_indicators WHERE data_status NOT IN ('synthetic','observed')`).get().c, 0, 'no stray provenance');
     }],
 
     ['Unauthenticated API access is rejected with 401', async () => {
