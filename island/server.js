@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
   res.set('Cache-Control', 'no-store');
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1d', etag: true }));
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1d', etag: true, setHeaders: (res, fp) => { if (String(fp).endsWith('.html')) res.setHeader('Cache-Control', 'no-store'); } }));
 app.use('/vendor', express.static(path.join(__dirname, 'node_modules', 'chart.js', 'dist'), { maxAge: '7d' }));
 
 app.use('/api', routes);

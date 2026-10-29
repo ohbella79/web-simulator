@@ -190,6 +190,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:12.8px}
       <a href="#command_center" data-nav="command_center">Executive ESG Command Center<span class="tag">PREVIEW</span></a>
       <div class="grp">Intelligence &amp; planning</div>
       <a href="#map" data-nav="map">Village Disaster Intelligence Map</a>
+      <a href="#energy" data-nav="energy">Nighttime Lights · PV 2025<span class="tag">OBSERVED</span></a>
       <a href="#simulator" data-nav="simulator">Resilience Simulator<span class="tag">PH 2</span></a>
       <a href="#allocation" data-nav="allocation">Emergency Resource Allocation<span class="tag">PH 3</span></a>
       <a href="#planner" data-nav="planner">Infrastructure Planner<span class="tag">PH 4</span></a>
@@ -295,7 +296,7 @@ async function enterApp(){
 }
 
 /* ---------------- router ---------------- */
-const TITLES = { command_center:'Executive ESG Command Center', map:'Village Disaster Intelligence Map', simulator:'Electricity & Water Resilience Simulator', allocation:'Emergency Resource Allocation', planner:'PV+BESS & Water Infrastructure Planner', optimizer:'ESG Investment Portfolio Optimizer', raas:'RaaS Business Model & Financial Analysis', monitoring:'ESG Performance & Impact Monitoring', roadmap:'Project Pipeline & Five-Year Roadmap', governance:'Governance, Reporting & Administration', portal:'Community Information Portal' };
+const TITLES = { command_center:'Executive ESG Command Center', map:'Village Disaster Intelligence Map', energy:'Nighttime Lights · PV 2025 (observed)', simulator:'Electricity & Water Resilience Simulator', allocation:'Emergency Resource Allocation', planner:'PV+BESS & Water Infrastructure Planner', optimizer:'ESG Investment Portfolio Optimizer', raas:'RaaS Business Model & Financial Analysis', monitoring:'ESG Performance & Impact Monitoring', roadmap:'Project Pipeline & Five-Year Roadmap', governance:'Governance, Reporting & Administration', portal:'Community Information Portal' };
 const PHASES = {
   command_center:['Phase 4–5','Portfolio KPIs, investment charts and roadmap visuals land in Phases 4–5 once the simulator, planner and financial model feed them.'],
   simulator:['Phase 2','Hourly electricity & water balance model (Modules C2–C4): cyclone / flood / grid-failure / fuel-disruption scenarios, PV+BESS dispatch with battery state of charge, water storage depletion and baseline-vs-intervention comparisons.'],
@@ -413,6 +414,8 @@ async function renderMap(){
         '<div class="banner"><span><b>Observed 2025 data loaded.</b> Geography (US Census 2020 · GeoNames), nightly nighttime lights (VIIRS DNB, 2025), PV detections (Sentinel-2, 2025-09) and SIAI/VQI are real observed data. Socioeconomic &amp; water indicators remain synthetic demo values. The screening index is a <b>decision-support ranking</b>, not a validated outage probability.</span><button class="btn" id="mapDismiss">Got it</button></div>' +
     '<div class="toolbar">' +
       '<label class="check">Map layer <select class="select" id="layerSel">' + LAYERS.map((l, i) => '<option value="' + i + '">' + esc(l.label) + '</option>').join('') + '</select></label>' +
+      '<label class="check" style="margin-left:10px"><input type="checkbox" id="ovPv"> PV detections</label>' +
+      '<label class="check" style="margin-left:8px"><input type="checkbox" id="ovFac"> PV+BESS facilities</label>' +
       '<span class="spacer"></span><a class="btn small" href="/api/export/screening?format=csv">Download screening (CSV)</a>' +
       '<a class="btn small" href="/api/export/villages?format=xlsx">Village indicators (Excel)</a>' +
     '</div>' +
@@ -430,19 +433,7 @@ async function renderMap(){
         '<div class="card" style="margin:0"><div class="card-head"><h3>Screening distribution</h3><span class="hint">' + screening.results.length + ' villages</span></div><div class="card-body" style="position:relative;height:200px"><canvas id="chDist"></canvas></div></div>' +
       '</div>' +
     '</div>' +
-    '<div class="card" style="margin-top:15px"><div class="card-head"><h3>Nighttime lights 2025 — event &amp; recovery comparison</h3><span class="hint">observed · VIIRS DNB weekly means</span></div><div class="card-body">' +
-      '<div id="ntlStats" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px"></div>' +
-      '<div style="display:grid;grid-template-columns:1.4fr 1fr;gap:14px;align-items:start">' +
-        '<div><label class="form-hint">Village overlay (line = territorial average + selected village)</label><br><select class="select" id="ntlSel" style="max-width:300px;margin-top:4px"></select>' +
-          '<div style="position:relative;height:260px;margin-top:8px"><canvas id="chNtl"></canvas></div></div>' +
-        '<div style="position:relative;height:300px"><canvas id="chTop"></canvas></div>' +
-      '</div>' +
-      '<div style="display:grid;grid-template-columns:1.4fr 1fr;gap:14px;align-items:start;margin-top:14px">' +
-        '<div style="position:relative;height:300px"><canvas id="chScat"></canvas></div>' +
-        '<div id="ntlPvComp"></div>' +
-      '</div>' +
-      '<p class="form-hint" style="margin-top:10px">Observed satellite radiance (nW/cm²/sr), weekly means of VIIRS DNB nightly data (117 nights, 2025). Shaded band = territorial-nadir week. Comparisons are descriptive — PV-bearing villages cluster near the town grid, so differences are association, not proof of a PV effect.</p>' +
-    '</div></div>' +
+    '<div class="banner" style="margin-top:15px"><span><b>Observed 2025 analysis ready:</b> nighttime-lights trajectory, top-village rankings, PV detections and PV+BESS facilities now live on the dedicated dashboard — <a href="#energy"><b>open Nighttime Lights · PV 2025</b></a>. Map layers below also include the 2025 event metrics.</span></div>' +
     '<div class="card" style="margin-top:15px"><div class="card-head"><h3>Villages</h3><span class="hint">click a row for the full profile</span></div>' +
       '<div class="table-wrap"><table class="tbl"><thead><tr><th>Village</th><th>District</th><th class="mono">Population</th><th class="mono">Screening</th><th>Band</th><th>Data quality</th></tr></thead><tbody>' +
       screening.results.slice(0, 12).map((r) =>
@@ -465,44 +456,6 @@ async function renderMap(){
       datasets:[{ data:[d.high, d.elevated, d.moderate, d.lower, d.insufficient], backgroundColor:['#b3261e','#e07b2a','#e8b83a','#1a7f79','#8fa3ad'], borderRadius:2 }] },
       options:{ indexAxis:'y', plugins:{ legend:{ display:false } }, scales:{ x:{ beginAtZero:true, ticks:{ precision:0 } }, y:{ grid:{ display:false } } }, responsive:true, maintainAspectRatio:false } });
   }
-  // ---- NTL 2025 observed comparisons ----
-  api('/ntl/timeseries').then((ntl) => {
-    const byName = {}; ntl.series.forEach((s) => byName[s.name] = s);
-    const sel = $('#ntlSel');
-    sel.innerHTML = '<option value="">(territorial average only)</option>' + ntl.series.map((s) => '<option>' + esc(s.name) + '</option>').join('');
-    const rows = ntl.rows || [];
-    const withDrop = rows.filter((r) => r.event2025_drop_pct != null).sort((a, b) => b.event2025_drop_pct - a.event2025_drop_pct);
-    const both = rows.filter((r) => r.event2025_drop_pct != null && r.event2025_rec_days != null);
-    const pvPts = both.filter((r) => (r.pv_detected_mw || 0) > 0), npvPts = both.filter((r) => !(r.pv_detected_mw > 0));
-    const avg = (a, k) => a.length ? Math.round(a.reduce((s, r) => s + (r[k] || 0), 0) / a.length * 10) / 10 : null;
-    $('#ntlStats').innerHTML = [
-      ['Villages with observed NTL', withDrop.length + ' / ' + rows.length],
-      ['Territorial nadir week', 'W' + (ntl.event_week + 1) + ' · ' + (ntl.meta.nadir_date || '')],
-      ['PV villages — mean recovery', (avg(pvPts, 'event2025_rec_days') ?? '—') + 'd (n=' + pvPts.length + ')'],
-      ['No-PV villages — mean recovery', (avg(npvPts, 'event2025_rec_days') ?? '—') + 'd (n=' + npvPts.length + ')']
-    ].map(([k, v]) => '<div style="flex:1;min-width:150px;border:1px solid #e3e9ee;border-radius:8px;padding:9px 12px"><div class="form-hint" style="font-size:11px">' + k + '</div><div style="font:700 18px var(--font-disp);color:var(--navy)">' + v + '</div></div>').join('');
-    $('#ntlPvComp').innerHTML = '<div class="card" style="margin:0"><div class="card-head"><h3>PV vs no-PV (mean)</h3><span class="hint">descriptive</span></div><div class="card-body"><table class="tbl"><thead><tr><th></th><th class="mono">drop %</th><th class="mono">recovery d</th></tr></thead><tbody>' +
-      [['PV detected (Sentinel-2)', pvPts], ['No PV detected', npvPts]].map(([k, a]) => '<tr><td>' + k + '</td><td class="mono">' + (avg(a, 'event2025_drop_pct') ?? '—') + '</td><td class="mono">' + (avg(a, 'event2025_rec_days') ?? '—') + '</td></tr>').join('') +
-      '</tbody></table><p class="form-hint">Association, not causation — PV sites sit near the town grid.</p></div></div>';
-    if (!window.Chart) return;
-    const labels = ntl.week_start_dates;
-    const evBand = { type:'bar', label:'event week', data:labels.map((_, i) => i === ntl.event_week ? 1 : null), backgroundColor:'rgba(224,123,42,.20)', yAxisID:'y2', borderWidth:0, barPercentage:1, categoryPercentage:1 };
-    const terrDs = { label:'Territorial average (observed)', data:ntl.territorial, borderColor:'#0f2a43', backgroundColor:'rgba(15,42,67,.06)', tension:.25, pointRadius:0, borderWidth:2 };
-    const draw = () => {
-      const n = sel.value ? byName[sel.value] : null;
-      const sets = [evBand, terrDs];
-      if (n) sets.push({ label:n.name + ' (observed)', data:n.weekly, borderColor:'#b3261e', backgroundColor:'rgba(179,38,30,.07)', tension:.25, pointRadius:0, borderWidth:2 });
-      if (charts.ntl) charts.ntl.destroy();
-      charts.ntl = new Chart($('#chNtl'), { data:{ labels, datasets:sets }, options:{ plugins:{ legend:{ labels:{ boxWidth:10, font:{ size:10 } } }, tooltip:{ mode:'index', intersect:false } }, scales:{ x:{ ticks:{ maxTicksLimit:9, font:{ size:9 } } }, y:{ beginAtZero:true, title:{ display:true, text:'nW/cm²/sr (weekly mean)', font:{ size:9 } } }, y2:{ display:false, min:0, max:1 } }, maintainAspectRatio:false } });
-    };
-    sel.onchange = draw; draw();
-    const top = withDrop.slice(0, 10);
-    charts.top = new Chart($('#chTop'), { type:'bar', data:{ labels:top.map((r) => r.village_name), datasets:[{ label:'light drop %', data:top.map((r) => r.event2025_drop_pct), backgroundColor:top.map((r) => (r.event2025_rec_days || 0) > 10 ? '#b3261e' : (r.event2025_rec_days || 0) > 7 ? '#e07b2a' : '#1a7f79'), borderRadius:2 }] }, options:{ indexAxis:'y', plugins:{ legend:{ display:false }, title:{ display:true, text:'Top-10 light drop — color = recovery days', font:{ size:11 } }, tooltip:{ callbacks:{ label:(c) => ' drop ' + c.raw + '% · recovery ' + top[c.dataIndex].event2025_rec_days + 'd · pop ' + (top[c.dataIndex].population || '—') } } }, scales:{ x:{ beginAtZero:true, max:100 } }, maintainAspectRatio:false } });
-    charts.scat = new Chart($('#chScat'), { type:'scatter', data:{ datasets:[
-      { label:'PV detected (' + pvPts.length + ')', data:pvPts.map((r) => ({ x:r.event2025_drop_pct, y:r.event2025_rec_days, n:r.village_name })), backgroundColor:'rgba(26,127,121,.75)', pointRadius:5 },
-      { label:'no PV (' + npvPts.length + ')', data:npvPts.map((r) => ({ x:r.event2025_drop_pct, y:r.event2025_rec_days, n:r.village_name })), backgroundColor:'rgba(143,163,173,.6)', pointRadius:4 } ] },
-      options:{ plugins:{ legend:{ labels:{ boxWidth:10, font:{ size:10 } } }, title:{ display:true, text:'Light drop % vs recovery days — PV detected?', font:{ size:11 } }, tooltip:{ callbacks:{ label:(c) => ' ' + c.raw.n + ': ' + c.parsed.x + '% / ' + c.parsed.y + 'd' } } }, scales:{ x:{ title:{ display:true, text:'light drop %' }, max:100 }, y:{ title:{ display:true, text:'recovery days' } } }, maintainAspectRatio:false } });
-  }).catch(() => {});
   if (window.L){
     if (map){ map.remove(); map = null; }
     map = L.map('map').setView([-14.285, -170.70], 10);
@@ -540,10 +493,110 @@ async function renderMap(){
     };
     legend.addTo(map);
     $('#layerSel').onchange = () => route();
+    const loadOv = async () => {
+      try {
+        const ly = await api('/energy/layers');
+        if (window._ov) window._ov.forEach((l) => l.remove());
+        window._ov = [];
+        if ($('#ovPv').checked) ly.pv.objects.forEach((o) => {
+          const c = L.circleMarker([o.lat, o.lon], { radius: 3 + Math.sqrt(o.mw) * 2.5, color:'#1a7f79', weight:1, fillColor:'#0e7c7b', fillOpacity:.6 });
+          c.bindTooltip('PV ' + o.mw + ' MW · ' + o.ha + ' ha · ' + o.tier).addTo(map); window._ov.push(c);
+        });
+        if ($('#ovFac').checked) ly.facilities.facilities.forEach((f) => {
+          const m = L.circleMarker([f.lat, f.lon], { radius: 9, color:'#b3261e', weight:2.5, fillColor:'#f0b429', fillOpacity:.92 });
+          m.bindTooltip('<b>' + esc(f.label) + '</b><br>' + esc(f.type) + ' — documented (DOE/EIA)').addTo(map); window._ov.push(m);
+        });
+      } catch (e) {}
+    };
+    $('#ovPv').onchange = loadOv; $('#ovFac').onchange = loadOv;
   } else {
     $('#map').innerHTML = '<div class="empty">Map library could not load. The village table shows the same data.</div>';
   }
   $$('[data-vill]', viewEl).forEach((tr) => tr.onclick = () => villageDrawer(tr.dataset.vill));
+}
+
+async function renderEnergy(){
+  if (user.role === 'resident'){
+    viewEl.innerHTML = '<div class="banner">Your role (resident) does not have access to village-level analysis data.</div>';
+    return;
+  }
+  const [ntl, layers] = await Promise.all([api('/ntl/timeseries'), api('/energy/layers')]);
+  const rows = (ntl.rows || []).filter((r) => r.event2025_drop_pct != null).sort((a, b) => b.event2025_drop_pct - a.event2025_drop_pct);
+  const pvObj = layers.pv.objects || [], facs = layers.facilities.facilities || [];
+  const totMw = layers.pv.meta.total_mw, tierCnt = {};
+  pvObj.forEach((o) => tierCnt[o.tier] = (tierCnt[o.tier] || 0) + 1);
+  const byName = {}; ntl.series.forEach((s) => byName[s.name] = s);
+  const both = rows.filter((r) => r.event2025_rec_days != null);
+  const pvPts = both.filter((r) => (r.pv_detected_mw || 0) > 0), npvPts = both.filter((r) => !(r.pv_detected_mw > 0));
+  const avg = (a, k) => a.length ? Math.round(a.reduce((s, r) => s + (r[k] || 0), 0) / a.length * 10) / 10 : null;
+  const topPv = rows.filter((r) => (r.pv_detected_mw || 0) > 0).slice(0, 10);
+  const statCard = (k, v) => '<div style="border:1px solid #e3e9ee;border-radius:8px;padding:10px 12px;background:#fff"><div class="form-hint" style="font-size:11px">' + k + '</div><div style="font:700 19px var(--font-disp);color:var(--navy)">' + v + '</div></div>';
+  viewEl.innerHTML =
+    '<div class="banner"><span><b>Observed 2025 satellite data.</b> Nighttime lights: VIIRS DNB, 117 nights across 2025 (weekly means). PV objects: Sentinel-2 detections (2025-09-12). Facilities: DOE/EIA documented power plants. Descriptive comparisons — not causal estimates.</span></div>' +
+    '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0">' +
+      statCard('Villages with observed NTL', rows.length + ' / ' + ntl.rows.length) +
+      statCard('Territorial nadir week', 'W' + (ntl.event_week + 1) + ' · ' + (ntl.meta.nadir_date || '')) +
+      statCard('PV detections (Sentinel-2)', pvObj.length + ' objects') +
+      statCard('PV detected capacity', totMw + ' MW') +
+      statCard('Documented facilities', facs.length) +
+    '</div>' +
+    '<div class="grid-2" style="grid-template-columns:1.5fr 1fr;align-items:start;margin-bottom:15px">' +
+      '<div class="card" style="margin:0"><div class="card-head"><h3>Weekly nighttime-lights trajectory 2025</h3><span class="hint">shaded = nadir week</span></div><div class="card-body">' +
+        '<select class="select" id="eSel" style="max-width:320px"></select>' +
+        '<div style="position:relative;height:280px;margin-top:9px"><canvas id="chTraj"></canvas></div></div></div>' +
+      '<div class="card" style="margin:0"><div class="card-head"><h3>PV detection confidence tiers</h3><span class="hint">A high → D single-date</span></div><div class="card-body" style="position:relative;height:230px"><canvas id="chTiers"></canvas></div>' +
+        '<div class="card-body" style="position:relative;height:210px;border-top:1px solid #eef2f5"><canvas id="chPvTop"></canvas></div></div>' +
+    '</div>' +
+    '<div class="grid-2" style="grid-template-columns:1fr 1fr;align-items:start;margin-bottom:15px">' +
+      '<div class="card" style="margin:0"><div class="card-body" style="position:relative;height:320px"><canvas id="chTop10"></canvas></div></div>' +
+      '<div class="card" style="margin:0"><div class="card-body" style="position:relative;height:320px"><canvas id="chScat"></canvas></div></div>' +
+    '</div>' +
+    '<div class="grid-2" style="grid-template-columns:1fr 1.3fr;align-items:start;margin-bottom:15px">' +
+      '<div class="card" style="margin:0"><div class="card-head"><h3>PV vs no-PV (mean)</h3><span class="hint">descriptive</span></div><div class="card-body"><table class="tbl"><thead><tr><th></th><th class="mono">light drop %</th><th class="mono">recovery d</th><th class="mono">n</th></tr></thead><tbody>' +
+        [['PV detected (Sentinel-2)', pvPts], ['No PV detected', npvPts]].map(([k, a]) => '<tr><td>' + k + '</td><td class="mono">' + (avg(a, 'event2025_drop_pct') ?? '—') + '</td><td class="mono">' + (avg(a, 'event2025_rec_days') ?? '—') + '</td><td class="mono">' + a.length + '</td></tr>').join('') +
+        '</tbody></table><p class="form-hint">Association, not causation — PV sites cluster near the town grid.</p></div></div>' +
+      '<div class="card" style="margin:0"><div class="card-head"><h3>Documented power facilities (DOE/EIA)</h3><span class="hint">observed locations</span></div><div class="card-body"><table class="tbl"><thead><tr><th>Facility</th><th>Type</th><th class="mono">Lat/Lon</th></tr></thead><tbody>' +
+        facs.map((f) => '<tr><td class="cell-main">' + esc(f.label) + '</td><td>' + esc(f.type) + '</td><td class="mono">' + f.lat.toFixed(4) + ', ' + f.lon.toFixed(4) + '</td></tr>').join('') +
+        '</tbody></table></div></div>' +
+    '</div>' +
+    '<div class="card" style="margin-bottom:15px"><div class="card-head"><h3>PV detections &amp; facilities map</h3><span class="hint">circle size ∝ detected MW</span></div><div class="card-body" style="padding:8px"><div id="emap" style="height:380px"></div></div></div>' +
+    '<p class="form-hint">Sources: VIIRS DNB nightly radiance (user research bundle, as_daily_ntl.json) · Sentinel-2 L2A PV detections (samoa_pv_detections.csv) · DOE/EIA documented facilities (official_nodes.csv). Radiance unit: nW/cm²/sr, weekly means.</p>';
+  if (!window.Chart) return;
+  const evBand = { type:'bar', label:'nadir week', data:ntl.week_start_dates.map((_, i) => i === ntl.event_week ? 1 : null), backgroundColor:'rgba(224,123,42,.20)', yAxisID:'y2', borderWidth:0, barPercentage:1, categoryPercentage:1 };
+  const terrDs = { label:'Territorial average', data:ntl.territorial, borderColor:'#0f2a43', backgroundColor:'rgba(15,42,67,.06)', tension:.25, pointRadius:0, borderWidth:2 };
+  const sel = $('#eSel');
+  sel.innerHTML = '<option value="">(territorial average only)</option>' + ntl.series.map((s) => '<option>' + esc(s.name) + '</option>').join('');
+  const drawTraj = () => {
+    const n = sel.value ? byName[sel.value] : null;
+    const sets = [evBand, terrDs];
+    if (n) sets.push({ label:n.name + ' (observed)', data:n.weekly, borderColor:'#b3261e', backgroundColor:'rgba(179,38,30,.07)', tension:.25, pointRadius:0, borderWidth:2 });
+    if (charts.tra) charts.tra.destroy();
+    charts.tra = new Chart($('#chTraj'), { data:{ labels:ntl.week_start_dates, datasets:sets }, options:{ plugins:{ legend:{ labels:{ boxWidth:10, font:{ size:10 } } }, tooltip:{ mode:'index', intersect:false } }, scales:{ x:{ ticks:{ maxTicksLimit:9, font:{ size:9 } } }, y:{ beginAtZero:true, title:{ display:true, text:'nW/cm²/sr (weekly mean)', font:{ size:9 } } }, y2:{ display:false, min:0, max:1 } }, maintainAspectRatio:false } });
+  };
+  sel.onchange = drawTraj; drawTraj();
+  const tcol = ['#0e7c7b', '#1a7f79', '#e07b2a', '#8fa3ad'];
+  charts.tiers = new Chart($('#chTiers'), { type:'doughnut', data:{ labels:Object.keys(tierCnt), datasets:[{ data:Object.values(tierCnt), backgroundColor:tcol, borderWidth:0 }] }, options:{ cutout:'58%', plugins:{ legend:{ position:'right', labels:{ boxWidth:10, font:{ size:10 } } } }, maintainAspectRatio:false } });
+  charts.pvTop = new Chart($('#chPvTop'), { type:'bar', data:{ labels:topPv.map((r) => r.village_name), datasets:[{ label:'detected MW', data:topPv.map((r) => r.pv_detected_mw), backgroundColor:'#0e7c7b', borderRadius:2 }] }, options:{ indexAxis:'y', plugins:{ legend:{ display:false }, title:{ display:true, text:'Top villages by detected PV (MW)', font:{ size:11 } } }, scales:{ x:{ beginAtZero:true, ticks:{ font:{ size:9 } } }, y:{ ticks:{ font:{ size:9 } } } }, maintainAspectRatio:false } });
+  const top10 = rows.slice(0, 10);
+  charts.top10 = new Chart($('#chTop10'), { type:'bar', data:{ labels:top10.map((r) => r.village_name), datasets:[{ label:'light drop %', data:top10.map((r) => r.event2025_drop_pct), backgroundColor:top10.map((r) => (r.event2025_rec_days || 0) > 10 ? '#b3261e' : (r.event2025_rec_days || 0) > 7 ? '#e07b2a' : '#1a7f79'), borderRadius:2 }] }, options:{ indexAxis:'y', plugins:{ legend:{ display:false }, title:{ display:true, text:'Top-10 light drop — color = recovery days', font:{ size:11 } }, tooltip:{ callbacks:{ label:(c) => ' drop ' + c.raw + '% · recovery ' + top10[c.dataIndex].event2025_rec_days + 'd · pop ' + (top10[c.dataIndex].population || '—') } } }, scales:{ x:{ beginAtZero:true, max:100 } }, y:{ ticks:{ font:{ size:9 } } }, maintainAspectRatio:false } });
+  charts.scat = new Chart($('#chScat'), { type:'scatter', data:{ datasets:[
+    { label:'PV detected (' + pvPts.length + ')', data:pvPts.map((r) => ({ x:r.event2025_drop_pct, y:r.event2025_rec_days, n:r.village_name })), backgroundColor:'rgba(26,127,121,.75)', pointRadius:5 },
+    { label:'no PV (' + npvPts.length + ')', data:npvPts.map((r) => ({ x:r.event2025_drop_pct, y:r.event2025_rec_days, n:r.village_name })), backgroundColor:'rgba(143,163,173,.6)', pointRadius:4 } ] },
+    options:{ plugins:{ legend:{ labels:{ boxWidth:10, font:{ size:10 } } }, title:{ display:true, text:'Light drop % vs recovery days — PV detected?', font:{ size:11 } }, tooltip:{ callbacks:{ label:(c) => ' ' + c.raw.n + ': ' + c.parsed.x + '% / ' + c.parsed.y + 'd' } } }, scales:{ x:{ title:{ display:true, text:'light drop %' }, max:100 }, y:{ title:{ display:true, text:'recovery days' } } }, maintainAspectRatio:false } });
+  if (window.L){
+    if (window._emap) window._emap.remove();
+    const em = L.map('emap').setView([-14.30, -170.70], 10);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution:'&copy; OpenStreetMap contributors' }).addTo(em);
+    pvObj.forEach((o) => {
+      L.circleMarker([o.lat, o.lon], { radius: 3 + Math.sqrt(o.mw) * 3, color:'#1a7f79', weight:1, fillColor:'#0e7c7b', fillOpacity:.6 })
+        .bindTooltip('PV ' + o.mw + ' MW · ' + o.ha + ' ha · ' + o.tier).addTo(em);
+    });
+    facs.forEach((f) => {
+      L.circleMarker([f.lat, f.lon], { radius: 9, color:'#b3261e', weight:2.5, fillColor:'#f0b429', fillOpacity:.92 })
+        .bindTooltip('<b>' + esc(f.label) + '</b><br>' + esc(f.type) + ' — documented (DOE/EIA)').addTo(em);
+    });
+    window._emap = em;
+  }
 }
 
 async function villageDrawer(id){
@@ -747,7 +800,7 @@ async function route(){
   $('#sidebar').classList.remove('open');
   if (!meta) meta = await api('/meta');
   viewEl.innerHTML = loadingHTML();
-  const views = { map:renderMap, governance:renderGovernance, portal:renderPortal };
+   const views = { map:renderMap, energy:renderEnergy, governance:renderGovernance, portal:renderPortal };
   try { await (views[name] || renderPreview)(name); }
   catch (e){ viewEl.innerHTML = '<div class="banner">Render error: ' + esc(e.message) + ' — <a href="#" onclick="location.reload()">reload</a></div>'; }
 }

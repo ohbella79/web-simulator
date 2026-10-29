@@ -62,6 +62,13 @@ router.get('/ntl/timeseries', api((req, res) => {
   }));
 }));
 
+router.get('/energy/layers', api((req, res) => {
+  const u = auth.currentUser(req);
+  if (!u) return res.status(401).json({ error: 'Authentication required. Please sign in.' });
+  if (u.role === 'resident') return res.status(403).json({ error: 'Resident role cannot access facility-level data.' });
+  res.json({ pv: require('./data-real/pv_detections.json'), facilities: require('./data-real/facilities.json') });
+}));
+
 // =================== auth ===================
 router.post('/auth/login', api((req, res) => {
   const email = String((req.body || {}).email || '').trim().toLowerCase();
