@@ -1,0 +1,721 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IslandResilience AI — Phase 1 Demo</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%230f2a43'/%3E%3Ccircle cx='16' cy='19' r='7' fill='%230e7c7b'/%3E%3Cpath d='M4 19h24' stroke='%23f4f6f5' stroke-width='2'/%3E%3Ccircle cx='22' cy='9' r='3' fill='%23f0b429'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="/vendor/leaflet.css">
+<style>
+:root{
+  --navy:#0f2a43; --navy-2:#16395c; --navy-3:#0a1e33;
+  --teal:#0e7c7b; --teal-soft:#e2f1f0;
+  --green:#1e8e5a; --green-soft:#e3f2ea;
+  --amber:#b45309; --amber-soft:#fdf0dd;
+  --red:#b3261e; --red-soft:#fbe9e7;
+  --paper:#f2f5f4; --card:#ffffff; --line:#d9e2e0; --line-2:#e7edeb;
+  --text:#22313c; --muted:#5d7280; --faint:#8fa3ad;
+  --radius:4px;
+  --font-body:'Public Sans',-apple-system,'Segoe UI',Roboto,sans-serif;
+  --font-disp:'Space Grotesk','Segoe UI',sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,monospace;
+  --shadow:0 18px 50px rgba(10,30,51,.25);
+}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{font:400 14px/1.55 var(--font-body);color:var(--text);background:var(--paper)}
+a{color:var(--teal)}h1,h2,h3,h4{margin:0}button{font-family:var(--font-body)}
+:focus-visible{outline:2px solid var(--teal);outline-offset:1px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+.login-wrap{min-height:100vh;display:none;align-items:center;justify-content:center;padding:24px;background:radial-gradient(1200px 600px at 70% -10%, #16395c 0%, #0f2a43 45%, #0a1e33 100%)}
+.login-card{background:#fff;border-radius:8px;max-width:440px;width:100%;padding:34px 34px 28px;border-top:4px solid var(--teal);box-shadow:var(--shadow)}
+.login-card h1{font:700 26px/1.1 var(--font-disp);color:var(--navy)}
+.login-card .sub{color:var(--muted);font-size:13px;margin:8px 0 18px}
+.demo-cred{background:#f5f8f7;border:1px solid var(--line);border-radius:4px;padding:10px 12px;font-size:12px;color:var(--muted);margin-top:16px}
+.demo-cred .mono{font-family:var(--font-mono);font-size:11.5px;color:var(--navy)}
+.lagoon{height:6px;border-radius:3px;margin:0 0 20px;background:linear-gradient(90deg,var(--navy) 0 30%,var(--teal) 30% 62%,var(--green) 62% 82%,var(--amber) 82% 100%)}
+.app{min-height:100vh;display:none}
+.app.on{display:block}
+.sidebar{position:fixed;inset:0 auto 0 0;width:246px;background:var(--navy);color:#b7c8d6;display:flex;flex-direction:column;z-index:70}
+.brand{display:flex;gap:10px;align-items:center;padding:16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.brand svg{flex:0 0 auto}
+.brand h1{font:700 15px/1.15 var(--font-disp);color:#fff;letter-spacing:.02em}
+.brand span{font-size:10.5px;color:#7f97ad}
+.nav{padding:8px 0;flex:1;overflow-y:auto}
+.nav .grp{font:600 9.5px var(--font-body);letter-spacing:.12em;text-transform:uppercase;color:#6f889f;padding:12px 16px 4px}
+.nav a{display:flex;gap:9px;align-items:center;padding:8px 14px;color:#b7c8d6;text-decoration:none;font-size:12.8px;border-left:3px solid transparent;line-height:1.25}
+.nav a:hover{background:var(--navy-2);color:#fff}
+.nav a.active{background:var(--navy-2);color:#fff;border-left-color:var(--teal)}
+.nav a .tag{margin-left:auto;font:500 9px var(--font-mono);color:#7f97ad;border:1px solid #33506e;border-radius:3px;padding:1px 4px;white-space:nowrap}
+.nav a.active .tag{color:#cfe3e1;border-color:#3e6a67}
+.side-foot{padding:12px 16px;font-size:10.5px;color:#7f97ad;border-top:1px solid rgba(255,255,255,.08)}
+.main{margin-left:246px;min-width:0;display:flex;flex-direction:column;min-height:100vh}
+.topbar{height:54px;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:0 20px;position:sticky;top:0;z-index:60}
+.topbar h2{font:600 17px/1.1 var(--font-disp);color:var(--navy)}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.userchip{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+.userchip .name{color:var(--navy);font-weight:600}
+.hamburger{display:none;background:none;border:1px solid var(--line);border-radius:4px;padding:5px 8px;cursor:pointer;color:var(--navy)}
+.view{padding:20px;flex:1;min-width:0}
+.footer{padding:11px 20px;color:var(--faint);font-size:11px;border-top:1px solid var(--line);background:var(--card)}
+.chip{display:inline-flex;align-items:center;gap:5px;font:500 10.5px/1 var(--font-mono);padding:4px 7px;border-radius:3px;white-space:nowrap}
+.chip .sw{width:7px;height:7px;background:currentColor;border-radius:1px}
+.pr-synthetic{color:var(--amber);background:var(--amber-soft)}
+.pr-engineering_estimate{color:var(--teal);background:var(--teal-soft)}
+.pr-verified_operational,.pr-observed{color:var(--green);background:var(--green-soft)}
+.pr-simulated{color:var(--muted);background:#eceff1}
+.chip.role{background:var(--navy);color:#fff}
+.banner{display:flex;gap:10px;align-items:flex-start;background:var(--amber-soft);border:1px solid #efd3ab;color:#7a4413;padding:9px 13px;border-radius:4px;font-size:12.5px;margin-bottom:14px;flex-wrap:wrap}
+.banner .btn{margin-left:auto;height:24px;padding:0 8px;font-size:11px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:15px}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 15px;border-bottom:1px solid var(--line-2);flex-wrap:wrap}
+.card-head h3{font:600 15px/1.15 var(--font-disp);color:var(--navy)}
+.card-head .hint{font-size:11.5px;color:var(--faint)}
+.card-body{padding:13px 15px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:11px;margin-bottom:15px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px 13px}
+.kpi .k-label{font:600 10px/1.3 var(--font-body);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.kpi .k-value{font:700 30px/1 var(--font-disp);color:var(--navy);margin-top:6px}
+.kpi .k-sub{font-size:11px;color:var(--faint);margin-top:3px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.toolbar .spacer{flex:1}
+.input,.select{height:33px;border:1px solid var(--line);border-radius:4px;padding:0 9px;font:400 13px var(--font-body);background:#fff;color:var(--text)}
+textarea.input{height:auto;padding:8px 9px}
+.input:focus,.select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 2px var(--teal-soft)}
+.btn{display:inline-flex;align-items:center;gap:6px;height:33px;padding:0 12px;border-radius:4px;border:1px solid var(--line);background:#fff;color:var(--text);font:500 12.5px var(--font-body);cursor:pointer;white-space:nowrap;text-decoration:none}
+.btn:hover{border-color:var(--faint);background:#f8faf9}
+.btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}
+.btn.primary:hover{background:#0a6362}
+.btn.danger{color:var(--red);border-color:#e5b9b5;background:var(--red-soft)}
+.btn.small{height:26px;padding:0 8px;font-size:11.5px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+label.check{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)}
+.table-wrap{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:var(--radius)}
+table.tbl{width:100%;border-collapse:collapse;font-size:12.8px}
+.tbl th{font:600 10px/1.3 var(--font-body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 11px;border-bottom:1px solid var(--line);background:#f6f9f8;white-space:nowrap}
+.tbl td{padding:8px 11px;border-bottom:1px solid var(--line-2);vertical-align:top}
+.tbl tbody tr:hover td{background:#f5f9f8}
+.tbl .mono{font-family:var(--font-mono);font-size:11.5px}
+.cell-main{font-weight:600;color:var(--navy)}
+.empty{padding:26px;text-align:center;color:var(--muted);font-size:13px}
+.pager{display:flex;gap:8px;justify-content:flex-end;align-items:center;padding:9px 11px;font-size:12px;color:var(--muted)}
+#map{height:520px;border-radius:var(--radius);border:1px solid var(--line);z-index:1}
+.leaflet-container{font:400 12px var(--font-body)}
+.map-legend{background:#fff;border:1px solid var(--line);border-radius:4px;padding:8px 10px;font-size:11.5px;max-width:230px}
+.map-legend .lg-title{font:600 10px var(--font-body);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:5px}
+.map-legend .lg-row{display:flex;align-items:center;gap:7px;margin:2px 0}
+.map-legend .lg-sw{width:14px;height:9px;border-radius:2px}
+.weights{display:grid;gap:6px}
+.weights .w-row{display:grid;grid-template-columns:1fr 118px 34px;gap:8px;align-items:center;font-size:12px}
+.weights input[type=range]{width:100%;accent-color:var(--teal)}
+.weights .w-val{font:500 12px var(--font-mono);text-align:right;color:var(--navy)}
+.dimbar{height:8px;border-radius:2px;background:#edf2f0;overflow:hidden;margin-top:2px}
+.dimbar i{display:block;height:100%;background:var(--teal)}
+.dimbar.miss i{background:#c9d4d0}
+.overlay{position:fixed;inset:0;background:rgba(10,30,51,.45);display:flex;align-items:flex-start;justify-content:center;padding:44px 16px;z-index:120;overflow:auto}
+.overlay.drawer-mode{justify-content:flex-end;padding:0;align-items:stretch}
+.drawer{width:490px;max-width:96vw;height:100%;background:#fff;overflow-y:auto;border-left:1px solid var(--line);box-shadow:var(--shadow)}
+.drawer-head{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:14px 17px;display:flex;justify-content:space-between;align-items:flex-start;z-index:2}
+.drawer-body{padding:15px 17px}
+.modal{background:#fff;border-radius:6px;width:100%;max-width:520px;border-top:3px solid var(--teal);box-shadow:var(--shadow)}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;padding:15px 17px 6px}
+.modal-head h3{font:600 17px var(--font-disp);color:var(--navy)}
+.modal-body{padding:9px 17px 15px}
+.modal-foot{display:flex;justify-content:flex-end;gap:9px;padding:11px 17px;border-top:1px solid var(--line-2)}
+.x{background:none;border:0;font-size:20px;line-height:1;cursor:pointer;color:var(--faint);padding:2px 5px}
+.field{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.field label{font:600 10.5px var(--font-body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.field input,.field select,.field textarea{height:34px;border:1px solid var(--line);border-radius:4px;padding:0 9px;font:400 13px var(--font-body)}
+.field textarea{height:auto;padding:8px 9px;resize:vertical}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 2px var(--teal-soft)}
+.field-error{color:var(--red);font-size:11.5px}
+.form-hint{font-size:11.5px;color:var(--faint)}
+.result-ok{color:var(--green);font-weight:600}.result-bad{color:var(--red);font-weight:600}
+.imp-box{background:#f5f8f7;border:1px solid var(--line);border-radius:4px;padding:10px 12px;font-size:12.5px;color:var(--muted);margin-top:9px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.seg button{border:0;background:#fff;padding:6px 10px;font-size:12px;cursor:pointer;color:var(--muted);border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--navy);color:#fff}
+.toast-root{position:fixed;right:16px;bottom:16px;z-index:200;display:flex;flex-direction:column;gap:7px}
+.toast{background:var(--navy);color:#fff;padding:10px 13px;border-radius:4px;font-size:12.5px;max-width:380px;border-left:3px solid var(--green)}
+.toast.error{border-left-color:var(--red)}
+.loading{display:flex;gap:9px;color:var(--muted);padding:40px;justify-content:center;font-size:13px;align-items:center}
+.spin{width:17px;height:17px;border:2px solid var(--line);border-top-color:var(--teal);border-radius:50%;animation:rot .8s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.phase-card{background:#fff;border:1px dashed #c4d2ce;border-radius:6px;padding:22px;margin-bottom:15px}
+.phase-card .ph-mod{font:700 11px var(--font-mono);letter-spacing:.12em;color:var(--teal)}
+.phase-card h3{font:600 19px var(--font-disp);color:var(--navy);margin:6px 0}
+.phase-card p{color:var(--muted);font-size:13px;margin:6px 0 0}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:3px 13px;font-size:12.5px}
+.kv dt{color:var(--faint)}.kv dd{margin:0}
+.status-card{border-radius:6px;padding:14px;border:1px solid var(--line);background:#fff}
+.status-card .st-t{font:600 13px var(--font-disp);color:var(--navy)}
+.status-card .st-b{font-size:12.5px;color:var(--muted);margin-top:5px}
+.status-card.unknown{border-left:3px solid var(--amber)}
+.portal-notice{border:1px solid var(--line);border-left:3px solid var(--green);border-radius:4px;padding:10px 12px;margin-bottom:9px;font-size:13px}
+.portal-notice .pn-t{font-weight:600;color:var(--navy)}
+.portal-notice .pn-m{font-size:11.5px;color:var(--faint);margin-top:2px}
+@media (max-width:1020px){.grid-2{grid-template-columns:1fr}}
+@media (max-width:900px){
+  .sidebar{transform:translateX(-100%);transition:transform .18s ease}
+  .sidebar.open{transform:none}.main{margin-left:0}.hamburger{display:inline-flex}.view{padding:13px}
+}
+</style>
+</head>
+<body>
+<div class="login-wrap" id="loginWrap">
+  <div class="login-card">
+    <div class="lagoon"></div>
+    <h1>IslandResilience AI</h1>
+    <p class="sub">ESG-driven decision support for resilient electricity and water infrastructure — American Samoa (Phase 1 working prototype).</p>
+    <div class="demo-cred">
+      <b>Automatic demo sign-in failed?</b> Use any account below — password <span class="mono">Demo2026!</span><br>
+      <span class="mono">executive@demo.islandresilience.ai</span> ·
+      <span class="mono">engineer@demo.islandresilience.ai</span> ·
+      <span class="mono">planner@demo.islandresilience.ai</span> ·
+      <span class="mono">resident@demo.islandresilience.ai</span>
+    </div>
+    <p class="form-hint" style="margin:12px 0 0">All resilience indicators in this prototype are synthetic. Geography is real public data. Nothing here is an official emergency information service.</p>
+  </div>
+</div>
+<div class="app" id="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="4" fill="#16395c"/><circle cx="16" cy="19" r="7" fill="#0e7c7b"/><path d="M4 19h24" stroke="#f2f5f4" stroke-width="2"/><circle cx="22" cy="9" r="3" fill="#f0b429"/></svg>
+      <div><h1>IslandResilience AI</h1><span>Resilience &amp; ESG decision support</span></div>
+    </div>
+    <nav class="nav" id="nav">
+      <div class="grp">Command</div>
+      <a href="#command_center" data-nav="command_center">Executive ESG Command Center<span class="tag">PREVIEW</span></a>
+      <div class="grp">Intelligence &amp; planning</div>
+      <a href="#map" data-nav="map">Village Disaster Intelligence Map</a>
+      <a href="#simulator" data-nav="simulator">Resilience Simulator<span class="tag">PH 2</span></a>
+      <a href="#allocation" data-nav="allocation">Emergency Resource Allocation<span class="tag">PH 3</span></a>
+      <a href="#planner" data-nav="planner">Infrastructure Planner<span class="tag">PH 4</span></a>
+      <div class="grp">Business &amp; ESG</div>
+      <a href="#optimizer" data-nav="optimizer">ESG Portfolio Optimizer<span class="tag">PH 5</span></a>
+      <a href="#raas" data-nav="raas">RaaS Financial Model<span class="tag">PH 5</span></a>
+      <a href="#monitoring" data-nav="monitoring">ESG Impact Monitoring<span class="tag">PH 6</span></a>
+      <a href="#roadmap" data-nav="roadmap">Pipeline &amp; Roadmap<span class="tag">PH 6</span></a>
+      <div class="grp">Trust</div>
+      <a href="#governance" data-nav="governance">Governance &amp; Administration</a>
+      <a href="#portal" data-nav="portal">Community Information Portal</a>
+    </nav>
+    <div class="side-foot">SQLite demo database · role-based access<br>Geography: real public data · Indicators: synthetic demo</div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <h2 id="pageTitle">Village Disaster Intelligence Map</h2>
+      <div class="topbar-right">
+        <span class="chip pr-synthetic" title="Geography is real public data (US Census 2020, GeoNames, geoBoundaries). Indicators and statuses are synthetic demo values."><i class="sw"></i>REAL GEOGRAPHY · DEMO INDICATORS</span>
+        <span class="userchip"><span class="name" id="userName"></span><span class="chip role" id="userRole"></span></span>
+        <label class="check" style="gap:5px">Demo role
+          <select class="select" id="demoRole" style="height:28px;font-size:12px" title="Switch demo account without a password">
+            <option value="engineer">Engineer</option>
+            <option value="executive">Executive</option>
+            <option value="planner">Planner</option>
+            <option value="resident">Resident</option>
+            <option value="admin">Admin</option>
+          </select>
+        </label>
+      </div>
+    </header>
+    <main id="view" class="view" aria-live="polite"><div class="loading"><span class="spin"></span>Loading…</div></main>
+    <footer class="footer">IslandResilience AI — Phase 1 working prototype. <b>DEMONSTRATION MODE — NOT AN OFFICIAL EMERGENCY INFORMATION SERVICE.</b> Village geography &amp; populations: real public data (US Census 2020, GeoNames, geoBoundaries). Indicators &amp; statuses: synthetic. Screening outputs are decision-support indices, not validated outage predictions.</footer>
+  </div>
+</div>
+<div id="modalRoot"></div>
+<div id="toastRoot" class="toast-root"></div>
+<script src="/vendor/chart.umd.js"></script>
+<script src="/vendor/leaflet.js"></script>
+<script>
+"use strict";
+const $ = (s, el) => (el || document).querySelector(s);
+const $$ = (s, el) => Array.from((el || document).querySelectorAll(s));
+const esc = (v) => String(v == null ? '' : v).replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+const viewEl = $('#view');
+const fmt = (v, unit) => v == null ? '<span class="form-hint">no data</span>' : esc(typeof v === 'number' ? Math.round(v * 100) / 100 : v) + (unit ? ' <span class="form-hint">' + unit + '</span>' : '');
+let user = null, meta = null, map = null, weights = null, charts = {};
+
+async function api(path, opts){
+  opts = opts || {};
+  let res;
+  try { res = await fetch('/api' + path, opts); }
+  catch (e) { throw new Error('Network error — the demo server is not reachable.'); }
+  const ct = res.headers.get('content-type') || '';
+  const body = ct.includes('json') ? await res.json() : await res.text();
+  if (!res.ok){
+    const err = new Error((body && body.error) || ('Request failed with status ' + res.status));
+    err.status = res.status; err.fields = body && body.fields; throw err;
+  }
+  return body;
+}
+const post = (p, d) => api(p, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(d || {}) });
+
+function toast(msg, kind){
+  const t = document.createElement('div');
+  t.className = 'toast ' + (kind || '');
+  t.textContent = msg;
+  $('#toastRoot').appendChild(t);
+  setTimeout(() => t.remove(), 5000);
+}
+function closeModal(){ $('#modalRoot').innerHTML = ''; }
+function openDrawer(html){
+  $('#modalRoot').innerHTML = '<div class="overlay drawer-mode"><div class="drawer">' + html + '</div></div>';
+  const ov = $('#modalRoot .overlay');
+  ov.addEventListener('mousedown', (e) => { if (e.target === ov) closeModal(); });
+}
+function killCharts(){ Object.values(charts).forEach((c) => { try{ c.destroy(); }catch(e){} }); charts = {}; }
+function loadingHTML(){ return '<div class="loading"><span class="spin"></span>Loading…</div>'; }
+
+/* ---------------- auth ---------------- */
+async function demoLogin(role){
+  const r = await post('/auth/demo-login', { role });
+  user = r.user;
+  $('#userName').textContent = user.name;
+  $('#userRole').textContent = user.role;
+  const sel = $('#demoRole');
+  if (sel) sel.value = user.role;
+  return r;
+}
+$('#demoRole').onchange = async (e) => {
+  try { await demoLogin(e.target.value); toast('Signed in as ' + user.role + ' (demo, no password).'); route(); }
+  catch (err){ toast(err.message, 'error'); }
+};
+$('#hamburger').onclick = () => $('#sidebar').classList.toggle('open');
+async function enterApp(){
+  $('#loginWrap').style.display = 'none';
+  $('#app').classList.add('on');
+  $('#userName').textContent = user.name;
+  $('#userRole').textContent = user.role;
+  if (!meta) meta = await api('/meta');
+  route();
+}
+
+/* ---------------- router ---------------- */
+const TITLES = { command_center:'Executive ESG Command Center', map:'Village Disaster Intelligence Map', simulator:'Electricity & Water Resilience Simulator', allocation:'Emergency Resource Allocation', planner:'PV+BESS & Water Infrastructure Planner', optimizer:'ESG Investment Portfolio Optimizer', raas:'RaaS Business Model & Financial Analysis', monitoring:'ESG Performance & Impact Monitoring', roadmap:'Project Pipeline & Five-Year Roadmap', governance:'Governance, Reporting & Administration', portal:'Community Information Portal' };
+const PHASES = {
+  command_center:['Phase 4–5','Portfolio KPIs, investment charts and roadmap visuals land in Phases 4–5 once the simulator, planner and financial model feed them.'],
+  simulator:['Phase 2','Hourly electricity & water balance model (Modules C2–C4): cyclone / flood / grid-failure / fuel-disruption scenarios, PV+BESS dispatch with battery state of charge, water storage depletion and baseline-vs-intervention comparisons.'],
+  allocation:['Phase 3','Emergency resource allocation (Module D): inventory assignment to villages, weighted shortage minimization with a transparent, clearly-labeled heuristic, equity indicators and downloadable plans.'],
+  planner:['Phase 4','PV+BESS & water investment planner (Module E): candidate projects, engineering comparisons, investment ranking and sensitivity analysis.'],
+  optimizer:['Phase 5','ESG portfolio optimizer (Module F): budget-constrained select/reject optimization with configurable ESG weights and four scenarios A–D.'],
+  raas:['Phase 5','RaaS financial model (Module G): NPV, IRR, payback, revenue by business line and risk scenarios with auditable, deterministic formulas.'],
+  monitoring:['Phase 6','ESG monitoring (Module H): KPI definitions, observations, verification status and evidence tracking.'],
+  roadmap:['Phase 6','Five-year roadmap (Module I): milestones, dependencies, Gantt timeline and project status dashboards.']
+};
+const MOD_OF = { command_center:'A', simulator:'C', allocation:'D', planner:'E', optimizer:'F', raas:'G', monitoring:'H', roadmap:'I' };
+const MODULE_LISTS = {
+  simulator: { title:'Module C — 시나리오 사양 (Phase 2 예정)', head:['재해 유형','시간 범위','비교 시나리오'], rows:[
+    ['사이클론 / 홍수 / 계통 고장 / 연료 공급 차단','6–168시간, 시간 단계','S0 현황 · S1 디젤 · S2 PV · S3 PV+BESS(아일랜딩) · S4 PV+BESS+디젤 · S5 +복원력 수처리'],
+    ['전력 모델: PV·발전기·BESS 방전 합계 vs 임계 수요','시간당 SOC 추적, 효율·최소 SOC 제약','미공급전력 kWh, 연속 서비스 시간'],
+    ['수자원 모델: 저장량 + 펌프 유입 − 수요 − 손실','펌프 전력·처리 능력 제약','미충족 필수수요 m³, 고갈까지 시간, 영향 인구']]},
+  planner: { title:'Module E — 투자 프로젝트 유형 (Phase 4 예정)', head:['프로젝트 유형','주요 입력'], rows:[
+    ['PV+BESS 커뮤니티 마이크로그리드','PV kW · BESS kWh/kW · 발전기 kW'],
+    ['수펌프 백업 전력 / 커뮤니티 허브','수조 m³ · 펌프 kW · 서빙 마을'],
+    ['디젤-PV-BESS 하이브리드 / 핵심시설 백업','연료 가정 · 임계부하 kW'],
+    ['전력·수자원 모니터링 인프라','계측 범위']]},
+  optimizer: { title:'Module F — ESG 차원 및 포트폴리오 시나리오 (Phase 5 예정)', head:['차원','세부 지표','시나리오'], rows:[
+    ['환경 (E)','디젤 절감 · CO2e 감축 · 재생에너지 비중','A 최저비용'],
+    ['사회 (S)','임계 전력 연속성 · 필수수 가용성 · 형평성','B 최대 사회 복원력'],
+    ['거버넌스 (G)','데이터 검증 · 승인 투명성 · 주민 협의','C 최대 환경 편익 / D 균형']]},
+  raas: { title:'Module G — RaaS 사업 모델 (Phase 5 예정)', head:['사업 모델','주요 산출'], rows:[
+    ['EPC / EPC+장기 O&M','현금 흐름 · NPV · IRR · 회수기간'],
+    ['가용성 기반 복원력 서비스','사업부문별 매출 · 영업이익률'],
+    ['모니터링 구독 / 컨설팅','민감도: CAPEX·O&M·연료가·배터리 열화 · 손익분기']]},
+  monitoring: { title:'Module H — ESG KPI 프레임 (Phase 6 예정)', head:['카테고리','지표 예시','검증 항목'], rows:[
+    ['환경 H1','실제 디젤 소비 · 재생발전량 · 검증 CO2e','정의·단위·산식'],
+    ['사회 H2','서비스 가용성 · 필수수 연속성','출처·담당자·기간'],
+    ['거버넌스 H3','데이터 완전성 · 승인·주민협의','기준값·목표·실적·증빙']]},
+  roadmap: { title:'Module I — 5개년 로드맵 (기본 예시, Phase 6 예정)', head:['연도','단계'], rows:[
+    ['2027','기초 데이터·타당성 조사'],['2028','첫 커뮤니티 복원력 허브 파일럿'],['2029','성과 모니터링·평가'],['2030','지역 인프라 확장'],['2031','장기 서비스 계약·포트폴리오 확장']]}
+};
+async function renderPreview(name){
+  const [ph, what] = PHASES[name];
+  $('#pageTitle').textContent = TITLES[name] + ' (Phase 1 미리보기)';
+  $$('#nav a').forEach((a) => a.classList.toggle('active', a.dataset.nav === name));
+  $('#sidebar').classList.remove('open');
+  let o = null;
+  try { o = await api('/preview/overview'); } catch (e) {}
+  let html =
+    '<div class="banner"><span><b>' + esc(ph) + ' 예정 모듈 (Module ' + (MOD_OF[name] || '-') + ').</b> ' + esc(what) +
+    ' 아래는 Phase 1에 이미 수집된 <b>실제 데이터 기반 미리보기</b>입니다.</span></div>' +
+    '<div class="phase-card"><div class="ph-mod">MODULE ' + (MOD_OF[name] || '-') + ' · ' + esc(ph) + ' · PLANNED</div>' +
+    '<h3>' + esc(TITLES[name]) + '</h3><p>' + esc(what) + '</p></div>';
+  if (o){
+    html += '<div class="kpis">' +
+      '<div class="kpi"><div class="k-label">Villages (REAL · Census 2020)</div><div class="k-value">' + o.villages + '</div><div class="k-sub">총 인구 ' + Number(o.population).toLocaleString('en-US') + '명</div></div>' +
+      '<div class="kpi"><div class="k-label">Quality-screened subset</div><div class="k-value">' + o.subset + '</div><div class="k-sub">데모 분석 대상 마을</div></div>' +
+      '<div class="kpi"><div class="k-label">Critical facilities</div><div class="k-value">' + o.facilities + '</div><div class="k-sub">데모 시설 레코드</div></div>' +
+      '<div class="kpi"><div class="k-label">Assets tracked</div><div class="k-value">' + (o.electricityAssets + o.waterAssets) + '</div><div class="k-sub">전력 ' + o.electricityAssets + ' · 수자원 ' + o.waterAssets + '</div></div>' +
+      '<div class="kpi"><div class="k-label">Disaster events</div><div class="k-value">' + o.events.length + '</div><div class="k-sub">TC Gita 실제 이벤트 포함</div></div>' +
+      '</div>';
+  }
+  if (name === 'command_center'){
+    html += '<div class="grid-2" style="align-items:start">' +
+      '<div class="card"><div class="card-head"><h3>Screening distribution (live)</h3><a class="btn small ghost" href="#map">Open map</a></div><div class="chart-box" style="position:relative;height:240px"><canvas id="chPrev"></canvas></div></div>' +
+      '<div class="card"><div class="card-head"><h3>Historical events</h3><span class="hint">real event + demo window</span></div>' +
+      '<div class="table-wrap"><table class="tbl"><thead><tr><th>Event</th><th>Type</th><th>Date</th><th>Provenance</th></tr></thead><tbody>' +
+      (o ? o.events.map((e) => '<tr><td>' + esc(e.event_name) + '</td><td>' + esc(e.event_type) + '</td><td class="mono">' + esc(e.event_date || '') + '</td><td><span class="chip pr-' + esc(e.data_status) + '"><i class="sw"></i>' + (e.data_status === 'observed' ? 'REAL event' : 'demo values') + '</span></td></tr>').join('') : '') +
+      '</tbody></table></div></div></div>';
+  }
+  if (name === 'allocation' && o){
+    html += '<div class="card"><div class="card-head"><h3>Emergency resource inventory (Module D 대상 데이터)</h3><span class="hint">synthetic demo inventory — 이미 DB에 적재됨</span></div>' +
+      '<div class="table-wrap"><table class="tbl"><thead><tr><th>Type</th><th>Name</th><th class="num">Qty</th><th>Capacity</th><th>Location</th><th>Availability</th><th>Transport</th></tr></thead><tbody>' +
+      o.resources.map((r) => '<tr><td class="mono">' + esc(r.resource_type) + '</td><td class="cell-main">' + esc(r.name) + '</td><td class="mono">' + r.quantity + '</td><td>' + esc(r.capacity_note) + '</td><td>' + esc(r.location) + '</td><td>' + esc(r.availability) + '</td><td>' + esc(r.transport_restriction) + '</td></tr>').join('') +
+      '</tbody></table></div><div class="card-body form-hint">Phase 3에서 이 인벤토리를 마을/지역 허브에 배분하는 가중 최소화 알고리즘(투명 휴리스틱으로 명시)이 추가됩니다.</div></div>';
+  }
+  const spec = MODULE_LISTS[name];
+  if (spec){
+    html += '<div class="card"><div class="card-head"><h3>' + esc(spec.title) + '</h3><span class="hint">모듈 사양 요약</span></div>' +
+      '<div class="table-wrap"><table class="tbl"><thead><tr>' + spec.head.map((h) => '<th>' + esc(h) + '</th>').join('') + '</tr></thead><tbody>' +
+      spec.rows.map((r) => '<tr>' + r.map((c) => '<td>' + esc(c) + '</td>').join('') + '</tr>').join('') +
+      '</tbody></table></div></div>';
+  }
+  viewEl.innerHTML = html;
+  if (name === 'command_center' && window.Chart){
+    try {
+      const sc = await api('/screening');
+      const d = sc.distribution;
+      charts.prev = new Chart($('#chPrev'), { type:'bar', data:{
+        labels:['High concern (65+)','Elevated (45-64)','Moderate (25-44)','Lower (<25)'],
+        datasets:[{ data:[d.high, d.elevated, d.moderate, d.lower], backgroundColor:['#b3261e','#e07b2a','#e8b83a','#1a7f79'], borderRadius:2 }] },
+        options:{ indexAxis:'y', plugins:{ legend:{ display:false } }, scales:{ x:{ beginAtZero:true, ticks:{ precision:0 } }, y:{ grid:{ display:false } } }, responsive:true, maintainAspectRatio:false } });
+    } catch (e) {}
+  }
+}
+
+/* ---------------- MAP (Module B) ---------------- */
+const LAYERS = [
+  { key:'score', label:'Vulnerability screening index', unit:'/100', invert:false },
+  { key:'gita2018_min_ratio', label:'TC Gita 2018 light disruption (min ratio)', unit:'ratio', invert:true },
+  { key:'gita2018_rec_days', label:'TC Gita 2018 recovery duration', unit:'days', invert:false },
+  { key:'flood2025_min_ratio', label:'2025 flood-window light ratio', unit:'ratio', invert:true },
+  { key:'population', label:'Population', unit:'persons', invert:false },
+  { key:'share_65plus', label:'Elderly share (65+)', unit:'share', invert:false },
+  { key:'dist_power_node_km', label:'Distance to power node', unit:'km', invert:false },
+  { key:'EXP_flood', label:'Flood exposure index', unit:'index', invert:false },
+  { key:'pv_capacity_kw', label:'PV capacity (2018 estimate)', unit:'kW', invert:false },
+  { key:'pv_recent_capacity_kw', label:'PV capacity (later satellite detections)', unit:'kW', invert:false }
+];
+const ramp = ['#1a7f79', '#8ab84f', '#e8b83a', '#e07b2a', '#b3261e'];
+function colorFor(t){ return ramp[Math.min(ramp.length - 1, Math.floor(t * ramp.length))]; }
+
+async function renderMap(){
+  const [geo, screening, villages] = await Promise.all([api('/villages/geojson'), api('/screening'), api('/villages')]);
+  if (!weights) weights = Object.assign({}, meta.defaultWeights);
+  const scoreById = {}; screening.results.forEach((r) => scoreById[r.village_id] = r);
+  const indBy = {}; villages.rows.forEach((r) => indBy[r.village_id] = r);
+
+  viewEl.innerHTML =
+    '<div class="banner"><span><b>Real geography, demo indicators.</b> Village names, 2020 census populations and coordinates are real public data (US Census 2020 · GeoNames · geoBoundaries). Resilience indicators are synthetic demo values. The screening index is a <b>decision-support ranking</b>, not a validated outage probability.</span><button class="btn" id="mapDismiss">Got it</button></div>' +
+    '<div class="toolbar">' +
+      '<label class="check">Map layer <select class="select" id="layerSel">' + LAYERS.map((l, i) => '<option value="' + i + '">' + esc(l.label) + '</option>').join('') + '</select></label>' +
+      '<span class="spacer"></span><a class="btn small" href="/api/export/screening?format=csv">Download screening (CSV)</a>' +
+      '<a class="btn small" href="/api/export/villages?format=xlsx">Village indicators (Excel)</a>' +
+    '</div>' +
+    '<div class="grid-2" style="grid-template-columns:2fr 1fr;align-items:start">' +
+      '<div class="card" style="margin:0"><div class="card-body" style="padding:8px"><div id="map"></div></div></div>' +
+      '<div>' +
+        '<div class="card" style="margin-bottom:12px"><div class="card-head"><h3>Screening weights</h3><span class="hint">adjustable</span></div><div class="card-body">' +
+          '<div class="weights" id="weightRows">' + Object.keys(meta.screeningDimensions).map((k) =>
+            '<div class="w-row"><span title="' + esc(meta.screeningDimensions[k].description) + '">' + esc(meta.screeningDimensions[k].label) + '</span>' +
+            '<input type="range" min="0" max="10" step="1" value="' + weights[k] + '" data-w="' + k + '">' +
+            '<span class="w-val" data-wv="' + k + '">' + weights[k] + '</span></div>').join('') + '</div>' +
+          '<button class="btn primary small" id="wApply" style="margin-top:9px">Apply &amp; recalculate</button>' +
+          '<p class="form-hint" style="margin:9px 0 0">Min-max normalized across villages with data; missing inputs are excluded and flagged — never imputed. Output is a relative screening index.</p>' +
+        '</div></div>' +
+        '<div class="card" style="margin:0"><div class="card-head"><h3>Screening distribution</h3><span class="hint">' + screening.results.length + ' villages</span></div><div class="card-body" style="position:relative;height:200px"><canvas id="chDist"></canvas></div></div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="card" style="margin-top:15px"><div class="card-head"><h3>Villages</h3><span class="hint">click a row for the full profile</span></div>' +
+      '<div class="table-wrap"><table class="tbl"><thead><tr><th>Village</th><th>District</th><th class="mono">Population</th><th class="mono">Screening</th><th>Band</th><th>Data quality</th></tr></thead><tbody>' +
+      screening.results.slice(0, 12).map((r) =>
+        '<tr data-vill="' + r.village_id + '" style="cursor:pointer"><td class="cell-main">' + esc(r.village_name) + ' <span class="mono form-hint">' + esc(r.village_code) + '</span></td>' +
+        '<td>' + esc(r.district_label) + '</td><td class="mono">' + (r.population == null ? '—' : r.population) + '</td>' +
+        '<td class="mono">' + (r.score == null ? '—' : r.score) + '</td><td>' + esc(r.band) + '</td>' +
+        '<td>' + (r.data_quality.missing_inputs.length ? '<span class="chip pr-synthetic"><i class="sw"></i>' + r.data_quality.missing_inputs.length + ' missing</span>' : '<span class="chip pr-verified_operational"><i class="sw"></i>complete</span>') + '</td></tr>').join('') +
+      '</tbody></table></div><div class="pager">showing top 12 of ' + screening.results.length + ' — full list on the map</div></div>';
+  $('#mapDismiss').onclick = (e) => e.target.closest('.banner').remove();
+  $$('#weightRows input').forEach((inp) => inp.oninput = () => { $('[data-wv="' + inp.dataset.w + '"]').textContent = inp.value; });
+  $('#wApply').onclick = async () => {
+    $$('#weightRows input').forEach((inp) => weights[inp.dataset.w] = Number(inp.value));
+    toast('Recalculating screening index…');
+    route();
+  };
+  if (window.Chart){
+    const d = screening.distribution;
+    charts.dist = new Chart($('#chDist'), { type:'bar', data:{
+      labels:['High concern (65+)','Elevated (45-64)','Moderate (25-44)','Lower (<25)','Insufficient data'],
+      datasets:[{ data:[d.high, d.elevated, d.moderate, d.lower, d.insufficient], backgroundColor:['#b3261e','#e07b2a','#e8b83a','#1a7f79','#8fa3ad'], borderRadius:2 }] },
+      options:{ indexAxis:'y', plugins:{ legend:{ display:false } }, scales:{ x:{ beginAtZero:true, ticks:{ precision:0 } }, y:{ grid:{ display:false } } }, responsive:true, maintainAspectRatio:false } });
+  }
+  if (window.L){
+    if (map){ map.remove(); map = null; }
+    map = L.map('map').setView([-14.285, -170.70], 10);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution:'&copy; OpenStreetMap contributors' }).addTo(map);
+    const li = Number($('#layerSel').value || 0);
+    const layerDef = LAYERS[li];
+    let vals = layerDef.key === 'score' ? screening.results.map((r) => r.score).filter((x) => x != null) : villages.rows.map((r) => r[layerDef.key]).filter((x) => x != null);
+    const vmin = Math.min(...vals), vmax = Math.max(...vals);
+    L.geoJSON(geo, {
+      style: (f) => {
+        let v = layerDef.key === 'score' ? (scoreById[f.properties.village_id] || {}).score : indBy[f.properties.village_id] ? indBy[f.properties.village_id][layerDef.key] : null;
+        if (v == null) return { color:'#5d7280', weight:1, fillOpacity:.12, dashArray:'3 3', fillColor:'#8fa3ad' };
+        const t = vmax > vmin ? (v - vmin) / (vmax - vmin) : 0.5;
+        return { color:'#0f2a43', weight:1, fillColor:colorFor(t), fillOpacity:.78 };
+      },
+      onEachFeature: (f, layer) => {
+        let v = layerDef.key === 'score' ? (scoreById[f.properties.village_id] || {}).score : indBy[f.properties.village_id] ? indBy[f.properties.village_id][layerDef.key] : null;
+        layer.bindTooltip('<b>' + esc(f.properties.village_name) + '</b><br>' + esc(layerDef.label) + ': ' + (v == null ? 'no data' : Math.round(v * 100) / 100 + ' ' + layerDef.unit));
+        layer.on('click', () => villageDrawer(f.properties.village_id));
+      }
+    }).addTo(map);
+    api('/counties/geojson').then((cj) => {
+      L.geoJSON(cj, { style: { color:'#0f2a43', weight:1.6, dashArray:'6 4', fill:false },
+        onEachFeature: (f, l) => l.bindTooltip('<b>' + esc(f.properties.shapeName) + '</b> County — real boundary (geoBoundaries)') }).addTo(map);
+    }).catch(() => {});
+    const legend = L.control({ position:'bottomright' });
+    legend.onAdd = () => {
+      const div = L.DomUtil.create('div', 'map-legend');
+      div.innerHTML = '<div class="lg-title">' + esc(layerDef.label) + '</div>' +
+        ramp.map((c, i) => '<div class="lg-row"><span class="lg-sw" style="background:' + c + '"></span>' +
+          Math.round(vmin + (vmax - vmin) * ((ramp.length - 1 - i) / (ramp.length - 1)) * 10) / 10 + ' – ' +
+          Math.round(vmin + (vmax - vmin) * (1 - i / (ramp.length - 1)) * 10) / 10 + '</div>').join('') +
+        '<div class="lg-row" style="color:#8fa3ad">dashed = no data</div>';
+      return div;
+    };
+    legend.addTo(map);
+    $('#layerSel').onchange = () => route();
+  } else {
+    $('#map').innerHTML = '<div class="empty">Map library could not load. The village table shows the same data.</div>';
+  }
+  $$('[data-vill]', viewEl).forEach((tr) => tr.onclick = () => villageDrawer(tr.dataset.vill));
+}
+
+async function villageDrawer(id){
+  const [d, screening] = await Promise.all([api('/villages/' + id), api('/screening')]);
+  const s = screening.results.find((r) => r.village_id == id) || {};
+  const v = d.village, ind = d.indicators;
+  const rows = [
+    ['Population', fmt(v.population, 'persons') + ' <span class="chip pr-observed"><i class="sw"></i>REAL · US Census 2020</span>'],
+    ['TC Gita 2018 min light ratio', fmt(ind.gita2018_min_ratio)],
+    ['TC Gita 2018 recovery days', ind.in_analytical_subset ? fmt(ind.gita2018_rec_days, 'days') : '<span class="form-hint">outside quality-screened subset</span>'],
+    ['2025 flood min light ratio', fmt(ind.flood2025_min_ratio)],
+    ['Median household income (log)', fmt(ind.log_median_hh_income, 'log USD')],
+    ['Adults without high school', fmt(ind.share_lt_hs)],
+    ['Unemployment rate', fmt(ind.unemp_rate)],
+    ['Share 65+', fmt(ind.share_65plus)],
+    ['Distance to power node', fmt(ind.dist_power_node_km, 'km')],
+    ['SIAI (provided index)', fmt(ind.SIAI)],
+    ['Flood exposure EXP_flood', fmt(ind.EXP_flood)],
+    ['PV capacity (2018 estimate)', fmt(ind.pv_capacity_kw, 'kW')],
+    ['PV capacity (later detection)', fmt(ind.pv_recent_capacity_kw, 'kW')],
+    ['Verified water storage', fmt(ind.water_storage_m3, 'm3')],
+    ['Water sources', fmt(ind.water_sources)]
+  ];
+  openDrawer(
+    '<div class="drawer-head"><div><h3 style="font:600 18px var(--font-disp);color:var(--navy)">' + esc(v.village_name) + '</h3>' +
+    '<div style="margin-top:4px;display:flex;gap:5px;flex-wrap:wrap"><span class="chip pr-observed"><i class="sw"></i>population: REAL Census 2020</span>' +
+    '<span class="chip pr-synthetic"><i class="sw"></i>indicators: synthetic demo</span>' +
+    '<span class="chip pr-simulated"><i class="sw"></i>' + esc(v.village_code) + '</span></div></div>' +
+    '<button class="x" onclick="document.getElementById(\'modalRoot\').innerHTML=\'\'">×</button></div>' +
+    '<div class="drawer-body">' +
+    (s.score != null ? '<div class="card" style="margin:0 0 12px"><div class="card-body"><div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font:600 14px var(--font-disp);color:var(--navy)">Screening index</b><span style="font:700 26px var(--font-disp);color:var(--navy)">' + s.score + '<span class="form-hint" style="font-size:12px">/100</span></span></div>' +
+      '<div class="form-hint">' + esc(s.band) + ' — decision-support screening, not an outage probability</div>' +
+      '<div style="margin-top:9px">' + Object.entries(s.dims).map(([k, dd]) =>
+        '<div style="margin-bottom:5px"><div style="display:flex;justify-content:space-between;font-size:11.5px"><span>' + esc(dd.label) + (dd.missing ? ' <span class="form-hint">— missing</span>' : '') + '</span><span class="mono">' + (dd.normalized == null ? '—' : dd.normalized) + ' × w' + dd.weight + '</span></div>' +
+        '<div class="dimbar' + (dd.missing ? ' miss' : '') + '"><i style="width:' + Math.round((dd.normalized || 0) * 100) + '%"></i></div></div>').join('') + '</div></div></div>' : '') +
+    (s.data_quality.missing_inputs.length ? '<div class="banner" style="margin:0 0 12px"><span>Data quality: missing inputs (' + esc(s.data_quality.missing_inputs.join('; ')) + ') are excluded, not imputed.</span></div>' : '') +
+    '<h4 style="font:600 14px var(--font-disp);color:var(--navy);margin:0 0 7px">Village indicators <span class="form-hint" style="font-weight:400">(' + esc(ind.vintage_label || 'synthetic demo vintages') + ')</span></h4>' +
+    '<div class="table-wrap" style="margin-bottom:12px"><table class="tbl"><tbody>' +
+    rows.map(([k, val]) => '<tr><td>' + k + '</td><td class="mono" style="text-align:right">' + val + '</td></tr>').join('') +
+    '</tbody></table></div>' +
+    '<h4 style="font:600 14px var(--font-disp);color:var(--navy);margin:0 0 7px">Assets & facilities (demo)</h4>' +
+    '<div class="table-wrap"><table class="tbl"><tbody>' +
+    d.electricity_assets.map((a) => '<tr><td>Electricity</td><td>' + esc(a.asset_type) + '</td><td class="mono">' + (a.capacity_kw == null ? '—' : a.capacity_kw + ' kW') + '</td></tr>').join('') +
+    d.water_assets.map((a) => '<tr><td>Water</td><td>' + esc(a.asset_type) + '</td><td class="mono">' + (a.storage_m3 == null ? '—' : a.storage_m3 + ' m3') + '</td></tr>').join('') +
+    d.facilities.map((f) => '<tr><td>Facility</td><td>' + esc(f.facility_type) + '</td><td class="mono">' + esc(f.name) + '</td></tr>').join('') +
+    '</tbody></table></div></div>');
+}
+
+/* ---------------- GOVERNANCE ---------------- */
+let govTab = 'overview';
+async function renderGovernance(){
+  viewEl.innerHTML =
+    '<div class="seg" id="govSeg" style="margin-bottom:13px">' +
+      ['overview','audit','users','import','validation'].map((t) => '<button data-tab="' + t + '" class="' + (govTab === t ? 'on' : '') + '">' + t + '</button>').join('') + '</div>' +
+    '<div id="govOut">' + loadingHTML() + '</div>';
+  $$('#govSeg button').forEach((b) => b.onclick = () => { govTab = b.dataset.tab; route(); });
+  await renderGovTab();
+}
+async function renderGovTab(){
+  const el = $('#govOut'); if (!el) return;
+  el.innerHTML = loadingHTML();
+  if (govTab === 'overview'){
+    const o = await api('/gov/overview');
+    const dq = await api('/gov/data-quality');
+    el.innerHTML =
+      '<div class="kpis">' + Object.entries(o.counts).map(([k, v]) =>
+        '<div class="kpi"><div class="k-label">' + esc(k.replace(/_/g, ' ')) + '</div><div class="k-value">' + v + '</div></div>').join('') + '</div>' +
+      '<div class="card"><div class="card-head"><h3>Data completeness by field</h3><span class="hint">' + dq.subsetCount + ' of ' + dq.total + ' villages in the quality-screened subset</span></div>' +
+      '<div class="table-wrap"><table class="tbl"><thead><tr><th>Field</th><th class="mono">Present</th><th class="mono">Missing</th><th>Coverage</th></tr></thead><tbody>' +
+      dq.fields.map((f) => { const pct = Math.round(f.present / f.total * 100); return '<tr><td>' + esc(f.label) + '</td><td class="mono">' + f.present + '</td><td class="mono">' + (f.total - f.present) + '</td><td><div class="dimbar' + (pct < 92 ? ' miss' : '') + '"><i style="width:' + pct + '%"></i></div></td></tr>'; }).join('') +
+      '</tbody></table></div><div class="card-body form-hint">Missing values are excluded from screening and flagged — never imputed.</div></div>' +
+      '<div class="card"><div class="card-head"><h3>Data sources</h3><span class="hint">real public data used in this demo</span></div>' +
+      '<div class="table-wrap"><table class="tbl"><tbody>' +
+      (meta.dataSources || []).map((s) => '<tr><td>' + esc(s.name) + '</td><td class="mono"><a href="' + esc(s.url) + '" target="_blank" rel="noopener">link</a></td><td class="mono">' + esc(s.retrieved) + '</td></tr>').join('') +
+      '</tbody></table></div></div>' +
+      '<div class="card"><div class="card-head"><h3>Admin</h3></div><div class="card-body">' +
+      '<button class="btn danger" id="btnReset">Reset demo data</button><span class="form-hint" style="margin-left:9px">Reseed the demo dataset (admin role only).</span></div></div>';
+    $('#btnReset').onclick = async () => {
+      if (!confirm('Reset the database to the pristine demo dataset? Your changes will be lost.')) return;
+      try { await post('/admin/reset'); toast('Demo data regenerated.'); route(); } catch (e){ toast(e.message, 'error'); }
+    };
+  } else if (govTab === 'audit'){
+    const a = await api('/gov/audit?limit=120');
+    el.innerHTML = '<div class="card"><div class="card-head"><h3>Audit log</h3><a class="btn small" href="/api/export/audit?format=csv">Download CSV</a></div>' +
+      '<div class="table-wrap"><table class="tbl"><thead><tr><th>When</th><th>Actor</th><th>Action</th><th>Entity</th><th>Detail</th></tr></thead><tbody>' +
+      a.rows.map((r) => '<tr><td class="mono">' + esc(r.created_at) + '</td><td>' + esc(r.actor_email) + ' <span class="form-hint">' + esc(r.actor_role) + '</span></td><td>' + esc(r.action) + '</td><td>' + esc(r.entity) + ' ' + esc(r.entity_id) + '</td><td>' + esc(r.detail) + '</td></tr>').join('') +
+      '</tbody></table></div></div>';
+  } else if (govTab === 'users'){
+    const u = await api('/gov/users');
+    el.innerHTML = '<div class="card"><div class="card-head"><h3>Users & role matrix</h3><span class="hint">roles are enforced server-side on every API route</span></div>' +
+      '<div class="table-wrap"><table class="tbl"><thead><tr><th>Email</th><th>Name</th><th>Role</th><th>Active</th></tr></thead><tbody>' +
+      u.rows.map((r) => '<tr><td class="mono">' + esc(r.email) + '</td><td>' + esc(r.name) + '</td><td><span class="chip role">' + esc(r.role) + '</span></td><td>' + (r.active ? 'yes' : 'no') + '</td></tr>').join('') +
+      '</tbody></table></div></div>' +
+      '<div class="card"><div class="card-head"><h3>Page access matrix</h3></div><div class="table-wrap"><table class="tbl"><thead><tr><th>Page</th><th>Roles</th></tr></thead><tbody>' +
+      Object.entries(u.roleMatrix).map(([p, roles]) => '<tr><td>' + esc(p.replace(/_/g, ' ')) + '</td><td class="mono">' + esc(roles.join(', ')) + '</td></tr>').join('') +
+      '</tbody></table></div></div>';
+  } else if (govTab === 'import'){
+    el.innerHTML =
+      '<div class="grid-2">' +
+      '<div class="card"><div class="card-head"><h3>Import villages</h3><a class="btn small" href="/api/export/template/villages">Template CSV</a></div><div class="card-body">' +
+      '<p class="form-hint">Columns: <span class="mono">village_code, village_name, district_label, lat, lon, population</span>. Duplicates are rejected.</p>' +
+      '<div class="toolbar" style="margin-top:9px"><input type="file" class="input" id="fVill" accept=".csv,.xlsx,.xls" style="width:auto;height:30px;font-size:12px"><button class="btn primary" id="upVill" disabled>Upload</button></div><div id="resVill"></div></div></div>' +
+      '<div class="card"><div class="card-head"><h3>Import village indicators</h3><a class="btn small" href="/api/export/template/indicators">Template CSV</a></div><div class="card-body">' +
+      '<p class="form-hint">Match by <span class="mono">village_code</span> or exact <span class="mono">village_name</span>. Numeric fields are range-checked against the data dictionary.</p>' +
+      '<div class="toolbar" style="margin-top:9px"><input type="file" class="input" id="fInd" accept=".csv,.xlsx,.xls" style="width:auto;height:30px;font-size:12px"><button class="btn primary" id="upInd" disabled>Upload</button></div><div id="resInd"></div></div></div></div>';
+    const wire = (fId, bId, ep, rId) => {
+      const f = $(fId), b = $(bId);
+      f.onchange = () => { b.disabled = !f.files.length; };
+      b.onclick = async () => {
+        const fd = new FormData(); fd.append('file', f.files[0]);
+        b.disabled = true;
+        try {
+          const res = await fetch('/api/import/' + ep, { method:'POST', body:fd });
+          const body = await res.json();
+          if (!res.ok) throw new Error(body.error || 'Import failed.');
+          $(rId).innerHTML = '<div class="imp-box">Imported <b class="result-ok">' + body.imported + '</b>, rejected <b class="result-bad">' + body.failed + '</b> of ' + body.total + '.' +
+            (body.failures.length ? '<table class="tbl" style="margin-top:7px"><thead><tr><th>Row</th><th>Name</th><th>Reason</th></tr></thead><tbody>' + body.failures.map((x) => '<tr><td class="mono">' + x.row + '</td><td>' + esc(x.name || '—') + '</td><td>' + esc(x.reason) + '</td></tr>').join('') + '</tbody></table>' : '') + '</div>';
+          toast('Import finished: ' + body.imported + ' imported, ' + body.failed + ' rejected.', body.failed ? 'error' : '');
+        } catch (e){ $(rId).innerHTML = '<div class="banner" style="margin:0">' + esc(e.message) + '</div>'; toast(e.message, 'error'); }
+        b.disabled = false; f.value = '';
+      };
+    };
+    wire('#fVill', '#upVill', 'villages', '#resVill');
+    wire('#fInd', '#upInd', 'indicators', '#resInd');
+  } else if (govTab === 'validation'){
+    el.innerHTML = '<div class="card"><div class="card-head"><h3>Phase 1 validation suite</h3><span class="hint">runs against the live API</span></div><div class="card-body">' +
+      '<button class="btn primary" id="btnTests">Run validation</button><div id="testOut" style="margin-top:11px"></div></div></div>';
+    $('#btnTests').onclick = async () => {
+      $('#testOut').innerHTML = loadingHTML();
+      try {
+        const r = await post('/tests/run');
+        $('#testOut').innerHTML = '<p style="margin:0 0 8px"><b class="' + (r.allPassed ? 'result-ok' : 'result-bad') + '">' + r.passed + '/' + r.total + ' checks passed</b></p>' +
+          '<div class="table-wrap"><table class="tbl"><tbody>' + r.results.map((t) =>
+          '<tr><td style="width:64px"><span class="chip ' + (t.pass ? 'pr-verified_operational' : 'pr-synthetic') + '"><i class="sw"></i>' + (t.pass ? 'PASS' : 'FAIL') + '</span></td><td>' + esc(t.name) + (t.pass ? '' : '<div class="field-error">' + esc(t.detail || '') + '</div>') + '</td></tr>').join('') + '</tbody></table></div>';
+      } catch (e){ $('#testOut').innerHTML = '<div class="banner" style="margin:0">' + esc(e.message) + '</div>'; }
+    };
+  }
+}
+
+/* ---------------- COMMUNITY PORTAL ---------------- */
+let portalLang = 'en';
+const SM = { electric:'Tulaga o le eletise', water:'Tulaga o le vai', notices:'Fa\u2019aaliga aloaia', feedback:'Lafo mai lau manatu', send:'Lafo', select:'Filifili lou nu\u2019u', demo:'Fa\u2019aaliga fa\u2019ata\u2019ita\u2019iga \u2014 e le o se tautua aloaia' };
+async function renderPortal(){
+  const [vl, nt] = await Promise.all([api('/portal/villages'), api('/portal/notices')]);
+  const t = (en, key) => portalLang === 'sm' ? (SM[key] || en) : en;
+  viewEl.innerHTML =
+    '<div class="banner"><span><b>' + t('DEMONSTRATION MODE — NOT AN OFFICIAL EMERGENCY INFORMATION SERVICE.', 'demo') + '</b> ' +
+    'No verified live electricity/water status is connected in the prototype. Emergency locations shown are demo records, not official locations.</span>' +
+    '<span class="seg"><button data-lang="en" class="' + (portalLang === 'en' ? 'on' : '') + '">English</button><button data-lang="sm" class="' + (portalLang === 'sm' ? 'on' : '') + '">Gagana Samoa</button></span></div>' +
+    '<div class="grid-2" style="align-items:start">' +
+      '<div>' +
+        '<div class="card" style="margin-bottom:12px"><div class="card-head"><h3>' + t('Choose your village', 'select') + '</h3></div><div class="card-body">' +
+          '<select class="select" id="pVillSel" style="width:100%"><option value="">— select —</option>' + vl.rows.map((v) => '<option value="' + v.id + '">' + esc(v.village_name) + '</option>').join('') + '</select>' +
+          '<div id="pStatus" style="margin-top:11px"></div></div></div>' +
+        '<div class="card" style="margin-bottom:0"><div class="card-head"><h3>' + t('Official emergency notices', 'notices') + '</h3></div><div class="card-body">' +
+          nt.rows.map((n) => '<div class="portal-notice" style="' + (n.official ? '' : 'border-left-color:var(--amber)') + '"><div class="pn-t">' + esc(n.title) + '</div><div style="margin-top:3px">' + esc(n.body) + '</div><div class="pn-m">' + (n.village_name ? esc(n.village_name) + ' · ' : '') + (n.official ? 'official (verified)' : 'demo content — not verified') + '</div></div>').join('') + '</div></div>' +
+      '</div>' +
+      '<div>' +
+        '<div class="card" style="margin-bottom:12px"><div class="card-head"><h3>' + t('Feedback', 'feedback') + '</h3></div><div class="card-body">' +
+          '<form id="fbForm"><div class="field"><label>' + t('Your message', 'feedback') + '</label><textarea class="input" name="message" rows="3" maxlength="1000" required></textarea><div class="field-error" id="fbErr"></div></div>' +
+          '<button class="btn primary" type="submit">' + t('Send feedback', 'send') + '</button></form></div></div>' +
+        '<div class="card" style="margin-bottom:0"><div class="card-head"><h3>Water & support locations</h3><span class="hint">demo records</span></div><div class="card-body" id="pLocs"><p class="form-hint">Select a village to see its recorded facilities.</p></div></div>' +
+      '</div>' +
+    '</div>';
+  $$('#view [data-lang]').forEach((b) => b.onclick = () => { portalLang = b.dataset.lang; route(); });
+  $('#pVillSel').onchange = async (e) => {
+    const id = e.target.value;
+    if (!id){ $('#pStatus').innerHTML = ''; $('#pLocs').innerHTML = '<p class="form-hint">Select a village.</p>'; return; }
+    $('#pStatus').innerHTML = loadingHTML();
+    try {
+      const d = await api('/portal/village/' + id);
+      $('#pStatus').innerHTML =
+        '<div class="status-card unknown" style="margin-bottom:8px"><div class="st-t">' + t('Electricity status', 'electric') + '</div><div class="st-b">' + esc(d.electricity_status.message) + '</div></div>' +
+        '<div class="status-card unknown"><div class="st-t">' + t('Water status', 'water') + '</div><div class="st-b">' + esc(d.water_status.message) + '</div></div>';
+      $('#pLocs').innerHTML = d.locations.length ? d.locations.map((l) =>
+        '<div class="portal-notice" style="border-left-color:var(--amber)"><div class="pn-t">' + esc(l.name) + '</div><div class="pn-m">' + esc(l.type) + ' · ' + esc(l.note) + '</div></div>').join('')
+        : '<p class="form-hint">No recorded facilities for this village.</p>';
+    } catch (err){ $('#pStatus').innerHTML = '<div class="banner" style="margin:0">' + esc(err.message) + '</div>'; }
+  };
+  $('#fbForm').onsubmit = async (e) => {
+    e.preventDefault();
+    $('#fbErr').textContent = '';
+    const fd = new FormData(e.target);
+    try { await post('/portal/feedback', { message: fd.get('message'), village_id: $('#pVillSel').value ? Number($('#pVillSel').value) : null }); toast('Feedback recorded. Fa\u2019afetai!'); e.target.reset(); }
+    catch (err){ $('#fbErr').textContent = err.message; }
+  };
+}
+
+/* ---------------- route + boot (flat scope — all functions hoisted) ---------------- */
+async function route(){
+  killCharts(); closeModal();
+  if (!user) return;
+  const name = TITLES[location.hash.slice(1)] ? location.hash.slice(1) : 'map';
+  if (name === 'governance' && !['admin','executive','engineer'].includes(user.role)){
+    $('#pageTitle').textContent = TITLES.governance;
+    viewEl.innerHTML = '<div class="banner">Your role (' + esc(user.role) + ') does not have access to the governance console.</div>';
+    return;
+  }
+  $('#pageTitle').textContent = TITLES[name];
+  $$('#nav a').forEach((a) => a.classList.toggle('active', a.dataset.nav === name));
+  $('#sidebar').classList.remove('open');
+  if (!meta) meta = await api('/meta');
+  viewEl.innerHTML = loadingHTML();
+  const views = { map:renderMap, governance:renderGovernance, portal:renderPortal };
+  try { await (views[name] || renderPreview)(name); }
+  catch (e){ viewEl.innerHTML = '<div class="banner">Render error: ' + esc(e.message) + ' — <a href="#" onclick="location.reload()">reload</a></div>'; }
+}
+window.addEventListener('hashchange', route);
+(async () => {
+  $('#app').classList.add('on');
+  try {
+    const me = await api('/auth/me');
+    user = me.user;
+    await enterApp();
+  } catch (e) {
+    try { await demoLogin('engineer'); await enterApp(); }
+    catch (e2) {
+      $('#app').classList.remove('on');
+      $('#loginWrap').style.display = 'flex';
+      $('#view').innerHTML = '';
+    }
+  }
+})();
+</script>
+</body>
+</html>

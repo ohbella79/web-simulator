@@ -1,0 +1,1109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Construction Bid Management System — Demo</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%2314283f'/%3E%3Cpath d='M8 22V10l8-4 8 4v12' fill='none' stroke='%23d9560b' stroke-width='2.4'/%3E%3Cpath d='M12 22v-6h8v6' fill='none' stroke='%23ffffff' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"></noscript>
+<style>
+:root{
+  --ink:#14283f; --ink-2:#1d3654; --ink-3:#0f1e30;
+  --paper:#edf1f4; --card:#ffffff; --line:#d7dfe6; --line-2:#e6ecf1;
+  --text:#24303c; --muted:#5b7085; --faint:#8ba0b2;
+  --blue:#1a56a8; --blue-dark:#14427f; --blue-soft:#e8eff8;
+  --orange:#d9560b; --orange-soft:#fdeee4;
+  --red:#b3261e; --red-soft:#fbe9e7;
+  --amber:#9a6700; --amber-soft:#faf3df;
+  --teal:#0f766e; --teal-soft:#e0f2f0;
+  --green:#177b4b; --green-soft:#e4f3ec;
+  --gray:#5b7085; --gray-soft:#eceff2;
+  --radius:3px;
+  --font-body:'IBM Plex Sans',-apple-system,'Segoe UI',Roboto,sans-serif;
+  --font-disp:'Barlow Condensed','Arial Narrow',sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',monospace;
+  --shadow:0 18px 50px rgba(15,30,48,.28);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font:400 14px/1.5 var(--font-body);color:var(--text);background:var(--paper)}
+a{color:var(--blue)}
+h1,h2,h3,h4{margin:0}
+button{font-family:var(--font-body)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+
+/* ---------- shell ---------- */
+.app{min-height:100vh}
+.sidebar{position:fixed;inset:0 auto 0 0;width:238px;background:var(--ink);color:#b9c9d9;display:flex;flex-direction:column;z-index:60}
+.brand{display:flex;gap:11px;align-items:center;padding:18px 16px;border-bottom:1px solid rgba(255,255,255,.09)}
+.brand svg{flex:0 0 auto}
+.brand h1{font:600 15px/1.15 var(--font-disp);letter-spacing:.06em;text-transform:uppercase;color:#fff}
+.brand span{font-size:10.5px;color:#7e94ab;letter-spacing:.02em}
+.nav{padding:10px 0;flex:1}
+.nav a{display:flex;gap:11px;align-items:center;padding:10px 16px;color:#b9c9d9;text-decoration:none;font-size:13.5px;border-left:3px solid transparent}
+.nav a svg{width:16px;height:16px;opacity:.75;flex:0 0 auto}
+.nav a:hover{background:var(--ink-2);color:#fff}
+.nav a.active{background:var(--ink-2);color:#fff;border-left-color:var(--orange)}
+.nav a.active svg{opacity:1}
+.sidebar-foot{padding:14px 16px;font-size:10.5px;line-height:1.6;color:#7e94ab;border-top:1px solid rgba(255,255,255,.09)}
+.main{margin-left:238px;display:flex;flex-direction:column;min-height:100vh;min-width:0}
+.topbar{height:56px;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:0 22px;position:sticky;top:0;z-index:50}
+.topbar h2{font:600 20px/1 var(--font-disp);letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.topbar-date{font:500 12px var(--font-mono);color:var(--muted)}
+.sample-chip{cursor:help}
+.hamburger{display:none;background:none;border:1px solid var(--line);border-radius:3px;padding:6px 8px;cursor:pointer;color:var(--ink)}
+.view{padding:22px;flex:1;min-width:0}
+.footer{padding:13px 22px;color:var(--faint);font-size:11.5px;border-top:1px solid var(--line);background:var(--card)}
+
+/* ---------- chips (drawing-legend motif) ---------- */
+.chip{display:inline-flex;align-items:center;gap:6px;font:500 11px/1 var(--font-mono);letter-spacing:.02em;padding:4px 8px;border-radius:2px;white-space:nowrap}
+.chip .sw{width:8px;height:8px;background:currentColor;border-radius:1px;flex:0 0 auto}
+.st-pending{color:var(--amber);background:var(--amber-soft)}
+.st-accepted{color:var(--blue);background:var(--blue-soft)}
+.st-declined{color:var(--gray);background:var(--gray-soft)}
+.st-prep{color:var(--teal);background:var(--teal-soft)}
+.st-submitted{color:var(--green);background:var(--green-soft)}
+.st-overdue{color:var(--red);background:var(--red-soft)}
+.st-warn{color:var(--amber);background:var(--amber-soft)}
+.st-neutral{color:var(--muted);background:var(--gray-soft)}
+.prio-high{color:var(--red);background:var(--red-soft)}
+.prio-medium{color:var(--amber);background:var(--amber-soft)}
+.prio-low{color:var(--gray);background:var(--gray-soft)}
+.sev-critical{color:#fff;background:var(--red)}
+.sev-high{color:#fff;background:var(--orange)}
+.sev-medium{color:var(--amber);background:var(--amber-soft)}
+.sev-watch{color:var(--muted);background:var(--gray-soft)}
+.lvl-red{color:#fff;background:var(--red)}
+.lvl-amber{color:#fff;background:var(--orange)}
+.lvl-yellow{color:var(--amber);background:var(--amber-soft)}
+.sample-chip{border:1px solid var(--orange);color:var(--orange);background:var(--orange-soft);font-weight:500}
+
+/* ---------- KPI cards ---------- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:12px;margin-bottom:16px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:13px 15px 11px;position:relative}
+.kpi .k-label{font:600 10.5px/1.25 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.kpi .k-value{font:700 37px/1.02 var(--font-disp);color:var(--ink);margin-top:7px}
+.kpi .k-sub{font-size:11px;color:var(--faint);margin-top:3px}
+.kpi.danger::before,.kpi.warn::before{content:'';position:absolute;left:-1px;top:-1px;bottom:-1px;width:3px;border-radius:2px 0 0 2px}
+.kpi.danger::before{background:var(--orange)}
+.kpi.warn::before{background:var(--amber)}
+.kpi.danger .k-value{color:var(--orange)}
+.kpi.clickable{cursor:pointer}
+.kpi.clickable:hover{border-color:var(--blue)}
+
+/* ---------- cards & grids ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:16px}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 16px;border-bottom:1px solid var(--line-2)}
+.card-head h3{font:600 17px/1.1 var(--font-disp);letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+.card-head .hint{font-size:11.5px;color:var(--faint)}
+.card-body{padding:14px 16px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-wide{display:grid;grid-template-columns:1.55fr 1fr;gap:16px}
+.chart-box{position:relative;height:250px;padding:8px 12px 12px}
+.chart-box canvas{max-width:100%}
+
+/* ---------- toolbar / inputs ---------- */
+.toolbar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-bottom:14px}
+.toolbar .spacer{flex:1}
+.input,.select{height:34px;border:1px solid var(--line);border-radius:3px;padding:0 10px;font:400 13px var(--font-body);background:var(--card);color:var(--text)}
+.input{width:200px}
+textarea.input,textarea.select{height:auto;padding:8px 10px;font-family:var(--font-body);resize:vertical}
+.input:focus,.select:focus,textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 2px var(--blue-soft)}
+label.check{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted);cursor:pointer;height:34px}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-radius:3px;border:1px solid var(--line);background:var(--card);color:var(--text);font:500 12.5px var(--font-body);cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--faint);background:#f7fafc}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.primary:hover{background:var(--blue-dark)}
+.btn.danger{color:var(--red);border-color:#e5b9b5;background:var(--red-soft)}
+.btn.danger:hover{background:#f6dcd9}
+.btn.small{height:27px;padding:0 9px;font-size:11.5px}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--blue)}
+.btn.ghost:hover{background:var(--blue-soft)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn svg{width:14px;height:14px}
+
+/* ---------- tables ---------- */
+.table-wrap{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius)}
+table.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{font:600 10.5px/1.3 var(--font-body);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);background:#f7fafb;white-space:nowrap}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+.tbl tbody tr:last-child td{border-bottom:0}
+.tbl tbody tr:hover td{background:#f6f9fb}
+.tbl .num{text-align:right;font-family:var(--font-mono);font-size:12px;white-space:nowrap}
+.mono{font-family:var(--font-mono);font-size:12px}
+.cell-main{font-weight:600;color:var(--ink)}
+.cell-sub{font-size:11.5px;color:var(--faint);margin-top:1px}
+.actions-cell{white-space:nowrap;text-align:right}
+.empty{padding:30px;text-align:center;color:var(--muted);font-size:13px}
+.pager{display:flex;align-items:center;gap:10px;justify-content:flex-end;padding:10px 12px;font-size:12px;color:var(--muted)}
+
+/* ---------- banner ---------- */
+.banner{display:flex;gap:10px;align-items:flex-start;background:var(--orange-soft);border:1px solid #f0cdb3;color:#7c3a12;padding:10px 14px;border-radius:3px;font-size:12.5px;margin-bottom:16px}
+.banner .btn{margin-left:auto;height:26px;padding:0 9px;font-size:11px}
+
+/* ---------- modal & drawer ---------- */
+.overlay{position:fixed;inset:0;background:rgba(15,30,48,.48);display:flex;align-items:flex-start;justify-content:center;padding:46px 16px;z-index:100;overflow:auto}
+.modal{background:#fff;border-radius:4px;width:100%;max-width:580px;border-top:3px solid var(--blue);box-shadow:var(--shadow)}
+.modal.danger-top{border-top-color:var(--orange)}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;padding:16px 18px 8px}
+.modal-head h3{font:600 19px/1.1 var(--font-disp);letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+.modal-head .x{background:none;border:0;font-size:20px;line-height:1;cursor:pointer;color:var(--faint);padding:2px 6px}
+.modal-body{padding:10px 18px 16px}
+.modal-foot{display:flex;justify-content:flex-end;gap:10px;padding:12px 18px;border-top:1px solid var(--line-2)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-grid .full{grid-column:1/-1}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font:600 10.5px var(--font-body);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.field .req{color:var(--orange)}
+.field input,.field select,.field textarea{height:34px;border:1px solid var(--line);border-radius:3px;padding:0 10px;font:400 13px var(--font-body);color:var(--text);background:#fff}
+.field textarea{height:auto;padding:8px 10px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 2px var(--blue-soft)}
+.field.invalid input,.field.invalid select,.field.invalid textarea{border-color:var(--red)}
+.field-error{color:var(--red);font-size:11.5px;min-height:0}
+.form-hint{font-size:11.5px;color:var(--faint)}
+.overlay.drawer-mode{justify-content:flex-end;padding:0;align-items:stretch}
+.drawer{width:470px;max-width:95vw;height:100%;background:#fff;overflow-y:auto;box-shadow:var(--shadow);border-left:1px solid var(--line);animation:slidein .18s ease}
+.drawer-head{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:16px 18px;display:flex;justify-content:space-between;align-items:flex-start;z-index:2}
+.drawer-body{padding:16px 18px}
+@keyframes slidein{from{transform:translateX(24px);opacity:0}to{transform:none;opacity:1}}
+
+/* ---------- timeline ---------- */
+.tl{position:relative;padding-left:20px;margin:0}
+.tl::before{content:'';position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:var(--line)}
+.tl-item{position:relative;padding:0 0 15px}
+.tl-item::before{content:'';position:absolute;left:-19px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--blue);border:2px solid #fff;box-shadow:0 0 0 1px var(--line)}
+.tl-item.declined::before{background:var(--gray)}
+.tl-item.due::before{background:var(--orange)}
+.tl-item.followup::before{background:var(--teal)}
+.tl-date{font:500 11px var(--font-mono);color:var(--faint)}
+.tl-text{font-size:13px;margin-top:1px}
+.tl-meta{font-size:11px;color:var(--faint)}
+
+/* ---------- toasts ---------- */
+.toast-root{position:fixed;right:18px;bottom:18px;z-index:220;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--ink);color:#fff;padding:11px 14px;border-radius:3px;font-size:13px;max-width:400px;box-shadow:0 10px 30px rgba(15,30,48,.35);border-left:3px solid var(--green);animation:slidein .18s ease}
+.toast.error{border-left-color:var(--red)}
+.toast.warn{border-left-color:var(--amber)}
+
+/* ---------- misc ---------- */
+.loading{display:flex;align-items:center;gap:10px;color:var(--muted);padding:46px;justify-content:center;font-size:13px}
+.spin{width:18px;height:18px;border:2px solid var(--line);border-top-color:var(--blue);border-radius:50%;animation:rot .8s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.rating-dots{font-family:var(--font-mono);letter-spacing:2px;color:var(--blue);font-size:11px}
+.rating-dots .off{color:#c9d5de}
+.score{font:600 15px var(--font-mono);color:var(--ink)}
+.brk{font-size:12px;color:var(--muted);margin-top:5px}
+.brk-row{display:flex;justify-content:space-between;gap:14px;padding:1px 0}
+.brk-row b{font-family:var(--font-mono);font-weight:500;color:var(--ink)}
+.assump{font-size:12.5px;color:var(--muted);margin:0;padding-left:18px}
+.assump li{margin-bottom:5px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:12.5px}
+.kv dt{color:var(--faint)}
+.kv dd{margin:0;color:var(--text)}
+.result-ok{color:var(--green);font-weight:600}
+.result-bad{color:var(--red);font-weight:600}
+.imp-box{background:#f7fafb;border:1px solid var(--line);border-radius:3px;padding:10px 12px;font-size:12.5px;color:var(--muted);margin-top:10px}
+.imp-box b{color:var(--ink)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.seg button{border:0;background:#fff;padding:7px 11px;font-size:12px;cursor:pointer;color:var(--muted);border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--ink);color:#fff}
+
+/* ---------- responsive ---------- */
+@media (max-width:1080px){.grid-2,.grid-wide{grid-template-columns:1fr}}
+@media (max-width:900px){
+  .sidebar{transform:translateX(-100%);transition:transform .2s ease}
+  .sidebar.open{transform:none}
+  .main{margin-left:0}
+  .hamburger{display:inline-flex}
+  .view{padding:14px}
+  .topbar{padding:0 14px}
+}
+@media (max-width:600px){
+  .kpis{grid-template-columns:1fr 1fr}
+  .form-grid{grid-template-columns:1fr}
+  .kpi .k-value{font-size:30px}
+  .topbar-date{display:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="4" fill="#1d3654"/><path d="M8 22V10l8-4 8 4v12" fill="none" stroke="#d9560b" stroke-width="2.4"/><path d="M12 22v-6h8v6" fill="none" stroke="#fff" stroke-width="2"/></svg>
+      <div><h1>Construction Bid<br>Management</h1><span>Subcontractor bid desk · demo</span></div>
+    </div>
+    <nav class="nav" id="nav">
+      <a href="#dashboard" data-nav="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Executive Dashboard</a>
+      <a href="#analytics" data-nav="analytics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Bid Analytics</a>
+      <a href="#subcontractors" data-nav="subcontractors"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Subcontractors</a>
+      <a href="#bids" data-nav="bids"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>Bid Register</a>
+      <a href="#risk" data-nav="risk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Risk Analytics</a>
+      <a href="#decisions" data-nav="decisions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>Decision Support</a>
+      <a href="#data" data-nav="data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>Data &amp; Tests</a>
+    </nav>
+    <div class="sidebar-foot">SQLite demo database · changes persist for this session.<br>All records are synthetic sample data.</div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <h2 id="pageTitle">Executive Dashboard</h2>
+      <div class="topbar-right">
+        <span class="chip sample-chip" title="Every company, project, contact and figure in this app was generated as synthetic sample data for the demo. Nothing is a real company result.">SYNTHETIC DEMO DATA</span>
+        <span class="topbar-date" id="topbarDate"></span>
+      </div>
+    </header>
+    <main id="view" class="view" aria-live="polite"></main>
+    <footer class="footer">Working prototype — project facts, contractor names and bid amounts are real public TxDOT records; contacts, ratings and workflow statuses are synthetic demo values.</footer>
+  </div>
+</div>
+<div id="modalRoot"></div>
+<div id="toastRoot" class="toast-root"></div>
+<script src="/vendor/chart.umd.js"></script>
+<script>
+(() => {
+'use strict';
+/* ---------------- helpers ---------------- */
+const $ = (s, el) => (el || document).querySelector(s);
+const $$ = (s, el) => Array.from((el || document).querySelectorAll(s));
+const esc = (v) => String(v == null ? '' : v).replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+const viewEl = $('#view');
+const money = new Intl.NumberFormat('en-US', { style:'currency', currency:'USD', maximumFractionDigits:0 });
+const moneyShort = new Intl.NumberFormat('en-US', { style:'currency', currency:'USD', notation:'compact', maximumFractionDigits:1 });
+const fmtDate = (d) => d ? new Date(d + 'T00:00:00Z').toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric', timeZone:'UTC' }) : '—';
+const fmtDateTime = (d) => d ? new Date(String(d).replace(' ', 'T') + 'Z').toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit', timeZone:'UTC' }) : '—';
+$('#topbarDate').textContent = new Date().toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+
+const STATUS = {
+  pending:        { label:'Invitation pending',  cls:'st-pending'   },
+  accepted:       { label:'Accepted',            cls:'st-accepted'  },
+  declined:       { label:'Declined',            cls:'st-declined'  },
+  in_preparation: { label:'In preparation',      cls:'st-prep'      },
+  submitted:      { label:'Submitted',           cls:'st-submitted' }
+};
+const STATUS_COLORS = { pending:'#9a6700', accepted:'#1a56a8', declined:'#8ba0b2', in_preparation:'#0f766e', submitted:'#177b4b' };
+const PRIORITIES = ['high','medium','low'];
+
+const state = {
+  subs:{ search:'', trade:'', status:'', page:1 },
+  bids:{ search:'', project:'', status:'', trade:'', overdue:false },
+  riskSev:'all',
+  decisions:{ extDays:7, addSubs:1 },
+  meta:null, banner:true
+};
+let charts = {};
+function killCharts(){ Object.values(charts).forEach((c) => { try{ c.destroy(); }catch(e){} }); charts = {}; }
+function chartOpts(extra){
+  const grid = { color:'#e6ecf1' }, tick = { font:{ family:"'IBM Plex Mono', monospace", size:10 }, color:'#5b7085' };
+  return Object.assign({ responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{ labels:{ font:{ size:11 }, color:'#5b7085', boxWidth:10, boxHeight:10 } } },
+    scales:{ x:{ grid, ticks:tick }, y:{ grid, ticks:tick, beginAtZero:true } } }, extra || {});
+}
+
+/* ---------------- api ---------------- */
+async function api(path, opts){
+  opts = opts || {};
+  let res;
+  try { res = await fetch('/api' + path, opts); }
+  catch (e) { throw new Error('Network error — the demo server is not reachable.'); }
+  const ct = res.headers.get('content-type') || '';
+  const body = ct.includes('json') ? await res.json() : await res.text();
+  if (!res.ok){
+    const err = new Error((body && body.error) || ('Request failed with status ' + res.status));
+    err.status = res.status; err.fields = body && body.fields; throw err;
+  }
+  return body;
+}
+const post = (p, d) => api(p, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(d || {}) });
+const put  = (p, d) => api(p, { method:'PUT',  headers:{'Content-Type':'application/json'}, body:JSON.stringify(d || {}) });
+const del  = (p) => api(p, { method:'DELETE' });
+
+/* ---------------- ui primitives ---------------- */
+function toast(msg, kind){
+  const t = document.createElement('div');
+  t.className = 'toast ' + (kind || '');
+  t.textContent = msg;
+  $('#toastRoot').appendChild(t);
+  setTimeout(() => t.remove(), 4600);
+}
+function closeModal(){ $('#modalRoot').innerHTML = ''; }
+function openModal(html, danger){
+  $('#modalRoot').innerHTML = '<div class="overlay"><div class="modal' + (danger ? ' danger-top' : '') + '" role="dialog" aria-modal="true">' + html + '</div></div>';
+  const ov = $('#modalRoot .overlay');
+  ov.addEventListener('mousedown', (e) => { if (e.target === ov) closeModal(); });
+  document.addEventListener('keydown', escClose);
+  return $('#modalRoot .modal');
+}
+function openDrawer(html){
+  $('#modalRoot').innerHTML = '<div class="overlay drawer-mode"><div class="drawer" role="dialog" aria-modal="true">' + html + '</div></div>';
+  const ov = $('#modalRoot .overlay');
+  ov.addEventListener('mousedown', (e) => { if (e.target === ov) closeModal(); });
+  document.addEventListener('keydown', escClose);
+}
+function escClose(e){ if (e.key === 'Escape') { closeModal(); document.removeEventListener('keydown', escClose); } }
+function confirmDlg(title, message, confirmLabel, danger){
+  return new Promise((resolve) => {
+    const m = openModal(
+      '<div class="modal-head"><h3>' + esc(title) + '</h3><button class="x" aria-label="Close">×</button></div>' +
+      '<div class="modal-body">' + message + '</div>' +
+      '<div class="modal-foot"><button class="btn" data-act="no">Cancel</button>' +
+      '<button class="btn ' + (danger ? 'danger' : 'primary') + '" data-act="yes">' + esc(confirmLabel || 'Confirm') + '</button></div>', danger);
+    m.querySelector('[data-act=no]').onclick = () => { closeModal(); resolve(false); };
+    m.querySelector('[data-act=yes]').onclick = () => { closeModal(); resolve(true); };
+    m.querySelector('.x').onclick = closeModal;
+  });
+}
+function formVals(form){ const o = {}; new FormData(form).forEach((v, k) => { o[k] = typeof v === 'string' ? v.trim() : v; }); return o; }
+function showFieldErrors(scope, fields){
+  $$('.field', scope).forEach((f) => f.classList.remove('invalid'));
+  $$('.field-error', scope).forEach((e) => e.textContent = '');
+  if (!fields) return;
+  Object.entries(fields).forEach(([k, msg]) => {
+    const slot = scope.querySelector('[data-err="' + k + '"]');
+    if (slot){ slot.textContent = msg; const f = slot.closest('.field'); if (f) f.classList.add('invalid'); }
+  });
+}
+function handleFormError(e, scope){
+  if (e.fields && scope) showFieldErrors(scope, e.fields);
+  toast(e.message, 'error');
+}
+function statusChip(s){ const st = STATUS[s] || { label:s, cls:'st-neutral' }; return '<span class="chip ' + st.cls + '"><i class="sw"></i>' + st.label + '</span>'; }
+function prioChip(p){ return '<span class="chip prio-' + esc(p) + '">' + esc(p) + ' priority</span>'; }
+function sevChip(s){ return '<span class="chip sev-' + esc(s) + '">' + esc(s) + '</span>'; }
+function dueCell(r){
+  if (r.status === 'submitted') return '<span class="mono">' + fmtDate(r.due_date) + '</span><div class="cell-sub">submitted ' + fmtDate(r.submitted_date) + '</div>';
+  if (r.status === 'declined') return '<span class="mono">' + fmtDate(r.due_date) + '</span>';
+  if (r.days_overdue > 0) return '<span class="mono">' + fmtDate(r.due_date) + '</span><div><span class="chip st-overdue"><i class="sw"></i>' + r.days_overdue + 'd overdue</span></div>';
+  return '<span class="mono">' + fmtDate(r.due_date) + '</span><div><span class="chip ' + (r.days_left <= 3 ? 'st-warn' : 'st-neutral') + '"><i class="sw"></i>' + r.days_left + 'd left</span></div>';
+}
+function ratingDots(n){
+  let out = '';
+  for (let i = 1; i <= 5; i++) out += '<span class="' + (i <= n ? '' : 'off') + '">●</span>';
+  return '<span class="rating-dots" title="Performance rating ' + n + '/5">' + out + '</span>';
+}
+function loadingHTML(){ return '<div class="loading"><span class="spin"></span>Loading…</div>'; }
+function emptyRow(cols, text){ return '<tr><td colspan="' + cols + '"><div class="empty">' + esc(text) + '</div></td></tr>'; }
+function bannerHTML(text, dismissId){
+  if (!state.banner) return '';
+  return '<div class="banner"><span>' + text + '</span><button class="btn" data-dismiss-banner="' + (dismissId || '') + '">Got it</button></div>';
+}
+function bindBanner(){ const b = $('[data-dismiss-banner]'); if (b) b.onclick = () => { state.banner = false; route(); }; }
+const SAMPLE_NOTE = 'Project facts — names, locations, letting dates, engineer estimates, contractor names and bid amounts — are <b>real public TxDOT bid tabulation records</b> (Texas Open Data Portal). Contacts, ratings and bid-desk workflow statuses are <b>synthetic demo values</b> layered on top.';
+
+/* ---------------- router ---------------- */
+const TITLES = { dashboard:'Executive Dashboard', analytics:'Bid Analytics', subcontractors:'Subcontractor Management', bids:'Bid Register', risk:'Risk Analytics', decisions:'Decision Support', data:'Data Management & Tests' };
+async function route(){
+  killCharts(); closeModal();
+  const raw = (location.hash || '#dashboard').slice(1);
+  const [view, qs] = raw.split('?');
+  const name = TITLES[view] ? view : 'dashboard';
+  $('#pageTitle').textContent = TITLES[name];
+  $$('#nav a').forEach((a) => a.classList.toggle('active', a.dataset.nav === name));
+  $('#sidebar').classList.remove('open');
+  if (qs) applyRouteQuery(name, new URLSearchParams(qs));
+  if (!state.meta){ try { state.meta = await api('/meta'); } catch (e) { viewEl.innerHTML = '<div class="banner">' + esc(e.message) + '</div>'; return; } }
+  viewEl.innerHTML = loadingHTML();
+  try { await VIEWS[name](); }
+  catch (e){ viewEl.innerHTML = '<div class="banner">' + esc(e.message) + '</div>'; }
+}
+function applyRouteQuery(name, p){
+  if (name === 'bids'){
+    state.bids.status = p.get('status') || '';
+    state.bids.overdue = p.get('overdue') === '1';
+    state.bids.project = p.get('project') || '';
+    state.bids.trade = p.get('trade') || '';
+  }
+}
+window.addEventListener('hashchange', route);
+$('#hamburger').onclick = () => $('#sidebar').classList.toggle('open');
+
+/* ============================================================ DASHBOARD */
+async function renderDashboard(){
+  const d = await api('/dashboard');
+  const k = d.kpis;
+  const cards = [
+    ['Total subcontractors', k.totalSubcontractors, k.activeSubcontractors + ' active', '', '#subcontractors'],
+    ['Invitations sent', k.invitationsSent, 'response rate ' + k.responseRate + '%', '', '#bids'],
+    ['Awaiting response', k.pendingResponse, 'no accept / decline yet', '', '#bids?status=pending'],
+    ['Bids accepted', k.accepted, 'agreed to bid', '', '#bids?status=accepted'],
+    ['Bids declined', k.declined, 'with reason on file', '', '#bids?status=declined'],
+    ['In preparation', k.inPreparation, 'proposals being built', '', '#bids?status=in_preparation'],
+    ['Proposals submitted', k.submitted, moneyShort.format(k.submittedValue) + ' total value', '', '#bids?status=submitted'],
+    ['Overdue bids', k.overdue, k.dueSoon + ' more due in ≤3 days', k.overdue > 0 ? 'danger' : '', '#bids?overdue=1']
+  ];
+  viewEl.innerHTML =
+    bannerHTML('<b>Demo environment.</b> ' + SAMPLE_NOTE, 'dash') +
+    '<div class="kpis">' + cards.map(([l, v, sub, tone, href]) =>
+      '<div class="kpi ' + tone + ' clickable" data-go="' + href + '"><div class="k-label">' + esc(l) + '</div><div class="k-value">' + v + '</div><div class="k-sub">' + esc(sub) + '</div></div>').join('') + '</div>' +
+    '<div class="grid-2">' +
+      '<div class="card"><div class="card-head"><h3>Pipeline status mix</h3><span class="hint">all bid records</span></div><div class="chart-box"><canvas id="chStatus"></canvas></div></div>' +
+      '<div class="card"><div class="card-head"><h3>Due-date outlook</h3><span class="hint">open proposals</span></div><div class="chart-box"><canvas id="chBuckets"></canvas></div></div>' +
+      '<div class="card"><div class="card-head"><h3>Top trades by invitations</h3><span class="hint">status breakdown</span></div><div class="chart-box"><canvas id="chTrades"></canvas></div></div>' +
+      '<div class="card"><div class="card-head"><h3>Submitted proposals</h3><span class="hint">last 8 weeks</span></div><div class="chart-box"><canvas id="chTrend"></canvas></div></div>' +
+    '</div>' +
+    '<div class="grid-wide">' +
+      '<div class="card"><div class="card-head"><h3>Overdue bids snapshot</h3><a class="btn small ghost" href="#risk">Open risk analytics</a></div>' +
+        '<div class="table-wrap"><table class="tbl"><thead><tr><th>Subcontractor</th><th>Project</th><th>Trade</th><th>Due</th><th class="num">Days over</th></tr></thead><tbody>' +
+        (d.overdueTop.length ? d.overdueTop.map((b) => '<tr><td class="cell-main">' + esc(b.company_name) + '</td><td>' + esc(b.project_name) + '</td><td>' + esc(b.trade) + '</td><td class="mono">' + fmtDate(b.due_date) + '</td><td class="num" style="color:var(--orange)">' + b.days_overdue + '</td></tr>').join('') : emptyRow(5, 'No overdue bids — the register is on schedule.')) +
+        '</tbody></table></div></div>' +
+      '<div class="card"><div class="card-head"><h3>Recent activity</h3><span class="hint">audit trail</span></div><div class="card-body" style="max-height:330px;overflow:auto">' +
+        '<div class="tl">' + d.activity.map((h) =>
+          '<div class="tl-item ' + (h.field === 'due_date' ? 'due' : h.entity_type === 'followup' ? 'followup' : h.new_value === 'declined' ? 'declined' : '') + '">' +
+          '<div class="tl-date">' + fmtDateTime(h.changed_at) + '</div>' +
+          '<div class="tl-text">' + esc(h.note) + '</div>' +
+          '<div class="tl-meta">' + esc(h.entity_label) + ' · ' + esc(h.actor) + '</div></div>').join('') + '</div></div></div>' +
+    '</div>';
+  bindBanner();
+  $$('[data-go]', viewEl).forEach((el) => el.onclick = () => { location.hash = el.dataset.go; });
+
+  if (window.Chart){
+    Chart.defaults.font.family = "'IBM Plex Sans', sans-serif";
+    const byTrade = d.charts.byTrade;
+    new Chart($('#chStatus'), { type:'doughnut', data:{
+      labels:Object.keys(STATUS).map((s) => STATUS[s].label),
+      datasets:[{ data:Object.keys(STATUS).map((s) => ({ pending:k.pendingResponse, accepted:k.accepted, declined:k.declined, in_preparation:k.inPreparation, submitted:k.submitted })[s]), backgroundColor:Object.values(STATUS_COLORS), borderColor:'#fff', borderWidth:2 }] },
+      options:chartOpts({ plugins:{ legend:{ position:'right', labels:{ font:{ size:11 }, color:'#5b7085', boxWidth:10, boxHeight:10 } } }, scales:{} }) });
+    const bk = d.charts.dueBuckets;
+    new Chart($('#chBuckets'), { type:'bar', data:{
+      labels:Object.keys(bk),
+      datasets:[{ data:Object.values(bk), backgroundColor:Object.keys(bk).map((x) => x === 'Overdue' ? '#d9560b' : '#1a56a8'), borderRadius:2 }] },
+      options:chartOpts({ indexAxis:'y', plugins:{ legend:{ display:false } } }) });
+    new Chart($('#chTrades'), { type:'bar', data:{
+      labels:byTrade.map((t) => t.trade),
+      datasets:[
+        { label:'Submitted', data:byTrade.map((t) => t.submitted), backgroundColor:'#177b4b' },
+        { label:'In prep', data:byTrade.map((t) => t.inPrep), backgroundColor:'#0f766e' },
+        { label:'Accepted', data:byTrade.map((t) => t.accepted), backgroundColor:'#1a56a8' },
+        { label:'Pending', data:byTrade.map((t) => t.pending), backgroundColor:'#c99700' },
+        { label:'Declined', data:byTrade.map((t) => t.declined), backgroundColor:'#8ba0b2' }]
+    }, options:chartOpts({ scales:{ x:{ stacked:true, grid:{ color:'#e6ecf1' }, ticks:{ font:{ size:10 }, color:'#5b7085' } }, y:{ stacked:true, beginAtZero:true, grid:{ color:'#e6ecf1' }, ticks:{ font:{ family:"'IBM Plex Mono', monospace", size:10 }, color:'#5b7085' } } } }) });
+    new Chart($('#chTrend'), { type:'line', data:{
+      labels:d.charts.submissionTrend.map((w) => w.label),
+      datasets:[{ data:d.charts.submissionTrend.map((w) => w.count), borderColor:'#1a56a8', backgroundColor:'#e8eff8', fill:true, tension:.3, pointRadius:3 }] },
+      options:chartOpts({ plugins:{ legend:{ display:false } } }) });
+  }
+}
+
+/* ============================================================ SUBCONTRACTORS */
+async function renderSubs(){
+  viewEl.innerHTML =
+    bannerHTML(SAMPLE_NOTE, 'subs') +
+    '<div class="toolbar">' +
+      '<input class="input" id="subSearch" placeholder="Search company, contact, city…" value="' + esc(state.subs.search) + '">' +
+      '<select class="select" id="subTrade"><option value="">All trades</option>' + state.meta.trades.map((t) => '<option' + (state.subs.trade === t ? ' selected' : '') + '>' + esc(t) + '</option>').join('') + '</select>' +
+      '<select class="select" id="subStatus"><option value="">Any status</option><option value="active"' + (state.subs.status === 'active' ? ' selected' : '') + '>Active</option><option value="inactive"' + (state.subs.status === 'inactive' ? ' selected' : '') + '>Inactive</option></select>' +
+      '<span class="spacer"></span><button class="btn primary" id="btnAddSub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add subcontractor</button>' +
+    '</div><div id="subList">' + loadingHTML() + '</div>';
+  bindBanner();
+  let deb;
+  $('#subSearch').oninput = (e) => { state.subs.search = e.target.value; state.subs.page = 1; clearTimeout(deb); deb = setTimeout(loadSubs, 280); };
+  $('#subTrade').onchange = (e) => { state.subs.trade = e.target.value; state.subs.page = 1; loadSubs(); };
+  $('#subStatus').onchange = (e) => { state.subs.status = e.target.value; state.subs.page = 1; loadSubs(); };
+  $('#btnAddSub').onclick = () => subFormModal(null);
+  await loadSubs();
+}
+async function loadSubs(){
+  const el = $('#subList'); if (!el) return;
+  el.innerHTML = loadingHTML();
+  const q = new URLSearchParams();
+  if (state.subs.search) q.set('search', state.subs.search);
+  if (state.subs.trade) q.set('trade', state.subs.trade);
+  if (state.subs.status) q.set('status', state.subs.status);
+  q.set('page', state.subs.page); q.set('pageSize', 10);
+  const data = await api('/subcontractors?' + q);
+  el.innerHTML =
+    '<div class="table-wrap"><table class="tbl"><thead><tr>' +
+    '<th>Company</th><th>Trade</th><th>Location</th><th>Contact</th><th>Rating</th><th>Bids</th><th>Status</th><th></th></tr></thead><tbody>' +
+    (data.rows.length ? data.rows.map((s) =>
+      '<tr><td><span class="cell-main">' + esc(s.company_name) + '</span></td>' +
+      '<td>' + esc(s.trade) + '</td>' +
+      '<td>' + esc(s.city) + (s.state ? ', ' + esc(s.state) : '') + '</td>' +
+      '<td><div class="mono">' + esc(s.email || '—') + '</div><div class="cell-sub mono">' + esc(s.phone || '') + '</div></td>' +
+      '<td>' + ratingDots(s.rating) + '</td>' +
+      '<td><span class="mono">' + s.open_bids + ' open</span>' + (s.overdue_bids > 0 ? ' <span class="chip st-overdue"><i class="sw"></i>' + s.overdue_bids + ' overdue</span>' : '') + '</td>' +
+      '<td><span class="chip ' + (s.status === 'active' ? 'st-submitted' : 'st-neutral') + '"><i class="sw"></i>' + esc(s.status) + '</span></td>' +
+      '<td class="actions-cell"><button class="btn small ghost" data-view-sub="' + s.id + '">View</button> <button class="btn small ghost" data-edit-sub="' + s.id + '">Edit</button></td></tr>').join('')
+    : emptyRow(8, 'No subcontractors match the current filters. Adjust the filters or add a new company.')) +
+    '</tbody></table></div>' +
+    '<div class="pager"><span>' + data.total + ' subcontractor' + (data.total === 1 ? '' : 's') + ' · page ' + data.page + ' of ' + data.pages + '</span>' +
+    '<button class="btn small" id="subPrev"' + (data.page <= 1 ? ' disabled' : '') + '>Prev</button>' +
+    '<button class="btn small" id="subNext"' + (data.page >= data.pages ? ' disabled' : '') + '>Next</button></div>';
+  $('#subPrev').onclick = () => { state.subs.page--; loadSubs(); };
+  $('#subNext').onclick = () => { state.subs.page++; loadSubs(); };
+  $$('[data-view-sub]', el).forEach((b) => b.onclick = () => subDrawer(b.dataset.viewSub));
+  $$('[data-edit-sub]', el).forEach((b) => b.onclick = () => subFormModal(b.dataset.editSub));
+}
+function subFormModal(id){
+  const isEdit = !!id;
+  const fill = (s) => s || { company_name:'', trade:'', contact_name:'', email:'', phone:'', city:'', state:'', rating:3, status:'active', notes:'' };
+  api('/subcontractors/' + id).catch(() => null).then((detail) => {
+    const s = fill(isEdit ? (detail ? detail.sub : null) : null);
+    if (isEdit && !s){ toast('Subcontractor not found.', 'error'); return; }
+    const m = openModal(
+      '<div class="modal-head"><h3>' + (isEdit ? 'Edit subcontractor' : 'Add subcontractor') + '</h3><button class="x">×</button></div>' +
+      '<form id="subForm" novalidate><div class="modal-body"><div class="form-grid">' +
+      '<div class="field full"><label>Company name <span class="req">*</span></label><input name="company_name" value="' + esc(s.company_name) + '" maxlength="120"><div class="field-error" data-err="company_name"></div></div>' +
+      '<div class="field"><label>Trade <span class="req">*</span></label><select name="trade"><option value="">Choose…</option>' + state.meta.trades.map((t) => '<option' + (s.trade === t ? ' selected' : '') + '>' + esc(t) + '</option>').join('') + '</select><div class="field-error" data-err="trade"></div></div>' +
+      '<div class="field"><label>Rating (1-5)</label><select name="rating">' + [1,2,3,4,5].map((n) => '<option value="' + n + '"' + (s.rating == n ? ' selected' : '') + '>' + n + '</option>').join('') + '</select><div class="field-error" data-err="rating"></div></div>' +
+      '<div class="field"><label>Contact name</label><input name="contact_name" value="' + esc(s.contact_name) + '" maxlength="100"><div class="field-error" data-err="contact_name"></div></div>' +
+      '<div class="field"><label>Status</label><select name="status"><option value="active"' + (s.status === 'active' ? ' selected' : '') + '>Active</option><option value="inactive"' + (s.status === 'inactive' ? ' selected' : '') + '>Inactive</option></select><div class="field-error" data-err="status"></div></div>' +
+      '<div class="field"><label>Email</label><input name="email" value="' + esc(s.email) + '" maxlength="160"><div class="field-error" data-err="email"></div></div>' +
+      '<div class="field"><label>Phone</label><input name="phone" value="' + esc(s.phone) + '" maxlength="40"><div class="field-error" data-err="phone"></div></div>' +
+      '<div class="field"><label>City</label><input name="city" value="' + esc(s.city) + '" maxlength="80"><div class="field-error" data-err="city"></div></div>' +
+      '<div class="field"><label>State</label><input name="state" value="' + esc(s.state) + '" maxlength="40"><div class="field-error" data-err="state"></div></div>' +
+      '<div class="field full"><label>Notes</label><textarea name="notes" rows="2" maxlength="1000">' + esc(s.notes) + '</textarea><div class="field-error" data-err="notes"></div></div>' +
+      '</div></div><div class="modal-foot"><button type="button" class="btn" data-act="cancel">Cancel</button><button type="submit" class="btn primary">' + (isEdit ? 'Save changes' : 'Add subcontractor') + '</button></div></form>');
+    m.querySelector('.x').onclick = closeModal;
+    m.querySelector('[data-act=cancel]').onclick = closeModal;
+    $('#subForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const vals = formVals(e.target);
+      vals.rating = Number(vals.rating || 3);
+      try {
+        if (isEdit){ await put('/subcontractors/' + id, vals); toast('Subcontractor updated.'); }
+        else { await post('/subcontractors', vals); toast('Subcontractor added.'); }
+        closeModal(); route();
+      } catch (err){ handleFormError(err, m); }
+    };
+  });
+}
+async function subDrawer(id){
+  const d = await api('/subcontractors/' + id);
+  const s = d.sub;
+  openDrawer(
+    '<div class="drawer-head"><div><h3 style="font:600 21px var(--font-disp);text-transform:uppercase;letter-spacing:.03em;color:var(--ink)">' + esc(s.company_name) + '</h3>' +
+    '<div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap"><span class="chip st-neutral"><i class="sw"></i>' + esc(s.trade) + '</span>' +
+    '<span class="chip ' + (s.status === 'active' ? 'st-submitted' : 'st-neutral') + '"><i class="sw"></i>' + esc(s.status) + '</span></div></div>' +
+    '<button class="x" style="background:none;border:0;font-size:20px;cursor:pointer;color:var(--faint)" onclick="document.getElementById(\'modalRoot\').innerHTML=\'\'">×</button></div>' +
+    '<div class="drawer-body">' +
+    '<dl class="kv" style="margin:0 0 14px">' +
+    '<dt>Contact</dt><dd>' + esc(s.contact_name || '—') + '</dd>' +
+    '<dt>Email</dt><dd class="mono">' + esc(s.email || '—') + '</dd>' +
+    '<dt>Phone</dt><dd class="mono">' + esc(s.phone || '—') + '</dd>' +
+    '<dt>Location</dt><dd>' + esc(s.city) + (s.state ? ', ' + esc(s.state) : '') + '</dd>' +
+    '<dt>Rating</dt><dd>' + ratingDots(s.rating) + '</dd>' +
+    '</dl>' +
+    (s.notes ? '<p class="form-hint" style="margin:0 0 14px">' + esc(s.notes) + '</p>' : '') +
+    '<h4 style="font:600 16px var(--font-disp);letter-spacing:.04em;text-transform:uppercase;color:var(--ink);margin:4px 0 8px">Bid history on projects</h4>' +
+    '<div class="table-wrap" style="margin-bottom:16px"><table class="tbl"><thead><tr><th>Project</th><th>Status</th><th>Due</th></tr></thead><tbody>' +
+    (d.bids.length ? d.bids.map((b) => '<tr><td>' + esc(b.project_name) + '</td><td>' + statusChip(b.status) + '</td><td>' + dueCell(b) + '</td></tr>').join('') : '<tr><td colspan="3"><div class="empty">No bids yet.</div></td></tr>') +
+    '</tbody></table></div>' +
+    '<h4 style="font:600 16px var(--font-disp);letter-spacing:.04em;text-transform:uppercase;color:var(--ink);margin:4px 0 10px">Status change history</h4>' +
+    '<div class="tl">' + (d.history.length ? d.history.map((h) =>
+      '<div class="tl-item ' + (h.field === 'due_date' ? 'due' : h.entity_type === 'followup' ? 'followup' : h.new_value === 'declined' ? 'declined' : '') + '">' +
+      '<div class="tl-date">' + fmtDateTime(h.changed_at) + ' · ' + esc(h.actor) + '</div>' +
+      '<div class="tl-text">' + esc(h.note) + '</div></div>').join('') : '<div class="empty">No recorded changes.</div>') + '</div></div>');
+}
+
+/* ============================================================ BID REGISTER */
+async function renderBids(){
+  const projects = await api('/projects');
+  viewEl.innerHTML =
+    '<div class="toolbar">' +
+      '<input class="input" id="bidSearch" placeholder="Search subcontractor or project…" value="' + esc(state.bids.search) + '">' +
+      '<select class="select" id="bidProject"><option value="">All projects</option>' + projects.rows.map((p) => '<option value="' + p.id + '"' + (String(state.bids.project) === String(p.id) ? ' selected' : '') + '>' + esc(p.name) + '</option>').join('') + '</select>' +
+      '<select class="select" id="bidStatus"><option value="">Any status</option>' + Object.keys(STATUS).map((s) => '<option value="' + s + '"' + (state.bids.status === s ? ' selected' : '') + '>' + STATUS[s].label + '</option>').join('') + '</select>' +
+      '<select class="select" id="bidTrade"><option value="">All trades</option>' + state.meta.trades.map((t) => '<option' + (state.bids.trade === t ? ' selected' : '') + '>' + esc(t) + '</option>').join('') + '</select>' +
+      '<label class="check"><input type="checkbox" id="bidOverdue"' + (state.bids.overdue ? ' checked' : '') + '> Overdue only</label>' +
+      '<span class="spacer"></span><button class="btn primary" id="btnNewBid">+ New invitation</button>' +
+    '</div><div id="bidList">' + loadingHTML() + '</div>';
+  let deb;
+  $('#bidSearch').oninput = (e) => { state.bids.search = e.target.value; clearTimeout(deb); deb = setTimeout(loadBids, 280); };
+  $('#bidProject').onchange = (e) => { state.bids.project = e.target.value; loadBids(); };
+  $('#bidStatus').onchange = (e) => { state.bids.status = e.target.value; loadBids(); };
+  $('#bidTrade').onchange = (e) => { state.bids.trade = e.target.value; loadBids(); };
+  $('#bidOverdue').onchange = (e) => { state.bids.overdue = e.target.checked; loadBids(); };
+  $('#btnNewBid').onclick = newInvitationModal;
+  await loadBids();
+}
+async function loadBids(){
+  const el = $('#bidList'); if (!el) return;
+  el.innerHTML = loadingHTML();
+  const q = new URLSearchParams();
+  if (state.bids.search) q.set('search', state.bids.search);
+  if (state.bids.project) q.set('projectId', state.bids.project);
+  if (state.bids.status) q.set('status', state.bids.status);
+  if (state.bids.trade) q.set('trade', state.bids.trade);
+  if (state.bids.overdue) q.set('overdue', '1');
+  const data = await api('/bids?' + q);
+  const actions = (b) => {
+    const out = [];
+    if (b.status === 'pending'){ out.push(['Accept', 'primary', () => setStatus(b, 'accepted')]); out.push(['Decline', 'ghost', () => setStatus(b, 'declined')]); }
+    if (b.status === 'accepted'){ out.push(['Start prep', 'primary', () => setStatus(b, 'in_preparation')]); out.push(['Decline', 'ghost', () => setStatus(b, 'declined')]); }
+    if (b.status === 'in_preparation'){ out.push(['Submit', 'primary', () => submitModal(b)]); }
+    if (b.status === 'declined'){ out.push(['Re-engage', 'ghost', () => setStatus(b, 'accepted')]); }
+    if (['pending','accepted','in_preparation'].includes(b.status)){ out.push(['Extend', 'ghost', () => extendModal(b)]); }
+    out.push(['History', 'ghost', () => bidHistory(b.id)]);
+    return out.map(([label, cls, fn], i) => '<button class="btn small ' + cls + '" data-bact="' + i + '" data-bid="' + b.id + '">' + label + '</button>').join(' ');
+  };
+  el.innerHTML =
+    '<div class="table-wrap"><table class="tbl"><thead><tr>' +
+    '<th>Project</th><th>Subcontractor</th><th>Status</th><th>Due date</th><th class="num">Amount</th><th></th></tr></thead><tbody>' +
+    (data.rows.length ? data.rows.map((b) =>
+      '<tr><td><span class="cell-main">' + esc(b.project_name) + '</span><div style="margin-top:3px">' + prioChip(b.project_priority) + '</div></td>' +
+      '<td><span class="cell-main">' + esc(b.company_name) + '</span><div class="cell-sub">' + esc(b.trade) + '</div></td>' +
+      '<td>' + statusChip(b.status) + '</td>' +
+      '<td>' + dueCell(b) + '</td>' +
+      '<td class="num">' + (b.amount != null ? money.format(b.amount) : '—') + '</td>' +
+      '<td class="actions-cell">' + actions(b) + '</td></tr>').join('')
+    : emptyRow(6, 'No bids match the current filters. Clear filters or send a new invitation.')) +
+    '</tbody></table></div>' +
+    '<p class="form-hint" style="margin-top:10px">' + data.total + ' bid record' + (data.total === 1 ? '' : 's') + '. Status flow: invitation pending → accepted / declined → proposal in preparation → submitted. Every change is written to the audit trail.</p>';
+  $$('[data-bact]', el).forEach((btn) => {
+    const bid = data.rows.find((r) => String(r.id) === btn.dataset.bid);
+    const idx = Number(btn.dataset.bact);
+    const defs = {
+      pending: [['Accept','primary',() => setStatus(bid,'accepted')],['Decline','ghost',() => setStatus(bid,'declined')],['Extend','ghost',() => extendModal(bid)],['History','ghost',() => bidHistory(bid.id)]],
+      accepted: [['Start prep','primary',() => setStatus(bid,'in_preparation')],['Decline','ghost',() => setStatus(bid,'declined')],['Extend','ghost',() => extendModal(bid)],['History','ghost',() => bidHistory(bid.id)]],
+      in_preparation: [['Submit','primary',() => submitModal(bid)],['Extend','ghost',() => extendModal(bid)],['History','ghost',() => bidHistory(bid.id)]],
+      submitted: [['History','ghost',() => bidHistory(bid.id)]],
+      declined: [['Re-engage','ghost',() => setStatus(bid,'accepted')],['History','ghost',() => bidHistory(bid.id)]]
+    }[bid.status];
+    btn.onclick = defs[idx][2];
+  });
+}
+async function setStatus(bid, to, extra){
+  try {
+    await post('/bids/' + bid.id + '/status', Object.assign({ to_status:to }, extra || {}));
+    toast((bid.company_name ? bid.company_name + ' — ' : '') + 'status set to "' + (STATUS[to] || to).label + '".');
+    closeModal(); route();
+  } catch (e){ handleFormError(e); }
+}
+function newInvitationModal(){
+  Promise.all([api('/projects'), api('/subcontractors?all=1&status=active')]).then(([pr, sr]) => {
+    const m = openModal(
+      '<div class="modal-head"><h3>Send bid invitation</h3><button class="x">×</button></div>' +
+      '<form id="invForm" novalidate><div class="modal-body"><div class="form-grid">' +
+      '<div class="field full"><label>Project <span class="req">*</span></label><select name="project_id"><option value="">Choose a project…</option>' + pr.rows.map((p) => '<option value="' + p.id + '">' + esc(p.name) + ' (due ' + fmtDate(p.due_date) + ')</option>').join('') + '</select><div class="field-error" data-err="project_id"></div></div>' +
+      '<div class="field full"><label>Subcontractor <span class="req">*</span></label><select name="subcontractor_id"><option value="">Choose a subcontractor…</option>' + sr.rows.map((s) => '<option value="' + s.id + '">' + esc(s.company_name) + ' — ' + esc(s.trade) + '</option>').join('') + '</select><div class="field-error" data-err="subcontractor_id"></div></div>' +
+      '<div class="field"><label>Invited date</label><input type="date" name="invited_date" value="' + state.meta.today + '"><div class="field-error" data-err="invited_date"></div></div>' +
+      '<div class="field"><label>Proposal due date</label><input type="date" name="due_date"><div class="form-hint">Leave empty to use the project bid date.</div><div class="field-error" data-err="due_date"></div></div>' +
+      '<div class="field full"><label>Notes</label><textarea name="notes" rows="2" maxlength="1000"></textarea></div>' +
+      '</div></div><div class="modal-foot"><button type="button" class="btn" data-act="cancel">Cancel</button><button class="btn primary" type="submit">Send invitation</button></div></form>');
+    m.querySelector('.x').onclick = closeModal;
+    m.querySelector('[data-act=cancel]').onclick = closeModal;
+    $('#invForm').onsubmit = async (e) => {
+      e.preventDefault();
+      try { await post('/bids', formVals(e.target)); toast('Invitation recorded — status "invitation pending".'); closeModal(); route(); }
+      catch (err){ handleFormError(err, m); }
+    };
+  }).catch((e) => toast(e.message, 'error'));
+}
+function submitModal(bid){
+  const m = openModal(
+    '<div class="modal-head"><h3>Record proposal submission</h3><button class="x">×</button></div>' +
+    '<form id="submForm" novalidate><div class="modal-body"><div class="form-grid">' +
+    '<div class="field"><label>Submitted date</label><input type="date" name="submitted_date" value="' + state.meta.today + '"><div class="field-error" data-err="submitted_date"></div></div>' +
+    '<div class="field"><label>Bid amount (USD)</label><input name="amount" inputmode="decimal" placeholder="e.g. 485000"><div class="field-error" data-err="amount"></div></div>' +
+    '<div class="field full"><label>Note</label><textarea name="note" rows="2" maxlength="500"></textarea><div class="field-error" data-err="note"></div></div>' +
+    '</div></div><div class="modal-foot"><button type="button" class="btn" data-act="cancel">Cancel</button><button class="btn primary" type="submit">Mark as submitted</button></div></form>');
+  m.querySelector('.x').onclick = closeModal;
+  m.querySelector('[data-act=cancel]').onclick = closeModal;
+  $('#submForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const vals = formVals(e.target);
+    try { await post('/bids/' + bid.id + '/status', Object.assign({ to_status:'submitted' }, vals)); toast('Proposal recorded as submitted.'); closeModal(); route(); }
+    catch (err){ handleFormError(err, m); }
+  };
+}
+function extendModal(bid){
+  const m = openModal(
+    '<div class="modal-head"><h3>Extend due date</h3><button class="x">×</button></div>' +
+    '<form id="extForm" novalidate><div class="modal-body">' +
+    '<p class="form-hint" style="margin-top:0">' + esc(bid.company_name) + ' on ' + esc(bid.project_name) + ' — current due date <b class="mono">' + fmtDate(bid.due_date) + '</b>.</p>' +
+    '<div class="form-grid">' +
+    '<div class="field"><label>New due date <span class="req">*</span></label><input type="date" name="due_date" required><div class="field-error" data-err="due_date"></div></div>' +
+    '<div class="field"><label>Reason</label><input name="reason" maxlength="300" placeholder="e.g. owner moved bid date"><div class="field-error" data-err="reason"></div></div>' +
+    '</div><div class="imp-box">The change is logged to the bid history with your name and reason. Setting a past date is possible for simulation and will mark the bid overdue.</div>' +
+    '</div><div class="modal-foot"><button type="button" class="btn" data-act="cancel">Cancel</button><button class="btn primary" type="submit">Apply extension</button></div></form>');
+  m.querySelector('.x').onclick = closeModal;
+  m.querySelector('[data-act=cancel]').onclick = closeModal;
+  $('#extForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const vals = formVals(e.target);
+    try {
+      const r = await post('/bids/' + bid.id + '/extend', vals);
+      toast('Due date changed ' + fmtDate(r.impact.previousDue) + ' → ' + fmtDate(r.impact.newDue) + (r.impact.nowOverdue ? ' (now overdue).' : '.'));
+      closeModal(); route();
+    } catch (err){ handleFormError(err, m); }
+  };
+}
+async function bidHistory(id){
+  const d = await api('/bids/' + id + '/history');
+  const b = await api('/bids/' + id);
+  openDrawer(
+    '<div class="drawer-head"><div><h3 style="font:600 21px var(--font-disp);text-transform:uppercase;letter-spacing:.03em;color:var(--ink)">Bid history</h3>' +
+    '<div class="cell-sub" style="margin-top:4px">' + esc(b.company_name) + ' — ' + esc(b.project_name) + '</div>' +
+    '<div style="margin-top:6px">' + statusChip(b.status) + '</div></div>' +
+    '<button class="x" style="background:none;border:0;font-size:20px;cursor:pointer;color:var(--faint)" onclick="document.getElementById(\'modalRoot\').innerHTML=\'\'">×</button></div>' +
+    '<div class="drawer-body"><div class="tl">' + (d.rows.length ? d.rows.map((h) =>
+      '<div class="tl-item ' + (h.field === 'due_date' ? 'due' : h.entity_type === 'followup' ? 'followup' : h.new_value === 'declined' ? 'declined' : '') + '">' +
+      '<div class="tl-date">' + fmtDateTime(h.changed_at) + ' · ' + esc(h.actor) + '</div>' +
+      '<div class="tl-text">' + esc(h.note) + '</div>' +
+      (h.field === 'due_date' ? '<div class="tl-meta mono">' + esc(h.old_value) + ' → ' + esc(h.new_value) + '</div>' : '') +
+      '</div>').join('') : '<div class="empty">No history yet.</div>') + '</div></div>');
+}
+
+/* ============================================================ RISK */
+async function renderRisk(){
+  const r = await api('/risk');
+  const cards = [
+    ['Overdue bids', r.summary.overdueCount, 'open proposals past due', 'danger'],
+    ['Due in ≤3 days', r.summary.dueSoonCount, 'need confirmation today', 'warn'],
+    ['Unanswered ≥7 days', r.summary.unansweredCount, 'invitations with no response', ''],
+    ['Flagged subcontractors', r.summary.flaggedSubs, 'follow-up recommended', 'danger']
+  ];
+  viewEl.innerHTML =
+    '<div class="kpis">' + cards.map(([l, v, sub, tone]) => '<div class="kpi ' + tone + '"><div class="k-label">' + esc(l) + '</div><div class="k-value">' + v + '</div><div class="k-sub">' + esc(sub) + '</div></div>').join('') + '</div>' +
+    '<div class="grid-2">' +
+      '<div class="card"><div class="card-head"><h3>Overdue aging</h3><span class="hint">days past due</span></div><div class="chart-box"><canvas id="chAging"></canvas></div></div>' +
+      '<div class="card"><div class="card-head"><h3>Open risk by trade</h3><span class="hint">open vs overdue</span></div><div class="chart-box"><canvas id="chTradeRisk"></canvas></div></div>' +
+    '</div>' +
+    '<div class="card"><div class="card-head"><h3>Overdue bids</h3><a class="btn small ghost" href="#bids?overdue=1">Open in register</a></div>' +
+      '<div class="table-wrap"><table class="tbl"><thead><tr><th>Subcontractor</th><th>Project</th><th>Trade</th><th>Status</th><th>Due</th><th>Contact</th><th></th></tr></thead><tbody>' +
+      (r.overdue.length ? r.overdue.map((b) =>
+        '<tr><td class="cell-main">' + esc(b.company_name) + '</td><td>' + esc(b.project_name) + '</td><td>' + esc(b.trade) + '</td><td>' + statusChip(b.status) + '</td>' +
+        '<td>' + dueCell(b) + '</td><td><div class="mono">' + esc(b.email || '') + '</div><div class="cell-sub mono">' + esc(b.phone || '') + '</div></td>' +
+        '<td class="actions-cell"><a class="btn small ghost" href="#bids?overdue=1">Act</a></td></tr>').join('')
+      : emptyRow(7, 'Nothing is overdue right now.')) + '</tbody></table></div></div>' +
+    '<div class="card"><div class="card-head"><h3>Subcontractors requiring follow-up</h3><span class="hint">rule-based flags</span></div>' +
+      '<div class="table-wrap"><table class="tbl"><thead><tr><th>Company</th><th>Trade</th><th>Flag level</th><th>Why flagged</th><th>Open bids</th></tr></thead><tbody>' +
+      (r.flagged.length ? r.flagged.map((f) =>
+        '<tr><td class="cell-main">' + esc(f.company_name) + '</td><td>' + esc(f.trade) + '</td>' +
+        '<td><span class="chip lvl-' + esc(f.level) + '">' + esc(f.level) + '</span></td>' +
+        '<td>' + f.reasons.map((x) => esc(x)).join(' · ') + '</td>' +
+        '<td class="mono">' + f.open_bids + '</td></tr>').join('')
+      : emptyRow(5, 'No subcontractors are flagged.')) + '</tbody></table></div>' +
+      '<div class="card-body form-hint">Flag rules: any overdue proposal → flagged; 2+ overdue → red; invitation unanswered 7+ days → amber; 2+ lifetime declines with an open invite → amber.</div></div>';
+  if (window.Chart){
+    Chart.defaults.font.family = "'IBM Plex Sans', sans-serif";
+    new Chart($('#chAging'), { type:'bar', data:{
+      labels:Object.keys(r.aging),
+      datasets:[{ data:Object.values(r.aging), backgroundColor:['#e58a3d','#d9560b','#a33907'], borderRadius:2 }] },
+      options:chartOpts({ indexAxis:'y', plugins:{ legend:{ display:false } } }) });
+    const tr = r.byTradeRisk.slice(0, 8);
+    new Chart($('#chTradeRisk'), { type:'bar', data:{
+      labels:tr.map((t) => t.trade),
+      datasets:[
+        { label:'Overdue', data:tr.map((t) => t.overdue), backgroundColor:'#d9560b' },
+        { label:'On track (open)', data:tr.map((t) => t.open_bids - t.overdue), backgroundColor:'#1a56a8' }]
+    }, options:chartOpts({ indexAxis:'y', scales:{ x:{ stacked:true, beginAtZero:true, grid:{ color:'#e6ecf1' }, ticks:{ font:{ family:"'IBM Plex Mono', monospace", size:10 }, color:'#5b7085' } }, y:{ stacked:true, grid:{ color:'#e6ecf1' }, ticks:{ font:{ size:10 }, color:'#5b7085' } } } }) });
+  }
+}
+
+/* ============================================================ DECISION SUPPORT */
+async function renderDecisions(){
+  const [projects, prio] = await Promise.all([api('/projects'), api('/priorities')]);
+  const sevOrder = { critical:0, high:1, medium:2, watch:3 };
+  const items = prio.items.filter((i) => state.riskSev === 'all' || i.severity === state.riskSev);
+  viewEl.innerHTML =
+    bannerHTML('<b>Decision support.</b> Adjust project deadlines, compare participation scenarios and work the follow-up list. All projections use the transparent rules shown on this page — no black-box scoring.', 'dec') +
+    '<div class="card"><div class="card-head"><h3>Projects &amp; deadlines</h3><span class="hint">click a project to adjust its bid date</span></div>' +
+      '<div class="table-wrap"><table class="tbl"><thead><tr><th>Project</th><th>Priority</th><th>Bid due</th><th class="num">Open / overdue</th><th class="num">Submitted</th><th></th></tr></thead><tbody>' +
+      projects.rows.map((p) =>
+        '<tr><td><span class="cell-main">' + esc(p.name) + '</span><div class="cell-sub">' + esc(p.location || '') + '</div></td>' +
+        '<td>' + prioChip(p.priority) + '</td>' +
+        '<td><span class="mono">' + fmtDate(p.due_date) + '</span>' + (p.due_date !== p.original_due_date ? '<div class="cell-sub">moved from ' + fmtDate(p.original_due_date) + '</div>' : '') + '</td>' +
+        '<td class="num">' + p.open_bids + ' / <span style="color:' + (p.overdue_bids ? 'var(--orange)' : 'inherit') + '">' + p.overdue_bids + '</span></td>' +
+        '<td class="num">' + p.submitted_bids + '</td>' +
+        '<td class="actions-cell"><button class="btn small" data-dl="' + p.id + '">Adjust deadline</button></td></tr>').join('') +
+      '</tbody></table></div></div>' +
+    '<div class="card"><div class="card-head"><h3>Participation scenarios</h3><span class="hint">what-if comparison on open packages</span></div><div class="card-body">' +
+      '<div class="toolbar" style="margin-bottom:6px">' +
+        '<label class="check">Extend deadlines by ' +
+          '<select class="select" id="scExt">' + [7,14,21].map((n) => '<option value="' + n + '"' + (state.decisions.extDays === n ? ' selected' : '') + '>' + n + ' days</option>').join('') + '</select></label>' +
+        '<label class="check">Extra invites per package ' +
+          '<select class="select" id="scAdd">' + [1,2,3].map((n) => '<option value="' + n + '"' + (state.decisions.addSubs === n ? ' selected' : '') + '>' + n + '</option>').join('') + '</select></label>' +
+        '<button class="btn primary" id="scRun">Run comparison</button>' +
+      '</div><div id="scOut">' + loadingHTML() + '</div></div></div>' +
+    '<div class="card"><div class="card-head"><h3>Follow-up priorities</h3><span class="hint">transparent scoring — rules below</span></div>' +
+      '<div class="card-body" style="padding-bottom:0"><div class="seg" id="sevSeg">' +
+        ['all','critical','high','medium','watch'].map((s) => '<button data-sev="' + s + '" class="' + (state.riskSev === s ? 'on' : '') + '">' + s + '</button>').join('') + '</div></div>' +
+      '<div class="table-wrap" style="margin-top:10px;border:0"><table class="tbl"><thead><tr><th class="num">#</th><th class="num">Score</th><th>Severity</th><th>Subcontractor</th><th>Project</th><th>Due</th><th>Suggested action</th><th></th></tr></thead><tbody id="prioRows">' +
+      (items.length ? items.map((i, ix) =>
+        '<tr><td class="num">' + (ix + 1) + '</td><td class="num"><span class="score">' + i.score + '</span></td><td>' + sevChip(i.severity) + '</td>' +
+        '<td><span class="cell-main">' + esc(i.company_name) + '</span><div class="cell-sub">' + esc(i.trade) + ' · ' + ratingDots(i.rating) + '</div>' +
+          '<div class="brk">' + i.breakdown.map((b) => '<div class="brk-row"><span>' + esc(b.label) + '</span><b>+' + b.points + '</b></div>').join('') + '</div></td>' +
+        '<td>' + esc(i.project_name) + '</td><td>' + dueCell((() => { const dl = Math.round((Date.parse(i.due_date + 'T00:00:00Z') - Date.parse(state.meta.today + 'T00:00:00Z')) / 86400000); return { due_date:i.due_date, status:i.status, days_overdue:i.days_overdue, days_left:dl }; })()) + '</td>' +
+        '<td style="max-width:280px">' + esc(i.suggested_action) + '</td>' +
+        '<td class="actions-cell"><button class="btn small" data-fu="' + i.bid_id + '">Log follow-up</button></td></tr>').join('')
+      : emptyRow(8, 'No items at this severity. Widen the filter to see the rest of the list.')) + '</tbody></table></div>' +
+      '<div class="card-body form-hint"><b>Scoring rules:</b> ' + esc(prio.rules.join(' ')) + '</div></div>';
+
+  $$('[data-dl]', viewEl).forEach((b) => b.onclick = () => deadlineModal(Number(b.dataset.dl)));
+  $$('[data-fu]', viewEl).forEach((b) => b.onclick = () => followupModal(Number(b.dataset.fu)));
+  $$('#sevSeg button', viewEl).forEach((b) => b.onclick = () => { state.riskSev = b.dataset.sev; route(); });
+  $('#scRun').onclick = runScenarios;
+  await runScenarios();
+}
+async function runScenarios(){
+  state.decisions.extDays = Number($('#scExt').value);
+  state.decisions.addSubs = Number($('#scAdd').value);
+  const out = $('#scOut'); if (!out) return;
+  out.innerHTML = loadingHTML();
+  const s = await post('/scenarios', { extendDays:state.decisions.extDays, addPerPackage:state.decisions.addSubs });
+  out.innerHTML =
+    '<div class="table-wrap"><table class="tbl"><thead><tr><th>Scenario</th><th class="num">Secured</th><th class="num">Projected submissions</th><th class="num">Packages covered</th><th class="num">Still at risk</th><th class="num">Risk index</th></tr></thead><tbody>' +
+    s.scenarios.map((sc) =>
+      '<tr><td class="cell-main">' + esc(sc.label) + '</td><td class="num">' + sc.securedSubmissions + '</td>' +
+      '<td class="num">' + sc.projectedSubmissions + '</td>' +
+      '<td class="num">' + sc.packagesCovered + ' / ' + sc.packagesTotal + '</td>' +
+      '<td class="num">' + sc.packagesAtRisk + '</td>' +
+      '<td class="num" style="color:' + (sc.riskIndex >= 3 ? 'var(--orange)' : 'inherit') + '">' + sc.riskIndex + '</td></tr>').join('') +
+    '</tbody></table></div>' +
+    '<div class="grid-2" style="margin-top:12px;align-items:start">' +
+      '<div class="chart-box" style="height:230px"><canvas id="chScen"></canvas></div>' +
+      '<div><h4 style="font:600 15px var(--font-disp);text-transform:uppercase;letter-spacing:.04em;color:var(--ink);margin:0 0 6px">Assumptions &amp; rules</h4>' +
+      '<ul class="assump">' + s.assumptions.rules.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul>' +
+      '<p class="form-hint">Company-wide fallback rates — acceptance ' + s.assumptions.gcWide.acceptanceRate + '%, submission ' + s.assumptions.gcWide.submissionRate + '%, on-time ' + s.assumptions.gcWide.onTimeRate + '%. Full per-trade rates: <a href="/api/export/summary?format=xlsx">download the summary report</a>.</p></div>' +
+    '</div>';
+  if (window.Chart){
+    new Chart($('#chScen'), { type:'bar', data:{
+      labels:s.scenarios.map((x) => x.label.replace(/ \(no change\)/, '').replace(/Combined: /, '')),
+      datasets:[
+        { label:'Projected submissions', data:s.scenarios.map((x) => x.projectedSubmissions), backgroundColor:'#1a56a8', borderRadius:2 },
+        { label:'Risk index', data:s.scenarios.map((x) => x.riskIndex), backgroundColor:'#d9560b', borderRadius:2 }]
+    }, options:chartOpts({ scales:{ x:{ grid:{ color:'#e6ecf1' }, ticks:{ font:{ size:9.5 }, color:'#5b7085' } }, y:{ beginAtZero:true, grid:{ color:'#e6ecf1' }, ticks:{ font:{ family:"'IBM Plex Mono', monospace", size:10 }, color:'#5b7085' } } } }) });
+  }
+}
+async function deadlineModal(projectId){
+  const projects = await api('/projects');
+  const p = projects.rows.find((x) => x.id === projectId);
+  if (!p) return;
+  const m = openModal(
+    '<div class="modal-head"><h3>Adjust project deadline</h3><button class="x">×</button></div>' +
+    '<form id="dlForm" novalidate><div class="modal-body">' +
+    '<p class="form-hint" style="margin-top:0">' + esc(p.name) + ' — current bid date <b class="mono">' + fmtDate(p.due_date) + '</b></p>' +
+    '<div class="form-grid">' +
+    '<div class="field"><label>New bid date <span class="req">*</span></label><input type="date" name="due_date" value="' + p.due_date + '" required><div class="field-error" data-err="due_date"></div></div>' +
+    '<div class="field"><label>Reason</label><input name="reason" maxlength="300" placeholder="e.g. owner request"><div class="field-error" data-err="reason"></div></div>' +
+    '<div class="field full"><label class="check" style="height:auto"><input type="checkbox" name="cascade" id="dlCascade"> Align all open proposals to the new date (recommended when the owner moves the bid date)</label></div>' +
+    '</div><div class="imp-box" id="dlPreview">Pick a new date to see the impact.</div>' +
+    '</div><div class="modal-foot"><button type="button" class="btn" data-act="cancel">Cancel</button><button class="btn primary" type="submit">Apply new date</button></div></form>');
+  m.querySelector('.x').onclick = closeModal;
+  m.querySelector('[data-act=cancel]').onclick = closeModal;
+  let deb;
+  const preview = async () => {
+    const due = $('#dlForm [name=due_date]').value;
+    const cascade = $('#dlCascade').checked;
+    const box = $('#dlPreview');
+    if (!due){ box.textContent = 'Pick a new date to see the impact.'; return; }
+    try {
+      const r = await post('/projects/' + p.id + '/deadline-preview', { due_date:due, cascade });
+      box.innerHTML = 'Impact preview: <b>' + r.openCount + '</b> open proposal(s). Overdue now: <b>' + r.overdueNow + '</b> → after change: <b>' + r.overdueAfter + '</b>.' +
+        (r.cascade ? ' <b>' + r.bidsMoved + '</b> proposal(s) will be re-dated.' + (r.sampleMoves.length ? '<div style="margin-top:6px">' + r.sampleMoves.map((x) => esc(x)).join('<br>') + '</div>' : '') : ' Proposals keep their individual due dates (no cascade).');
+    } catch (e){ box.textContent = e.message; }
+  };
+  $('#dlForm [name=due_date]').oninput = () => { clearTimeout(deb); deb = setTimeout(preview, 250); };
+  $('#dlCascade').onchange = preview;
+  $('#dlForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const vals = formVals(e.target);
+    vals.cascade = $('#dlCascade').checked;
+    try {
+      const r = await post('/projects/' + p.id + '/deadline', vals);
+      toast('Project bid date updated.' + (r.bidsUpdated ? ' ' + r.bidsUpdated + ' open proposal(s) re-dated.' : ''));
+      closeModal(); route();
+    } catch (err){ handleFormError(err, m); }
+  };
+  preview();
+}
+function followupModal(bidId){
+  const m = openModal(
+    '<div class="modal-head"><h3>Log follow-up</h3><button class="x">×</button></div>' +
+    '<form id="fuForm" novalidate><div class="modal-body"><div class="field full">' +
+    '<label>What was done <span class="req">*</span></label>' +
+    '<textarea name="note" rows="3" maxlength="500" placeholder="e.g. Called Ray — accepted invitation, proposal due Friday."></textarea>' +
+    '<div class="field-error" data-err="note"></div></div></div>' +
+    '<div class="modal-foot"><button type="button" class="btn" data-act="cancel">Cancel</button><button class="btn primary" type="submit">Save follow-up</button></div></form>');
+  m.querySelector('.x').onclick = closeModal;
+  m.querySelector('[data-act=cancel]').onclick = closeModal;
+  $('#fuForm').onsubmit = async (e) => {
+    e.preventDefault();
+    try { await post('/followups', { bid_id:bidId, note:formVals(e.target).note }); toast('Follow-up logged to the bid history.'); closeModal(); route(); }
+    catch (err){ handleFormError(err, m); }
+  };
+}
+
+/* ============================================================ DATA & TESTS */
+async function renderData(){
+  viewEl.innerHTML =
+    bannerHTML('<b>Data management.</b> Import subcontractors and bid records from CSV or Excel, download reports, and run the built-in test suite. ' + SAMPLE_NOTE, 'data') +
+    '<div class="grid-2">' +
+      '<div class="card"><div class="card-head"><h3>Import subcontractors</h3><a class="btn small" href="/api/export/template/subcontractors">Download template</a></div><div class="card-body">' +
+        '<p class="form-hint">Required columns: <span class="mono">company_name</span>, <span class="mono">trade</span>. Optional: contact_name, email, phone, city, state, rating (1-5), status, notes. Existing company names are rejected as duplicates.</p>' +
+        '<div class="toolbar" style="margin:10px 0 0"><input type="file" class="input" id="fileSubs" accept=".csv,.xlsx,.xls" style="width:auto;height:30px;font-size:12px"><button class="btn primary" id="upSubs" disabled>Upload</button></div>' +
+        '<div id="resSubs" style="margin-top:10px"></div></div></div>' +
+      '<div class="card"><div class="card-head"><h3>Import bid register</h3><a class="btn small" href="/api/export/template/bids">Download template</a></div><div class="card-body">' +
+        '<p class="form-hint">Required columns: <span class="mono">project_name</span>, <span class="mono">company_name</span>, <span class="mono">due_date</span>. Optional: invited_date, status, decline_reason, submitted_date, amount, notes. Project and subcontractor must already exist (exact names).</p>' +
+        '<div class="toolbar" style="margin:10px 0 0"><input type="file" class="input" id="fileBids" accept=".csv,.xlsx,.xls" style="width:auto;height:30px;font-size:12px"><button class="btn primary" id="upBids" disabled>Upload</button></div>' +
+        '<div id="resBids" style="margin-top:10px"></div></div></div>' +
+    '</div>' +
+    '<div class="card"><div class="card-head"><h3>Downloadable reports</h3><span class="hint">generated live from the database</span></div><div class="card-body"><div class="toolbar" style="margin:0">' +
+      '<a class="btn" href="/api/export/bids?format=csv">Bid register · CSV</a>' +
+      '<a class="btn" href="/api/export/bids?format=xlsx">Bid register · Excel</a>' +
+      '<a class="btn" href="/api/export/subcontractors?format=csv">Subcontractor directory · CSV</a>' +
+      '<a class="btn" href="/api/export/subcontractors?format=xlsx">Subcontractor directory · Excel</a>' +
+      '<a class="btn" href="/api/export/risk?format=csv">Risk report · CSV</a>' +
+      '<a class="btn" href="/api/export/risk?format=xlsx">Risk report · Excel</a>' +
+      '<a class="btn" href="/api/export/summary?format=xlsx">Executive summary · Excel</a>' +
+    '</div></div></div>' +
+    '<div class="grid-2">' +
+      '<div class="card"><div class="card-head"><h3>Built-in test suite</h3><span class="hint">17 API scenarios</span></div><div class="card-body">' +
+        '<p class="form-hint">Runs validation, lifecycle, audit-trail, import, export, analytics and error-handling checks against the live API. The suite creates its own "qa" records and removes them afterwards.</p>' +
+        '<button class="btn primary" id="runTests">Run automated tests</button><div id="testOut" style="margin-top:12px"></div></div></div>' +
+      '<div class="card"><div class="card-head"><h3>Manual test scenarios</h3><span class="hint">suggested click-through</span></div><div class="card-body">' +
+        '<ul class="assump">' + [
+          'Add a subcontractor with an empty name and a bad email — inline field errors appear, nothing is saved.',
+          'Invite a subcontractor on a project, accept, start preparation, then submit with an amount — the audit trail records each step.',
+          'Try to move a submitted bid back to "in preparation" — the transition is rejected with an explanation.',
+          'Extend a bid\u0027s due date into the past — the bid flips to overdue and appears in Risk Analytics.',
+          'Adjust a project deadline with cascade — every open proposal is re-dated and the impact is previewed first.',
+          'Delete a subcontractor that has bids — blocked with a 409 conflict message.',
+          'Import a spreadsheet with one good and two broken rows — one imports, two are reported with row numbers and reasons.',
+          'Run the automated suite, then use "Reset demo data" to restore the pristine sample dataset.'
+        ].map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul></div></div>' +
+    '</div>' +
+    '<div class="card"><div class="card-head"><h3>Data sources</h3><span class="hint">real public data used in this demo</span></div>' +
+      '<div class="table-wrap"><table class="tbl"><tbody>' +
+      (state.meta.dataSources || []).map((s) => '<tr><td>' + esc(s.name) + '</td><td class="mono"><a href="' + esc(s.url) + '" target="_blank" rel="noopener">link</a></td><td class="mono">' + esc(s.retrieved) + '</td></tr>').join('') +
+      '</tbody></table></div></div>' +
+    '<div class="card"><div class="card-head"><h3>Admin</h3><span class="hint">demo utilities</span></div><div class="card-body">' +
+      '<button class="btn danger" id="resetData">Reset demo data</button>' +
+      '<span class="form-hint" style="margin-left:10px">Clears the SQLite database and regenerates the synthetic sample dataset (dates relative to today).</span>' +
+    '</div></div>';
+
+  const wireImport = (fileId, btnId, entity, resId) => {
+    const file = $(fileId), btn = $(btnId);
+    file.onchange = () => { btn.disabled = !file.files.length; };
+    btn.onclick = async () => {
+      if (!file.files.length) return;
+      btn.disabled = true;
+      const fd = new FormData();
+      fd.append('file', file.files[0]);
+      try {
+        const res = await fetch('/api/import/' + entity, { method:'POST', body:fd });
+        const body = await res.json();
+        if (!res.ok) throw new Error(body.error || 'Import failed.');
+        renderImportResult($(resId), body);
+        toast('Import finished: ' + body.imported + ' imported, ' + body.failed + ' rejected.', body.failed ? 'warn' : '');
+      } catch (e){ $(resId).innerHTML = '<div class="banner" style="margin:0">' + esc(e.message) + '</div>'; toast(e.message, 'error'); }
+      btn.disabled = false;
+      file.value = '';
+    };
+  };
+  wireImport('#fileSubs', '#upSubs', 'subcontractors', '#resSubs');
+  wireImport('#fileBids', '#upBids', 'bids', '#resBids');
+  $('#runTests').onclick = runTestSuite;
+  $('#resetData').onclick = async () => {
+    const ok = await confirmDlg('Reset demo data', 'This deletes all current records (including your changes) and regenerates the synthetic sample dataset. Continue?', 'Reset data', true);
+    if (!ok) return;
+    await post('/admin/reset');
+    toast('Demo data was regenerated.');
+    route();
+  };
+}
+function renderImportResult(el, body){
+  el.innerHTML = '<div class="imp-box">Imported <b class="result-ok">' + body.imported + '</b> row(s); rejected <b class="result-bad">' + body.failed + '</b> of ' + body.total + '.' +
+    (body.failures.length ? '<table class="tbl" style="margin-top:8px"><thead><tr><th>Row</th><th>Company</th><th>Reason</th></tr></thead><tbody>' +
+      body.failures.map((f) => '<tr><td class="mono">' + f.row + '</td><td>' + esc(f.company || '—') + '</td><td>' + esc(f.reason) + '</td></tr>').join('') +
+      '</tbody></table><button class="btn small" id="dlFail" style="margin-top:8px">Download failure report</button>' : '') +
+    '</div>';
+  const btn = $('#dlFail');
+  if (btn) btn.onclick = () => {
+    const rows = [['row', 'company', 'reason']].concat(body.failures.map((f) => [f.row, f.company, f.reason]));
+    const csv = '\uFEFF' + rows.map((r) => r.map((c) => '"' + String(c).replace(/"/g, '""') + '"').join(',')).join('\r\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csv], { type:'text/csv' }));
+    a.download = body.entity + '-import-failures.csv';
+    a.click();
+  };
+}
+async function runTestSuite(){
+  const out = $('#testOut');
+  out.innerHTML = loadingHTML();
+  try {
+    const r = await post('/tests/run');
+    out.innerHTML =
+      '<p style="margin:0 0 8px"><b class="' + (r.allPassed ? 'result-ok' : 'result-bad') + '">' + r.passed + '/' + r.total + ' scenarios passed</b>' +
+      (r.allPassed ? ' — validation, lifecycle, audit, import/export, analytics and error handling all behave as specified.' : ' — failures listed below.') + '</p>' +
+      '<div class="table-wrap"><table class="tbl"><tbody>' +
+      r.results.map((t) => '<tr><td style="width:70px"><span class="chip ' + (t.pass ? 'st-submitted' : 'st-overdue') + '"><i class="sw"></i>' + (t.pass ? 'PASS' : 'FAIL') + '</span></td>' +
+        '<td>' + esc(t.name) + (t.pass ? '' : '<div class="tl-meta" style="color:var(--red)">' + esc(t.detail || '') + '</div>') + '</td></tr>').join('') +
+      '</tbody></table></div>';
+  } catch (e){ out.innerHTML = '<div class="banner" style="margin:0">' + esc(e.message) + '</div>'; }
+}
+
+/* ============================================================ BID ANALYTICS */
+async function renderBidAnalytics(){
+  const a = await api('/analytics');
+  const kpiCards = [
+    ['Submitted value', moneyShort.format(a.kpis.totalSubmittedValue), a.submittedCount + ' proposals'],
+    ['Average bid', moneyShort.format(a.kpis.avgSubmittedAmount), 'per submitted proposal'],
+    ['Median response time', a.kpis.medianResponseDays + ' days', 'invitation to answer'],
+    ['On-time rate', a.kpis.onTimeRate + '%', a.late + ' submitted late'],
+    ['Participation rate', a.kpis.participationRate + '%', 'of invitations answered']
+  ];
+  viewEl.innerHTML =
+    bannerHTML('<b>Bid analytics — synthetic demo data.</b> Every figure on this page is computed live from the sample dataset in the SQLite demo database and refreshes as you change records.', 'ana') +
+    '<div class="kpis">' + kpiCards.map(([l, v, sub]) =>
+      '<div class="kpi"><div class="k-label">' + esc(l) + '</div><div class="k-value">' + v + '</div><div class="k-sub">' + esc(sub) + '</div></div>').join('') + '</div>' +
+    '<div class="grid-2">' +
+      '<div class="card"><div class="card-head"><h3>Participation funnel</h3><span class="hint">invitation → answer → accepted → submitted</span></div><div class="chart-box"><canvas id="chFunnel"></canvas></div></div>' +
+      '<div class="card"><div class="card-head"><h3>Submitted value by project</h3><span class="hint">USD, live from register</span></div><div class="chart-box"><canvas id="chValue"></canvas></div></div>' +
+      '<div class="card"><div class="card-head"><h3>Average submitted bid by trade</h3><span class="hint">USD</span></div><div class="chart-box"><canvas id="chAvgTrade"></canvas></div></div>' +
+      '<div class="card"><div class="card-head"><h3>Decline reasons</h3><span class="hint">' + a.declineReasons.reduce((x, d) => x + d.count, 0) + ' declined invitations</span></div><div class="chart-box"><canvas id="chDeclines"></canvas></div></div>' +
+      '<div class="card"><div class="card-head"><h3>Response time (invitation → answer)</h3><span class="hint">working pattern of the bid desk</span></div><div class="chart-box"><canvas id="chResponse"></canvas></div></div>' +
+      '<div class="card"><div class="card-head"><h3>Submission timeliness</h3><span class="hint">vs package due date</span></div><div class="chart-box"><canvas id="chOnTime"></canvas></div></div>' +
+    '</div>' +
+    '<div class="card"><div class="card-head"><h3>Top subcontractors by submitted value</h3><span class="hint">synthetic demo records</span></div>' +
+      '<div class="table-wrap"><table class="tbl"><thead><tr><th>Company</th><th>Trade</th><th class="num">Bids</th><th class="num">Submitted</th><th class="num">Submitted value</th></tr></thead><tbody>' +
+      a.topSubs.map((s) => '<tr><td class="cell-main">' + esc(s.company_name) + '</td><td>' + esc(s.trade) + '</td>' +
+        '<td class="num">' + s.bids + '</td><td class="num">' + s.submitted + '</td><td class="num">' + money.format(s.value) + '</td></tr>').join('') +
+      '</tbody></table></div></div>';
+  bindBanner();
+  if (!window.Chart) return;
+  Chart.defaults.font.family = "'IBM Plex Sans', sans-serif";
+  const dollarTicks = { callback:(v) => '$' + (v >= 1e6 ? (v / 1e6).toFixed(1) + 'M' : v >= 1e3 ? Math.round(v / 1e3) + 'K' : v) };
+  new Chart($('#chFunnel'), { type:'bar', data:{
+    labels:['Invitations', 'Answered', 'Accepted', 'Submitted'],
+    datasets:[{ data:[a.funnel.invited, a.funnel.responded, a.funnel.accepted, a.funnel.submitted],
+      backgroundColor:['#5b7085', '#1a56a8', '#0f766e', '#177b4b'], borderRadius:2 }] },
+    options:chartOpts({ indexAxis:'y', plugins:{ legend:{ display:false } } }) });
+  new Chart($('#chValue'), { type:'bar', data:{
+    labels:a.valueByProject.map((p) => p.project.length > 24 ? p.project.slice(0, 24) + '…' : p.project),
+    datasets:[{ data:a.valueByProject.map((p) => p.value), backgroundColor:'#1a56a8', borderRadius:2 }] },
+    options:chartOpts({ plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label:(c) => money.format(c.parsed.y) + ' (' + a.valueByProject[c.dataIndex].count + ' bids)' } } }, scales:{ x:{ grid:{ color:'#e6ecf1' }, ticks:{ font:{ size:10 }, color:'#5b7085', maxRotation:40 } }, y:{ beginAtZero:true, grid:{ color:'#e6ecf1' }, ticks:Object.assign({ font:{ family:"'IBM Plex Mono', monospace", size:10 }, color:'#5b7085' }, dollarTicks) } } }) });
+  new Chart($('#chAvgTrade'), { type:'bar', data:{
+    labels:a.avgByTrade.map((t) => t.trade),
+    datasets:[{ data:a.avgByTrade.map((t) => t.avg), backgroundColor:'#0f766e', borderRadius:2 }] },
+    options:chartOpts({ indexAxis:'y', plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label:(c) => 'avg ' + money.format(c.parsed.x) + ' (' + a.avgByTrade[c.dataIndex].count + ' bids)' } } }, scales:{ x:{ beginAtZero:true, grid:{ color:'#e6ecf1' }, ticks:Object.assign({ font:{ family:"'IBM Plex Mono', monospace", size:10 }, color:'#5b7085' }, dollarTicks) }, y:{ grid:{ color:'#e6ecf1' }, ticks:{ font:{ size:10 }, color:'#5b7085' } } } }) });
+  new Chart($('#chDeclines'), { type:'doughnut', data:{
+    labels:a.declineReasons.map((d) => d.reason.length > 34 ? d.reason.slice(0, 34) + '…' : d.reason),
+    datasets:[{ data:a.declineReasons.map((d) => d.count),
+      backgroundColor:['#8ba0b2', '#5b7085', '#a9bccb', '#6e8299', '#c2cfd9', '#7b8f9e'], borderColor:'#fff', borderWidth:2 }] },
+    options:chartOpts({ plugins:{ legend:{ position:'right', labels:{ font:{ size:10 }, color:'#5b7085', boxWidth:10, boxHeight:10 } } }, scales:{} }) });
+  new Chart($('#chResponse'), { type:'bar', data:{
+    labels:Object.keys(a.responseBuckets),
+    datasets:[{ data:Object.values(a.responseBuckets), backgroundColor:'#1a56a8', borderRadius:2 }] },
+    options:chartOpts({ plugins:{ legend:{ display:false } } }) });
+  new Chart($('#chOnTime'), { type:'doughnut', data:{
+    labels:['On time', 'Late'],
+    datasets:[{ data:[a.onTime, a.late], backgroundColor:['#177b4b', '#d9560b'], borderColor:'#fff', borderWidth:2 }] },
+    options:chartOpts({ plugins:{ legend:{ position:'right', labels:{ font:{ size:11 }, color:'#5b7085', boxWidth:10, boxHeight:10 } } }, scales:{} }) });
+}
+
+/* ---------------- boot ---------------- */
+const VIEWS = { dashboard:renderDashboard, analytics:renderBidAnalytics, subcontractors:renderSubs, bids:renderBids, risk:renderRisk, decisions:renderDecisions, data:renderData };
+route();
+})();
+</script>
+</body>
+</html>

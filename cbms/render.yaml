@@ -1,0 +1,22 @@
+# Render Blueprint — Construction Bid Management System (demo)
+# https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: construction-bid-mgmt
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+    # ── 데이터 영속화(선택 · 유료 인스턴스) ──────────────────
+    # 디스크를 추가하고(DB 유지) 싶을 때 아래 주석을 해제하세요.
+    # disk:
+    #   name: cbms-data
+    #   mountPath: /var/data
+    #   sizeGB: 1
+    # 그리고 위 envVars 목록에 다음을 추가:
+    #   - key: DB_PATH
+    #     value: /var/data/cbms.db

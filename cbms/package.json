@@ -1,0 +1,23 @@
+{
+  "name": "construction-bid-management-system",
+  "version": "1.0.0",
+  "description": "Prototype: subcontractor bid management, risk analytics and decision support for a U.S. general contractor. Ships with clearly labeled synthetic sample data.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "reset-data": "node -e \"require('./seed').resetSeed(); console.log('Database reseeded with synthetic sample data.')\"",
+    "test": "node tests/runTests.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "chart.js": "^4.4.9",
+    "compression": "^1.8.2",
+    "express": "^4.21.2",
+    "multer": "^2.5.0",
+    "xlsx": "^0.18.5"
+  }
+}

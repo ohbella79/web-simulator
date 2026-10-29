@@ -1,0 +1,23 @@
+{
+  "name": "islandresilience-ai",
+  "version": "0.1.0",
+  "description": "Phase 1 prototype: ESG-driven decision support platform for resilient electricity and water infrastructure investment, American Samoa. Ships with a clearly labeled synthetic demonstration dataset for Tutuila.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "reset-data": "node -e \"require('./seed').resetSeed(); console.log('Database reseeded with synthetic demonstration data.')\"",
+    "test": "node tests/runTests.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "chart.js": "^4.4.9",
+    "compression": "^1.8.2",
+    "express": "^4.21.2",
+    "multer": "^2.0.0",
+    "xlsx": "^0.18.5"
+  }
+}
