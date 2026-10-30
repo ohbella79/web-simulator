@@ -1,0 +1,3108 @@
+{
+ "meta": {
+  "generated": "2026-10-30",
+  "sources": [
+   "USASpending.gov API (federal contracts, place of performance Georgia, NAICS 23 construction)",
+   "spending_over_time FY2016-2025",
+   "top 300 contracts by amount (3 pages x 100)",
+   "recipient search: \"eastern builders\" (GA)"
+  ],
+  "honesty": "Observed federal contract obligations. Sample = top-300 by amount, so recipient shares overstate large prime contractors. State DOT (GDOT) lettings are NOT included. \"Eastern builders\" matches include fuzzy token matches (e.g., MEB General Contractors).",
+  "window": "FY2016-FY2025",
+  "sampled": 300
+ },
+ "over_time": [
+  {
+   "fy": 2016,
+   "amount": 851103228.84
+  },
+  {
+   "fy": 2017,
+   "amount": 1050499977.73
+  },
+  {
+   "fy": 2018,
+   "amount": 901070013.75
+  },
+  {
+   "fy": 2019,
+   "amount": 1041651137.08
+  },
+  {
+   "fy": 2020,
+   "amount": 1091944518.01
+  },
+  {
+   "fy": 2021,
+   "amount": 1422051620.72
+  },
+  {
+   "fy": 2022,
+   "amount": 1018275669.31
+  },
+  {
+   "fy": 2023,
+   "amount": 1206751863.76
+  },
+  {
+   "fy": 2024,
+   "amount": 960605858.65
+  },
+  {
+   "fy": 2025,
+   "amount": 1079094082.83
+  }
+ ],
+ "awards": [
+  {
+   "recipient": "ALBERICI-MORTENSON A JOINT VENTURE",
+   "amount": 620217197.39,
+   "start": "2020-03-20",
+   "end": "2023-09-22",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "NSB KINGS BAY DRY DOCK RECAPITALIZATION PHASE A",
+   "aid": "N6945020C0016"
+  },
+  {
+   "recipient": "TURNER CONSTRUCTION COMPANY",
+   "amount": 395197071.0,
+   "start": "2009-09-28",
+   "end": "2016-01-08",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "FORT BENNING HOSPITAL",
+   "aid": "W912HN09C0045"
+  },
+  {
+   "recipient": "HCBECK, LTD.",
+   "amount": 221114401.0,
+   "start": "2020-12-07",
+   "end": "2026-02-28",
+   "agency": "Department of Health and Human Services",
+   "naics": "236220",
+   "desc": "CHAMBLEE CAMPUS BLDG 108 PHASE II",
+   "aid": "75D30121C10098"
+  },
+  {
+   "recipient": "RQ CONSTRUCTION, LLC",
+   "amount": 196129672.75,
+   "start": "2023-11-09",
+   "end": "2027-07-29",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "PRECONSTRUCTION SERVICES (ECI), P684 TRIDENT REFIT FACILITY (TRF) EXPANSION",
+   "aid": "N6945024C0004"
+  },
+  {
+   "recipient": "BL HARBERT INTERNATIONAL LLC",
+   "amount": 175851815.0,
+   "start": "2016-08-29",
+   "end": "2020-02-10",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF ARCYBER HQ, FORT GORDON, GA (PN 85811 AND 85818)",
+   "aid": "W912HN16C0014"
+  },
+  {
+   "recipient": "ACC CONSTRUCTION CO., INC.",
+   "amount": 165920524.16,
+   "start": "2025-08-15",
+   "end": "2029-07-16",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CONSTRUCTION OF FACILITY",
+   "aid": "W912HN25C4002"
+  },
+  {
+   "recipient": "M. A. MORTENSON COMPANY",
+   "amount": 156090210.87,
+   "start": "2018-09-26",
+   "end": "2024-09-16",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "IGF::OT::IGF CLIN 0001 BASE BID REPAIR EHW 1 PHASE 2 NSB KINGS BAY GA",
+   "aid": "N6945018C0905"
+  },
+  {
+   "recipient": "M. A. MORTENSON COMPANY",
+   "amount": 149565662.0,
+   "start": "2017-07-31",
+   "end": "2026-05-31",
+   "agency": "Department of Agriculture",
+   "naics": "236220",
+   "desc": "DESIGN-BUILD-BRIDGING CONSTRUCTION SERVICES FOR THE MODERNIZATION OF THE U.S. NATIONAL POULTRY RESEARCH CENTER",
+   "aid": "AG3K25C170001"
+  },
+  {
+   "recipient": "WEEKS MARINE, INC.",
+   "amount": 144905246.75,
+   "start": "2019-11-07",
+   "end": "2022-04-20",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "SAVANNAH INNER HARBOR UNCLASSIFIED AND MAINTENANCE DREDGING REACHES 0+000 TO 70+000 REACHES C, D,&E",
+   "aid": "W912HN20C5001"
+  },
+  {
+   "recipient": "BL HARBERT INTERNATIONAL LLC",
+   "amount": 141387715.0,
+   "start": "2023-12-13",
+   "end": "2028-08-28",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "P658 NUCLEAR REGIONAL MAINT. FACILITY NSB KINGS BAY, GA",
+   "aid": "N6945024C0001"
+  },
+  {
+   "recipient": "BRASFIELD & GORRIE LLC",
+   "amount": 126988569.0,
+   "start": "2021-02-04",
+   "end": "2026-10-31",
+   "agency": "General Services Administration",
+   "naics": "236220",
+   "desc": "AWARD # 47PF0021C0017. CONSTRUCTION MANAGER AS CONSTRUCTOR (CMC) FOR THE ALTERATION OF THE TOMOCHICHI FEDERAL ",
+   "aid": "47PF0021C0017"
+  },
+  {
+   "recipient": "RQ CONSTRUCTION, LLC",
+   "amount": 124203071.0,
+   "start": "2023-09-08",
+   "end": "2027-08-30",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "TRIDENT TRAINING FACILITY (TTF)RECAPITALIZATION: MECHANICAL AND ELECTRICAL REPAIRS. NAVAL SUBMARINE BASE, KING",
+   "aid": "N6945023F0858"
+  },
+  {
+   "recipient": "NORFOLK DREDGING COMPANY",
+   "amount": 120792965.78,
+   "start": "2019-08-19",
+   "end": "2021-09-30",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "SAVANNAH INNER HARBOR DREDGING REACHES A&B STATIONS 70+000 TO 103+000, AND KINGS ISLAND TURNING BASIN SAVANNAH",
+   "aid": "W912HN19C5004"
+  },
+  {
+   "recipient": "TURNER CONSTRUCTION COMPANY",
+   "amount": 116481625.0,
+   "start": "2019-05-01",
+   "end": "2022-08-31",
+   "agency": "Department of Health and Human Services",
+   "naics": "236220",
+   "desc": "ROYBAL PARKING DECK",
+   "aid": "75D30119C04488"
+  },
+  {
+   "recipient": "RQ CONSTRUCTION, LLC",
+   "amount": 116247941.92,
+   "start": "2022-09-22",
+   "end": "2026-10-26",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "HURRICANE ELSA REPAIRS TO TRF BUILDINGS B4026, B4027 AND B4028, NAVAL SUBMARINE BASE KINGS BAY, GA",
+   "aid": "N6945022F0786"
+  },
+  {
+   "recipient": "J KOKOLAKIS CONTRACTING INC",
+   "amount": 115413794.06,
+   "start": "2021-04-09",
+   "end": "2024-11-13",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "MCA2 FORCE MODERNIZATION & PROPONENCY CENTER",
+   "aid": "W912HN21C3003"
+  },
+  {
+   "recipient": "GREAT LAKES DREDGE & DOCK CO, LLC",
+   "amount": 114129194.8,
+   "start": "2015-03-04",
+   "end": "2018-07-18",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "IGF::OT::IGF   SAVANNAH ENTRANCE CHANNEL NEW WORK DREDGING",
+   "aid": "W912HN15C0005"
+  },
+  {
+   "recipient": "CH2M HILL CONSTRUCTORS, INC.",
+   "amount": 111372226.09,
+   "start": "2017-02-01",
+   "end": "2020-10-30",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF GCC-MAC MCLB ALBANY",
+   "aid": "WE01"
+  },
+  {
+   "recipient": "ACC CONSTRUCTION CO., INC.",
+   "amount": 102258118.0,
+   "start": "2023-02-01",
+   "end": "2027-01-09",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "ABMS FACILITY HANGAR",
+   "aid": "W912HN23C3002"
+  },
+  {
+   "recipient": "CDM CONSTRUCTORS INC",
+   "amount": 99897017.63,
+   "start": "2015-07-31",
+   "end": "2018-05-20",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "IGF::OT::IGF SHEP DISSOLVED OXYGEN INJECTION SYSTEM",
+   "aid": "W912HN15C0015"
+  },
+  {
+   "recipient": "GILBANE FEDERAL",
+   "amount": 99719006.83,
+   "start": "2020-06-19",
+   "end": "2023-12-14",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "PN 88724 SCI TRAINING, RESEARCH&NETWORK CENTER, FORT GORDON, GEORGIA",
+   "aid": "W912HN20C3006"
+  },
+  {
+   "recipient": "ACC CONSTRUCTION CO., INC.",
+   "amount": 97084901.0,
+   "start": "2025-01-17",
+   "end": "2028-06-19",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "PRIMARY FACILITY",
+   "aid": "W912HN25C3000"
+  },
+  {
+   "recipient": "ARCHER WESTERN CONTRACTORS, LLC",
+   "amount": 92014261.31,
+   "start": "2010-08-20",
+   "end": "2022-11-30",
+   "agency": "Department of Transportation",
+   "naics": "236210",
+   "desc": "CONSTRUCTION OF A NEW AIRPORT TRAFFIC CONTROL TOWER (ATCT) AND TERMINAL RADAR APPROACH CONTROL (TRACON) AT MCC",
+   "aid": "DTFANM10C00215"
+  },
+  {
+   "recipient": "NEW SOUTH CONSTRUCTION COMPANY, INC.",
+   "amount": 84622915.33,
+   "start": "2013-12-17",
+   "end": "2022-06-13",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "ROBINS AFB BLDG 125 FIRE ALARM, FIRE SUPPRESSION, AND REPLACE ROOF",
+   "aid": "W912HN14C0002"
+  },
+  {
+   "recipient": "ACC CONSTRUCTION CO., INC.",
+   "amount": 80199281.0,
+   "start": "2022-04-15",
+   "end": "2026-11-25",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "ADVANCED BATTLE MANAGEMENT OPS FACILITY TO 5-FT LINE, COMPLETE",
+   "aid": "W912HN22C3002"
+  },
+  {
+   "recipient": "BECK INTERNATIONAL, LLC",
+   "amount": 79352542.06,
+   "start": "2009-06-30",
+   "end": "2017-01-31",
+   "agency": "Department of Health and Human Services",
+   "naics": "236220",
+   "desc": "TAS::75 0943::TAS BLDG 107&PARKING DECK, CHAMBLEE CAMPUS",
+   "aid": "HHSD200201036521C"
+  },
+  {
+   "recipient": "SAUER CONSTRUCTION, LLC",
+   "amount": 71109473.0,
+   "start": "2022-12-23",
+   "end": "2026-03-31",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CONSTRUCTION SOF BATTALION HQ",
+   "aid": "W912HN23C3001"
+  },
+  {
+   "recipient": "BENHAM CONSTRUCTORS, LLC",
+   "amount": 69807573.0,
+   "start": "2008-06-25",
+   "end": "2015-05-30",
+   "agency": "Department of Defense",
+   "naics": "236210",
+   "desc": "OPTION 2A - EQUIPMENT OVER $100K/EACH",
+   "aid": "W912HN08C0031"
+  },
+  {
+   "recipient": "CADDELL CONSTRUCTION CO. (DE), LLC",
+   "amount": 68606299.0,
+   "start": "2014-11-06",
+   "end": "2017-09-30",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF - AIT BARRACKS COMPLEX PHASE II PN 51868,&GROUND SOURCE HEAT TRANSFER SYSTEM PN 77419, FT. GORDON",
+   "aid": "0006"
+  },
+  {
+   "recipient": "ACC CONSTRUCTION CO., INC.",
+   "amount": 66132447.03,
+   "start": "2021-05-22",
+   "end": "2025-12-31",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CONSTRUCT ADVANCE TRAINING FACILITY",
+   "aid": "W912HN21C3004"
+  },
+  {
+   "recipient": "ZODIAC-POETTKER HBZ JOINT VENTURE II, LLC",
+   "amount": 56519974.9,
+   "start": "2021-06-25",
+   "end": "2024-03-11",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "BASE:HAAF HANGAR",
+   "aid": "W912HN21C3005"
+  },
+  {
+   "recipient": "J.E. DUNN CONSTRUCTION COMPANY",
+   "amount": 55337173.48,
+   "start": "2025-09-19",
+   "end": "2028-06-19",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CONSTRUCT AN ARMY RESERVE CENTER (ARC) ON DOBBINS AIR FORCE RESERVE BASE IN ATLANTA, GEORGIA (GA).",
+   "aid": "W912QR25CA027"
+  },
+  {
+   "recipient": "MITCHELL BROTHERS INC",
+   "amount": 53393327.74,
+   "start": "2022-11-01",
+   "end": "2024-10-18",
+   "agency": "Department of Defense",
+   "naics": "237310",
+   "desc": "CONTRACT IS FOR THE REPAIR AIRFIELD AND TAXIWAY INFRASTRUCTURE AT HUNTER ARMY AIRFIELD, GEORGIA",
+   "aid": "W912HN23C4000"
+  },
+  {
+   "recipient": "TUG HILL CONSTRUCTION, INC.",
+   "amount": 52924217.86,
+   "start": "2010-02-19",
+   "end": "2011-11-13",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "TRAINING AREA INFRASTRUCTURE 1, GOOD HOPE MANEUVER AREA, PN69668, FORT BENNING, GA  BASE BID ITEMS 0001-0002",
+   "aid": "0002"
+  },
+  {
+   "recipient": "M. A. MORTENSON COMPANY",
+   "amount": 51017923.0,
+   "start": "2016-06-28",
+   "end": "2019-06-23",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF P611 CRAB ISLAND SECURITY ENCLAVE",
+   "aid": "0003"
+  },
+  {
+   "recipient": "RQ CONSTRUCTION, LLC",
+   "amount": 50687947.0,
+   "start": "2024-08-22",
+   "end": "2027-05-20",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "MAGNETIC SILENCING FACILITY REPAIRS AT NSB KINGS BAY, GA",
+   "aid": "N6945024F0748"
+  },
+  {
+   "recipient": "TEPA CONSTRUCTION SOLUTIONS, LLC",
+   "amount": 49529163.0,
+   "start": "2023-08-30",
+   "end": "2027-01-31",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "REPAIR SECTION E, BUILDING 399",
+   "aid": "W912HN23C4002"
+  },
+  {
+   "recipient": "MCCARTHY BUILDING COMPANIES, INC.",
+   "amount": 47170943.0,
+   "start": "2012-09-18",
+   "end": "2017-05-18",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "BASE BID ITEM - ALTERATION",
+   "aid": "W912HN12C0019"
+  },
+  {
+   "recipient": "SAUER CONSTRUCTION, LLC",
+   "amount": 47143883.46,
+   "start": "2022-12-30",
+   "end": "2025-12-22",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "SSP ADDITION",
+   "aid": "N6945023F0148"
+  },
+  {
+   "recipient": "CH2M HILL CONSTRUCTORS, INC.",
+   "amount": 46792063.12,
+   "start": "2019-02-15",
+   "end": "2022-01-31",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF X009 HURRICANE MICHAEL ASSESSMENT AND RECOVERY WORK",
+   "aid": "N4008519F4867"
+  },
+  {
+   "recipient": "MCKNIGHT CONSTRUCTION CO.",
+   "amount": 46741829.87,
+   "start": "2020-09-18",
+   "end": "2026-06-12",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "PERSONNEL RECOVERY HANGAR HMU AT MOODY AFB GA",
+   "aid": "W912HN20C3007"
+  },
+  {
+   "recipient": "ROUNDHOUSE PBN - TEPA EC 2 JOINT VENTURE",
+   "amount": 45565953.0,
+   "start": "2024-09-27",
+   "end": "2027-06-22",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "REPAIR SECTION A&B BUILDING 73 PHASE I",
+   "aid": "W912HN24C4007"
+  },
+  {
+   "recipient": "COPPER CONSTRUCTION COMPANY, INC.",
+   "amount": 45264226.0,
+   "start": "2025-09-02",
+   "end": "2028-11-03",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "RENOVATE BLDG. 59D - ROBINS AFB GA",
+   "aid": "W912HN25CA013"
+  },
+  {
+   "recipient": "THALLE CONSTRUCTION CO INC",
+   "amount": 43615262.5,
+   "start": "2015-12-11",
+   "end": "2018-06-22",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "IGF::OT::IGF RAW WATER STORAGE IMPOUNDMENT SAVANNAH HARBOR EXPANSION PROJECT",
+   "aid": "W912HN16C0002"
+  },
+  {
+   "recipient": "4K GLOBAL-ACC JV, LLC",
+   "amount": 41985945.0,
+   "start": "2023-09-29",
+   "end": "2026-03-12",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CONSTRUCTION - PLEASE SEE CLIN SCHEDULE",
+   "aid": "W912HN23C4005"
+  },
+  {
+   "recipient": "ARCHER WESTERN CONTRACTORS, LLC",
+   "amount": 40980648.05,
+   "start": "2014-09-10",
+   "end": "2017-07-21",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "REPLACEMENT OF NEW DIAMOND ELEMENTARY",
+   "aid": "CV01"
+  },
+  {
+   "recipient": "TUTOR PERINI CORPORATION",
+   "amount": 40900450.0,
+   "start": "2020-12-28",
+   "end": "2023-09-29",
+   "agency": "Department of Homeland Security",
+   "naics": "236220",
+   "desc": "CONSTRUCTION OF RESIDENTIAL BUILDING FOR 300 STUDENT DORMITORY ROOMS",
+   "aid": "70LGLY21FSSB00008"
+  },
+  {
+   "recipient": "COPPER CONSTRUCTION COMPANY, INC.",
+   "amount": 39970416.9,
+   "start": "2023-08-05",
+   "end": "2026-09-17",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "REPAIR SECTION F, BUILDING 17 - PH I",
+   "aid": "W912HN23C3005"
+  },
+  {
+   "recipient": "LEEBCOR SERVICES LLC",
+   "amount": 38827594.64,
+   "start": "2016-09-29",
+   "end": "2025-03-12",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF BLDG 3105 TBUP",
+   "aid": "CV02"
+  },
+  {
+   "recipient": "SAUER CONSTRUCTION, LLC",
+   "amount": 37783554.23,
+   "start": "2012-03-16",
+   "end": "2015-10-31",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CONSTRUCTION FOR P601 SECURITY ENCLAVE/VEHICLE BARRIER.",
+   "aid": "0007"
+  },
+  {
+   "recipient": "KORTE CONSTRUCTION COMPANY",
+   "amount": 37520232.88,
+   "start": "2015-09-28",
+   "end": "2020-06-30",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF BRANCH HEALTH CLINIC MODERNIZATION, BUILDING 1028, NAVAL STATION KINGS BAY, GEORGIA",
+   "aid": "N6247015C5009"
+  },
+  {
+   "recipient": "SAND POINT SERVICES, LLC",
+   "amount": 37032201.09,
+   "start": "2018-06-27",
+   "end": "2020-08-28",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF CONSTRUCT BLDG 3335 STARSHIP TBUP, FT. BENNING, GA",
+   "aid": "W912HN18F3001"
+  },
+  {
+   "recipient": "URS GROUP, INC.",
+   "amount": 36583454.95,
+   "start": "2018-09-24",
+   "end": "2022-04-30",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF HURRICANE IRMA REPAIRS - KINGS BAY",
+   "aid": "N6945018F0085"
+  },
+  {
+   "recipient": "BRASFIELD & GORRIE LLC",
+   "amount": 36250751.0,
+   "start": "2014-08-04",
+   "end": "2016-09-09",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF       CONSTRUCT - COMPANY OPERATIONS AREAS,",
+   "aid": "0003"
+  },
+  {
+   "recipient": "MARINEX CONSTRUCTION INC",
+   "amount": 35271000.0,
+   "start": "2025-09-15",
+   "end": "2026-11-05",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "FY25 SAVANNAH INNER HARBOR MAINTENANCE DREDGING PROJECT",
+   "aid": "W912HN25C5006"
+  },
+  {
+   "recipient": "CADDELL CONSTRUCTION CO. (DE), LLC",
+   "amount": 34749687.0,
+   "start": "2013-11-08",
+   "end": "2016-07-27",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "BASE BID -",
+   "aid": "0005"
+  },
+  {
+   "recipient": "CADDELL CONSTRUCTION CO., INC.",
+   "amount": 34658592.0,
+   "start": "2014-04-17",
+   "end": "2017-04-26",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF IDIQ LARGE MACC FOR NFL&SGA P636 WATERFRONT NORTH LWI",
+   "aid": "0002"
+  },
+  {
+   "recipient": "COPPER CONSTRUCTION COMPANY, INC.",
+   "amount": 34594829.84,
+   "start": "2014-09-30",
+   "end": "2018-05-05",
+   "agency": "Department of Veterans Affairs",
+   "naics": "237130",
+   "desc": "IGF::OT::IGF - CONTRACT IS TO PROVIDE ALL OF THE WORK NECESSARY TO CONSTRUCT A NEW COMBINED HEAT AND POWER PLA",
+   "aid": "VA70114C0037"
+  },
+  {
+   "recipient": "ACC CONSTRUCTION CO., INC.",
+   "amount": 34578794.64,
+   "start": "2021-01-29",
+   "end": "2025-08-05",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CONSTRUCTION OF A CONSOLIDATED MISSION COMPLEX (CMC), PHASE 3 LOCATED AT WARNER ROBINS AIR FORCE BASE (AFB), G",
+   "aid": "W912QR21C0009"
+  },
+  {
+   "recipient": "THE HASKELL COMPANY",
+   "amount": 34384000.0,
+   "start": "2025-09-25",
+   "end": "2027-06-22",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "DESIGN/BID/BUILD CONSTRUCTION OF AN ARMY RESERVE CENTER (ARC) TRAINING BUILDING, VEHICLE MAINTENANCE SHOP (VMS",
+   "aid": "W912QR25CA029"
+  },
+  {
+   "recipient": "ALUTIIQ MANUFACTURING CONTRACTORS, LLC",
+   "amount": 33928940.0,
+   "start": "2013-09-04",
+   "end": "2016-10-20",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "TBUP BLDG 3210",
+   "aid": "0002"
+  },
+  {
+   "recipient": "CAROTHERS CONSTRUCTION INC",
+   "amount": 33860684.62,
+   "start": "2014-09-27",
+   "end": "2018-06-25",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "BASE BID REPLACEMENT OF SCHOOL--",
+   "aid": "CV01"
+  },
+  {
+   "recipient": "WHITESELL-GREEN, INC",
+   "amount": 33781182.41,
+   "start": "2016-05-20",
+   "end": "2018-07-29",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF CONSTRUCTION",
+   "aid": "CV01"
+  },
+  {
+   "recipient": "ACC CONSTRUCTION CO., INC.",
+   "amount": 33281267.0,
+   "start": "2018-09-12",
+   "end": "2021-12-16",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF CONSTRUCT ACCESS CONTROL POINT, FT. GORDON, GA BASE CLINS 0001&0002",
+   "aid": "W912HN18C3002"
+  },
+  {
+   "recipient": "SAND POINT SERVICES, LLC",
+   "amount": 32501709.74,
+   "start": "2019-09-20",
+   "end": "2026-12-31",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "DEMOLISH, RENOVATE&REPAIR, AND NEW CONSTRUCTION FOR BUILDINGS 25702&25707. FORT GORDON GA",
+   "aid": "W912HN19F3001"
+  },
+  {
+   "recipient": "ASHFORD LEEBCOR ENTERPRISES LLC",
+   "amount": 32396336.7,
+   "start": "2019-09-12",
+   "end": "2022-08-16",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "PROJECT REPAIRS THE FAILED AND FAILING SYSTEMS OF BUILDING 399 SECTIONS A&G AT FORT BENNING, GEORGIA",
+   "aid": "W912HN19C3011"
+  },
+  {
+   "recipient": "WHITING-TURNER CONTRACTING COMPANY, THE",
+   "amount": 31618380.0,
+   "start": "2024-10-16",
+   "end": "2027-03-30",
+   "agency": "Department of Homeland Security",
+   "naics": "236220",
+   "desc": "B280 STRENGTH & CONDITIONING COMPLEX (SCC)",
+   "aid": "70LGLY24FSSB00134"
+  },
+  {
+   "recipient": "ACC CONSTRUCTION CO., INC.",
+   "amount": 31069895.49,
+   "start": "2019-09-24",
+   "end": "2023-01-13",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "ROBINS AIR FORCE BASE, GEORGIA - CONSOLIDATED MISSION COMPLEX, PHASE 2",
+   "aid": "W912QR19C0042"
+  },
+  {
+   "recipient": "4K GLOBAL-ACC JV, LLC",
+   "amount": 30955831.25,
+   "start": "2023-09-26",
+   "end": "2026-06-29",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "ST-22092-3P GEORGIA POWER",
+   "aid": "W912HN23C4004"
+  },
+  {
+   "recipient": "SAND POINT SERVICES, LLC",
+   "amount": 30854821.28,
+   "start": "2021-09-23",
+   "end": "2023-09-05",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "REPAIR SECTION C",
+   "aid": "W912HN21C3007"
+  },
+  {
+   "recipient": "GCI-SAC JV LLC",
+   "amount": 30585097.79,
+   "start": "2022-09-28",
+   "end": "2026-12-01",
+   "agency": "Department of Defense",
+   "naics": "238220",
+   "desc": "CONTRACT IS TO REPAIR/REPLACE HEATING, VENTILATION, AND AIR CONDITIONING SYSTEMS IN BUILDINGS 3405 AND 3425 AT",
+   "aid": "W912HN22C4005"
+  },
+  {
+   "recipient": "SAUER CONSTRUCTION, LLC",
+   "amount": 30176879.0,
+   "start": "2011-06-22",
+   "end": "2016-05-31",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "UAS COMPLEX, FORT STEWART, GEORGIA, PN 69830",
+   "aid": "CV03"
+  },
+  {
+   "recipient": "NLGC JV LLC",
+   "amount": 29836882.53,
+   "start": "2024-01-01",
+   "end": "2026-08-29",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "NEW LAB BUIILDING",
+   "aid": "W912HN24C4001"
+  },
+  {
+   "recipient": "4K GLOBAL-ACC JV, LLC",
+   "amount": 29102436.7,
+   "start": "2017-06-16",
+   "end": "2019-08-02",
+   "agency": "Department of Labor",
+   "naics": "236220",
+   "desc": "IGF::CL,CT::IGF THIS PROJECT IS TO PROVIDE CONSTRUCTION SERVICES FOR A NEW JOB CORPS CAMPUS TO REPLACE THE EXI",
+   "aid": "1630DC17C0024"
+  },
+  {
+   "recipient": "GILBANE FEDERAL",
+   "amount": 29076120.91,
+   "start": "2018-09-05",
+   "end": "2021-12-29",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF ALLEN HALL BLDG 29813, RICHMOND COUNTY, FT. GORDON, GA PN86479. AWARD OF BASE CLIN 0001&0002.",
+   "aid": "W912HN18C3009"
+  },
+  {
+   "recipient": "MARINEX CONSTRUCTION INC",
+   "amount": 28988500.0,
+   "start": "2018-08-15",
+   "end": "2020-01-03",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "FY18 SAVANNAH INNER HARBOR MAINTENANCE DREDGING",
+   "aid": "W912HN18C5005"
+  },
+  {
+   "recipient": "WHITING-TURNER CONTRACTING COMPANY, THE",
+   "amount": 28830866.41,
+   "start": "2021-02-23",
+   "end": "2024-05-03",
+   "agency": "Department of Homeland Security",
+   "naics": "236220",
+   "desc": "REBUILD THE STA/ANT TYBEE FACILITIES AND WATERFRONT SHORELINE AT COCKSPUR ISLAND, GA.",
+   "aid": "70Z04721FTYBEDB00"
+  },
+  {
+   "recipient": "MARINEX CONSTRUCTION INC",
+   "amount": 28198111.68,
+   "start": "2023-06-30",
+   "end": "2024-07-08",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "FY23 SAVANNAH INNER HARBOR MAINTENANCE DREDGING",
+   "aid": "W912HN23C5003"
+  },
+  {
+   "recipient": "THE HASKELL COMPANY",
+   "amount": 28130889.66,
+   "start": "2020-01-31",
+   "end": "2024-05-16",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "BASE PRICE INCLUDES THE FOLLOWING:",
+   "aid": "N4008520C8504"
+  },
+  {
+   "recipient": "ZODIAC-POETTKER JOINT VENTURE, LLC",
+   "amount": 28126417.4,
+   "start": "2016-10-24",
+   "end": "2019-07-22",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF ROBINS PH. 1 AFRC CMC - AWARDING BASE ONLY IN THE AMOUNT OF $26,340,224.40.",
+   "aid": "W912QR17C0001"
+  },
+  {
+   "recipient": "HURLEY JV, LLP",
+   "amount": 27849345.0,
+   "start": "2025-09-25",
+   "end": "2027-09-25",
+   "agency": "Department of Veterans Affairs",
+   "naics": "236220",
+   "desc": "ATLANTA EHRM INFRASTRUCTURE AND DATA CENTER UPGRADES - DECATUR, GA",
+   "aid": "36C77625C0087"
+  },
+  {
+   "recipient": "TURNER & TOWNSEND HEERY, LLC",
+   "amount": 27814884.84,
+   "start": "2013-09-11",
+   "end": "2017-05-11",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF   BASE BID FOR DESIGN BUILD CONSTRUCTION FOR ROBINS AFB CLINIC RENOVATION.",
+   "aid": "CL03"
+  },
+  {
+   "recipient": "MARINEX CONSTRUCTION INC",
+   "amount": 27280656.5,
+   "start": "2024-07-15",
+   "end": "2025-10-09",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "FY24 SAVANNAH INNER HARBOR MAINTENANCE DREDGING",
+   "aid": "W912HN24C5005"
+  },
+  {
+   "recipient": "4K GLOBAL-ACC JV, LLC",
+   "amount": 27088759.0,
+   "start": "2024-10-15",
+   "end": "2027-03-11",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "REPAIR BUILDING 2831",
+   "aid": "W912HN24C4005"
+  },
+  {
+   "recipient": "WEEKS MARINE, INC.",
+   "amount": 26812942.5,
+   "start": "2025-10-06",
+   "end": "2026-04-20",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "NAVAL SUBMARINE BASE KINGS BAY MAINTENANCE DREDGING ENTRANCE CHANNEL CAMDEN COUNTY, GEORGIA AND NASSAU COUNTY,",
+   "aid": "W912EP25CA014"
+  },
+  {
+   "recipient": "MARINEX CONSTRUCTION INC",
+   "amount": 26425787.04,
+   "start": "2022-06-30",
+   "end": "2023-08-04",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "FY22 SAVANNAH INNER HARBOR MAINTENANCE DREDGING",
+   "aid": "W912HN22C5002"
+  },
+  {
+   "recipient": "MARINEX CONSTRUCTION INC",
+   "amount": 26157153.11,
+   "start": "2019-09-26",
+   "end": "2020-12-20",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "FY19 SAVANNAH INNER HARBOR MAINTENANCE DREDGING - USACE SAVANNAH DISTRICT",
+   "aid": "W912HN19C5011"
+  },
+  {
+   "recipient": "ENGINEERING DESIGN TECHNOLOGIES, INC.",
+   "amount": 25630816.47,
+   "start": "2014-09-24",
+   "end": "2016-07-04",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "BASE BID- REPAIRS--",
+   "aid": "0004"
+  },
+  {
+   "recipient": "C & C CONTRACTORS LLC",
+   "amount": 25353183.72,
+   "start": "2023-02-04",
+   "end": "2025-12-29",
+   "agency": "Department of Veterans Affairs",
+   "naics": "237990",
+   "desc": "GEORGIA NATION CEMETERY EXPANSION",
+   "aid": "36C78623C0003"
+  },
+  {
+   "recipient": "THE DUTRA GROUP",
+   "amount": 25133474.5,
+   "start": "2017-11-17",
+   "end": "2018-12-14",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "MAINTENANCE DREDGING OF THE KINGS BAY ENTRANCE CHANNEL IGF::CT::IGF",
+   "aid": "W912EP18C0005"
+  },
+  {
+   "recipient": "HOAR CONSTRUCTION, LLC",
+   "amount": 24958332.1,
+   "start": "2017-09-29",
+   "end": "2021-06-15",
+   "agency": "General Services Administration",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF CONSTRUCTION OF NEW UNITED STATED FEDERAL COURTHOUSE, ANNEX BUILDING",
+   "aid": "47PE0317C0007"
+  },
+  {
+   "recipient": "M. A. MORTENSON COMPANY",
+   "amount": 24693943.73,
+   "start": "2017-06-29",
+   "end": "2019-02-17",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF X004 CON: DBB REPAIR EXPLOSIVE HANDLING WHARF 1 - PHA",
+   "aid": "N6945017F0703"
+  },
+  {
+   "recipient": "ASHFORD LEEBCOR ENTERPRISES V, LLC",
+   "amount": 24558347.17,
+   "start": "2021-11-04",
+   "end": "2024-04-17",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "RENOVATION OF THE FACILITY",
+   "aid": "W912HN22C3000"
+  },
+  {
+   "recipient": "ENGINEERING DESIGN TECHNOLOGIES, INC.",
+   "amount": 24481421.0,
+   "start": "2013-09-17",
+   "end": "2015-08-15",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "BASE BID: CONSTRUCTION/RENOVATION OF AIT",
+   "aid": "0003"
+  },
+  {
+   "recipient": "FACILITY SERVICES MANAGEMENT, INC.",
+   "amount": 24160799.01,
+   "start": "2019-01-15",
+   "end": "2025-08-29",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "BASE YEAR",
+   "aid": "W9127819F0069"
+  },
+  {
+   "recipient": "MARINEX CONSTRUCTION INC",
+   "amount": 24087813.67,
+   "start": "2017-01-20",
+   "end": "2018-08-10",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "IGF::OT::IGF - FY17 SAVANNAH INNER HARBOR MAINTENANCE DREDGING",
+   "aid": "W912HN17C0002"
+  },
+  {
+   "recipient": "FIRST CHOICE GOV, INC",
+   "amount": 23469532.96,
+   "start": "2011-09-28",
+   "end": "2017-06-14",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "DESIGN/BUILD MODULAR TEMPORARY FACILITY AT ROBINS AFB",
+   "aid": "W912QR11C0063"
+  },
+  {
+   "recipient": "SAW-GREENLAND JV II LLC",
+   "amount": 23297410.38,
+   "start": "2023-08-28",
+   "end": "2026-08-09",
+   "agency": "Department of Veterans Affairs",
+   "naics": "236220",
+   "desc": "TASK ORDER FOR BOILER PROJECT 509-20-100",
+   "aid": "36C24723N0580"
+  },
+  {
+   "recipient": "V LINE SERVICES L.L.C.",
+   "amount": 23087400.0,
+   "start": "2025-09-22",
+   "end": "2027-06-30",
+   "agency": "Department of Veterans Affairs",
+   "naics": "236220",
+   "desc": "EHRM INFRASTRUCTURE UPGRADES",
+   "aid": "36C77625C0099"
+  },
+  {
+   "recipient": "TURNER CONSTRUCTION COMPANY",
+   "amount": 22769421.0,
+   "start": "2021-07-29",
+   "end": "2026-06-30",
+   "agency": "General Services Administration",
+   "naics": "236220",
+   "desc": "GENERAL CONTRACTOR CONSTRUCTION SERVICES - US CITIZENSHIP AND MIGRATION SERVICES (USCIS) AT THE PEACHTREE SUMM",
+   "aid": "47PE0321C0002"
+  },
+  {
+   "recipient": "BL HARBERT INTERNATIONAL LLC",
+   "amount": 22535098.06,
+   "start": "2019-03-07",
+   "end": "2021-07-09",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CLIN 0001 - P977",
+   "aid": "N4008519C9126"
+  },
+  {
+   "recipient": "GLOBAL GO, LLC",
+   "amount": 22327015.0,
+   "start": "2024-09-26",
+   "end": "2027-06-25",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "D/B/B CONSTRUCTION OF THE SECURITY FORCES TRAINING FACILITY, DOBBINS ARB, GA.",
+   "aid": "W912QR24C0035"
+  },
+  {
+   "recipient": "ASHFORD LEEBCOR ENTERPRISES IV LLC",
+   "amount": 22296918.57,
+   "start": "2020-09-30",
+   "end": "2024-07-31",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "MILCON OF ADC AIRCRAFT HANGAR",
+   "aid": "W50S7020C0002"
+  },
+  {
+   "recipient": "GE RENEWABLES US LLC",
+   "amount": 22129646.12,
+   "start": "2020-09-10",
+   "end": "2027-09-08",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "HARTWELL REWIND UNITS 3&4",
+   "aid": "W9127820C0025"
+  },
+  {
+   "recipient": "SAND POINT SERVICES, LLC",
+   "amount": 22085165.82,
+   "start": "2020-10-15",
+   "end": "2026-01-25",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "REPAIR VOLAR BUILDING 514, 515, 516, 517 AT FT STEWART, GA",
+   "aid": "W912HN20F3009"
+  },
+  {
+   "recipient": "CONTINENTAL HEAVY CIVIL CORP",
+   "amount": 21905489.0,
+   "start": "2018-07-06",
+   "end": "2020-02-14",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "MCCOY'S CUT DIVERSION STRUCTURE, MCCOOMBS AND RIFLE CUT CLOSURES AND CHANNEL IMPROVEMENTS - USACE - SAVANNAH D",
+   "aid": "W912HN18C5003"
+  },
+  {
+   "recipient": "ROY ANDERSON CORP",
+   "amount": 21607561.5,
+   "start": "2013-09-26",
+   "end": "2015-12-16",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF = OTHER FUNCTIONS POTABLE WATER DISTRIBUTION RENOVATION",
+   "aid": "0003"
+  },
+  {
+   "recipient": "MARINEX CONSTRUCTION INC",
+   "amount": 21604930.86,
+   "start": "2016-02-19",
+   "end": "2017-03-04",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "IGF::OT::IGF  MAINTENANCE DREDGING SAVANNAH AND BRUNSWICK HARBORS, GA",
+   "aid": "W912HN16C0005"
+  },
+  {
+   "recipient": "4K GLOBAL-ACC JV, LLC",
+   "amount": 21601540.36,
+   "start": "2022-10-05",
+   "end": "2025-11-06",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "RENOVATION OF THE FACILITY .",
+   "aid": "W912HN22C3003"
+  },
+  {
+   "recipient": "CADDELL CONSTRUCTION CO. (DE), LLC",
+   "amount": 21560227.46,
+   "start": "2013-01-09",
+   "end": "2014-12-16",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "BASIC TRAINING COPLEX PHASE II-BARRACKS AND PT TRACK FORT BENNING, GA",
+   "aid": "0002"
+  },
+  {
+   "recipient": "CADDELL CONSTRUCTION CO. (DE), LLC",
+   "amount": 21299340.0,
+   "start": "2013-06-24",
+   "end": "2015-08-08",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "UNMANNED AERIAL VEHICLE (UAV) COMPLEX",
+   "aid": "0004"
+  },
+  {
+   "recipient": "BRISTOL-EDT JV LLC",
+   "amount": 20898261.74,
+   "start": "2023-10-25",
+   "end": "2026-10-28",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "REPAIR BUILDING 632",
+   "aid": "W912HN23C3006"
+  },
+  {
+   "recipient": "YORK-BRAWLEY II JV LLC",
+   "amount": 20835438.0,
+   "start": "2023-10-02",
+   "end": "2026-05-22",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CEMACC III PROJECT 140172, BLDG 645 RENOVATION",
+   "aid": "FA850123F0182"
+  },
+  {
+   "recipient": "MARINEX CONSTRUCTION INC",
+   "amount": 20829267.82,
+   "start": "2021-10-20",
+   "end": "2022-10-06",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "FY21 SAVANNAH INNER HARBOR MAINTENANCE DREDGING",
+   "aid": "W912HN21C5002"
+  },
+  {
+   "recipient": "AKTARIUS LLC",
+   "amount": 20785547.0,
+   "start": "2022-09-21",
+   "end": "2027-01-04",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "BASE CLIN CHILL WATER/ HVAC UPGRADES AND OPTION CLIN RADON MITIGATION",
+   "aid": "N6945022C0056"
+  },
+  {
+   "recipient": "IAP-DESIGN BUILD, LLC",
+   "amount": 20659821.23,
+   "start": "2015-09-24",
+   "end": "2019-12-15",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF REPAIR BLDG 21270 GCL, FORT GORDON, GA",
+   "aid": "0002"
+  },
+  {
+   "recipient": "SAUER CONSTRUCTION, LLC",
+   "amount": 20571550.0,
+   "start": "2011-06-30",
+   "end": "2014-07-21",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "BASE BID - CONSTRUCTION OF THE NEW ELEMENTARY SCHOOL, FT. STEWART GA",
+   "aid": "CV01"
+  },
+  {
+   "recipient": "DE MOYA CONTINENTAL J.V.",
+   "amount": 20377124.0,
+   "start": "2016-09-15",
+   "end": "2018-01-02",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "IGF::OT::IGF - SAVANNAH HARBOR GEORGIA AND SOUTH CAROLINA SEDIMENT BASIN TIDE GATE REMOVAL",
+   "aid": "W912HN16C0015"
+  },
+  {
+   "recipient": "ADVON CORPORATION",
+   "amount": 20323976.19,
+   "start": "2024-09-17",
+   "end": "2028-05-29",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "PRIMARY FACILITY",
+   "aid": "W912HN24C4004"
+  },
+  {
+   "recipient": "POINTER CONSTRUCTION GROUP LLC",
+   "amount": 19926106.0,
+   "start": "2025-09-11",
+   "end": "2027-09-21",
+   "agency": "Department of Veterans Affairs",
+   "naics": "236220",
+   "desc": "EHRM INFRASTRUCTURE UPGRADES - DUBLIN, GA",
+   "aid": "36C77625C0083"
+  },
+  {
+   "recipient": "LEEBCOR SERVICES LLC",
+   "amount": 19731590.3,
+   "start": "2018-07-23",
+   "end": "2021-01-11",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF REPAIR BUILDING TBUP 2761-FT. BENNING, GA PN 88799",
+   "aid": "W912HN18F3002"
+  },
+  {
+   "recipient": "IAP-DESIGN BUILD, LLC",
+   "amount": 19216800.09,
+   "start": "2011-09-12",
+   "end": "2013-10-07",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "BATTLE COMMAND TRAINING CENTER, FORT STEWART, GA. PN 39614",
+   "aid": "0001"
+  },
+  {
+   "recipient": "SAUER CONSTRUCTION, LLC",
+   "amount": 19116607.17,
+   "start": "2022-09-23",
+   "end": "2026-02-27",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "RENOVATE BUILDING 2314, JB CHARLESTON",
+   "aid": "N6945022F0528"
+  },
+  {
+   "recipient": "BRISTOL-EDT JV LLC",
+   "amount": 19111908.15,
+   "start": "2022-10-17",
+   "end": "2025-06-14",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "REPAIR BUILDING 633",
+   "aid": "W912HN22C4001"
+  },
+  {
+   "recipient": "MARINEX CONSTRUCTION INC",
+   "amount": 18966362.81,
+   "start": "2020-09-30",
+   "end": "2021-10-06",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "SAVANNAH INNER HARBOR",
+   "aid": "W912HN20C5010"
+  },
+  {
+   "recipient": "MANSON CONSTRUCTION CO",
+   "amount": 18872494.48,
+   "start": "2016-12-21",
+   "end": "2017-03-31",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "MAINTENANCE DREDGING OF THE KINGS BAY ENTRANCE CHANNEL IGF::CT::IGF",
+   "aid": "W912EP17C0007"
+  },
+  {
+   "recipient": "MARINEX CONSTRUCTION INC",
+   "amount": 18804883.52,
+   "start": "2014-12-18",
+   "end": "2016-02-08",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "''IGF::OT::IGF FIRST 1,272,000 CUBIC YARDS",
+   "aid": "W912HN15C0002"
+  },
+  {
+   "recipient": "GILBANE FEDERAL",
+   "amount": 18618570.41,
+   "start": "2022-04-14",
+   "end": "2025-09-30",
+   "agency": "Department of Homeland Security",
+   "naics": "236220",
+   "desc": "EXPANSION OF THE TACTICAL TRAINING VILLAGE OF \"DANIS CITY\" ON GLYNCO SITE",
+   "aid": "70LGLY22FSSB00025"
+  },
+  {
+   "recipient": "BRANTLEY CONSTRUCTION SERVICES, LLC",
+   "amount": 18590172.1,
+   "start": "2013-09-28",
+   "end": "2017-01-01",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "REPAIR BUILDINGS 2760&83 AT FORT BENNING, GA",
+   "aid": "0009"
+  },
+  {
+   "recipient": "ACC CONSTRUCTION CO., INC.",
+   "amount": 18400578.34,
+   "start": "2018-07-10",
+   "end": "2020-09-09",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF CONSTRUCT TRAINING SUPPORT FACILITY, FT. BENNING, GA",
+   "aid": "W912HN18C3001"
+  },
+  {
+   "recipient": "GULF BUILDING, HERNANDEZ CONSULTING A JOINT VENTURE LLC",
+   "amount": 18338976.41,
+   "start": "2017-12-20",
+   "end": "2020-03-19",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF X007 CON:  REPAVE MISSILE HAUL ROUTE LA&CA (NSB KI",
+   "aid": "N6945018F0703"
+  },
+  {
+   "recipient": "J & J MAINTENANCE INC",
+   "amount": 18058458.4,
+   "start": "2011-02-01",
+   "end": "2015-12-30",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "TAS::97 0130::TAS  O&M SERVICES FOR DWIGHT DAVID EISENHOWER ARMY MEDICAL CENTER, FORT GORDON, GA (BASE PERIOD)",
+   "aid": "0003"
+  },
+  {
+   "recipient": "M. A. MORTENSON COMPANY",
+   "amount": 17914241.0,
+   "start": "2015-08-10",
+   "end": "2017-10-22",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF DBB P636 WRA SOUTH LWI UNDER IDIQ MACC FOR NFL/SGA",
+   "aid": "0002"
+  },
+  {
+   "recipient": "COPPER CONSTRUCTION COMPANY, INC.",
+   "amount": 17644271.0,
+   "start": "2024-06-09",
+   "end": "2026-11-08",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "PN85565 WTC BARRACKS CONSTRUCTION",
+   "aid": "W912HN24C4003"
+  },
+  {
+   "recipient": "JAAAT TECHNICAL SERVICES, LLC",
+   "amount": 17598612.23,
+   "start": "2012-06-20",
+   "end": "2014-08-14",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "NSA WHITELAW WEDGE ADDITION, FORT GORDON, GA",
+   "aid": "0002"
+  },
+  {
+   "recipient": "J & J MAINTENANCE INC",
+   "amount": 17165382.36,
+   "start": "2017-09-30",
+   "end": "2022-09-05",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF REPAIR FAMILY MEDICINE CLINIC, FT. GORDON, GA",
+   "aid": "W9127817F0506"
+  },
+  {
+   "recipient": "GILBANE FEDERAL",
+   "amount": 17081836.14,
+   "start": "2019-06-18",
+   "end": "2024-07-02",
+   "agency": "Department of Homeland Security",
+   "naics": "236220",
+   "desc": "THE CONTRACTOR SHALL PERFORM CONSTRUCTION AND RENOVATION ADDITION SERVICES AT FLETC BUILDING 36; WHICH IS INCL",
+   "aid": "70LGLY19FSSB00058"
+  },
+  {
+   "recipient": "THE CLEMENT GROUP LLC",
+   "amount": 17017060.43,
+   "start": "2015-09-30",
+   "end": "2017-10-12",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF   REPAIR AND ABATEMENT WORK BLDG 35200",
+   "aid": "CV01"
+  },
+  {
+   "recipient": "DAWSON ENTERPRISES, INC.",
+   "amount": 16733930.56,
+   "start": "2024-12-04",
+   "end": "2026-10-31",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "ICCB RECAP REPLACE VARIOUS SYSTEMS NSB KINGS BAY, GA",
+   "aid": "N6945025F0062"
+  },
+  {
+   "recipient": "GSC CONSTRUCTION, INC.",
+   "amount": 16682713.29,
+   "start": "2012-09-25",
+   "end": "2015-02-15",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "RENOVATION OF RIP ROPE BUILDINGS 2833&2834 FT. BENNING, GA",
+   "aid": "0007"
+  },
+  {
+   "recipient": "POND CONSTRUCTORS INC.",
+   "amount": 16589642.0,
+   "start": "2010-09-02",
+   "end": "2016-06-08",
+   "agency": "Department of Defense",
+   "naics": "237120",
+   "desc": "M: TANK GROUP 11 TASK ORDER, NATIONWIDE FUELS",
+   "aid": "0001"
+  },
+  {
+   "recipient": "MEB GENERAL CONTRACTORS INC",
+   "amount": 16567793.0,
+   "start": "2015-08-19",
+   "end": "2019-04-26",
+   "agency": "Department of Defense",
+   "naics": "237120",
+   "desc": "IGF::OT::IGF REPLACE HYDRANT HYDRANT FUEL SYSTEM AT ROBINS AFB, GA",
+   "aid": "W912HN15C0016"
+  },
+  {
+   "recipient": "ADVON CORPORATION",
+   "amount": 16493687.81,
+   "start": "2021-09-30",
+   "end": "2023-04-25",
+   "agency": "Department of Veterans Affairs",
+   "naics": "236220",
+   "desc": "CONSTRUCTION CONTRACT FOR THE CONSTRUCT WOMEN'S HEALTHCARE CLINIC AT THE CARL VINSON VAMC",
+   "aid": "36C77621N4919"
+  },
+  {
+   "recipient": "GREAT LAKES DREDGE & DOCK CO, LLC",
+   "amount": 16046616.4,
+   "start": "2015-11-20",
+   "end": "2016-03-31",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "MAINTENANCE DREDGING OF THE KINGS BAY ENTRANCE CHANNEL IGF::CT::IGF",
+   "aid": "0009"
+  },
+  {
+   "recipient": "MACHIS MID-ATLANTIC, INC.",
+   "amount": 15998081.91,
+   "start": "2020-09-08",
+   "end": "2023-03-02",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "B3040, REPLACE HVAC SYSTEM",
+   "aid": "N6945020C0061"
+  },
+  {
+   "recipient": "GREAT LAKES DREDGE & DOCK CO, LLC",
+   "amount": 15662861.4,
+   "start": "2023-10-20",
+   "end": "2025-10-28",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "MOBILIZATION AND DEMOBILIZATION",
+   "aid": "W912EP23C0023"
+  },
+  {
+   "recipient": "JAAAT TECHNICAL SERVICES, LLC",
+   "amount": 15637173.0,
+   "start": "2011-09-17",
+   "end": "2013-09-04",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "SOF COMPANY OPERATIONS FACILITY",
+   "aid": "0001"
+  },
+  {
+   "recipient": "WOLVERINE FIRE PROTECTION CO",
+   "amount": 15607013.0,
+   "start": "2012-09-29",
+   "end": "2015-03-25",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "BUILDING 385, REPAIR SPRINKLER SYSTEM",
+   "aid": "0001"
+  },
+  {
+   "recipient": "LEEBCOR SERVICES LLC",
+   "amount": 15520220.18,
+   "start": "2018-09-12",
+   "end": "2021-10-16",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT:IGF P642 NAVAL OPERATIONAL SUPPORT CENTER",
+   "aid": "N6945018F0731"
+  },
+  {
+   "recipient": "R. C. CONSTRUCTION CO., INC.",
+   "amount": 15101900.0,
+   "start": "2014-08-28",
+   "end": "2016-07-18",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF      BLDG. 3035, RECEPTION STATION BARRACKS AT FORT BENNING, GA",
+   "aid": "0008"
+  },
+  {
+   "recipient": "CAPE ENVIRONMENTAL MANAGEMENT INC",
+   "amount": 15047155.5,
+   "start": "2014-11-06",
+   "end": "2020-03-02",
+   "agency": "Department of Defense",
+   "naics": "237120",
+   "desc": "IGF::OT::IGF  MILITARY - TANK GROUP 20, VARIOUS LOCATIONS.  API 653 TANK INSPECTIONS AND COMPLETE ALL REPAIRS.",
+   "aid": "0008"
+  },
+  {
+   "recipient": "SAND POINT SERVICES, LLC",
+   "amount": 14986622.93,
+   "start": "2018-08-31",
+   "end": "2022-05-25",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF SITE ADAPT/DESIGN, DEMO, RENO&REPAIR",
+   "aid": "W912HN18F3000"
+  },
+  {
+   "recipient": "AIRFIELD CONTRACTING",
+   "amount": 14900940.3,
+   "start": "2020-09-28",
+   "end": "2022-07-06",
+   "agency": "Department of Defense",
+   "naics": "237310",
+   "desc": "REPAIR TRANSIENT PARKING RAMP",
+   "aid": "FA670320C0006"
+  },
+  {
+   "recipient": "GILBANE FEDERAL",
+   "amount": 14898543.76,
+   "start": "2019-06-21",
+   "end": "2021-08-25",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "REPAIR BUILDING 29802 (MORAN HALL SOUTH), FORT GORDON, GA, PN 86411",
+   "aid": "W912HN19C3007"
+  },
+  {
+   "recipient": "GULF BUILDING, HERNANDEZ CONSULTING A JOINT VENTURE LLC",
+   "amount": 14896064.77,
+   "start": "2014-11-03",
+   "end": "2018-03-06",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF DESIGN- BUILD P934 WEAPONS STORAGE AND INSPECTION FACILITY AT MCLB ALBANY, GA",
+   "aid": "0002"
+  },
+  {
+   "recipient": "ODYSSEY INTERNATIONAL, INC.",
+   "amount": 14768954.64,
+   "start": "2019-01-18",
+   "end": "2021-10-29",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CONSTRUCT ARCYBER COF, FORT GORDON, GA",
+   "aid": "W912HN19C3000"
+  },
+  {
+   "recipient": "ADVON CORPORATION",
+   "amount": 14629839.39,
+   "start": "2018-09-24",
+   "end": "2024-06-03",
+   "agency": "Department of Veterans Affairs",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF - CONSTRUCT COMMUNITY LIVING CENTER - AUGUSTA VAMC",
+   "aid": "36C24718C0191"
+  },
+  {
+   "recipient": "EAGLE EYE ELECTRIC LLC",
+   "amount": 14396190.28,
+   "start": "2020-09-12",
+   "end": "2023-11-14",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "BASE: RPR RR TIES AND XING FT. STEWARTQ5A-60-8J&WG-501-0J",
+   "aid": "W912HN20C4004"
+  },
+  {
+   "recipient": "CCI GROUP, LLC",
+   "amount": 14305700.78,
+   "start": "2021-09-22",
+   "end": "2026-05-19",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "ECI FOR P693 ELECTRICAL TRANSMISSION AND DISTRIBUTION, NAVAL SUBMARINE BASE KINGS BAY, GEORGIA",
+   "aid": "N6945021F0767"
+  },
+  {
+   "recipient": "GREENLAND ENTERPRISES, INC.",
+   "amount": 14227609.0,
+   "start": "2016-09-22",
+   "end": "2019-04-26",
+   "agency": "Department of Defense",
+   "naics": "236210",
+   "desc": "IGF::OT::IGF VAMC BOILER PLANT REBUILD, DUBLIN GA.",
+   "aid": "W912HP16C0018"
+  },
+  {
+   "recipient": "MANSON CONSTRUCTION CO",
+   "amount": 14043166.44,
+   "start": "2024-09-30",
+   "end": "2025-05-03",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "NAVAL SUBMARINE BASE KINGS BAY, ENTRANCE CHANNEL",
+   "aid": "W912EP24C0019"
+  },
+  {
+   "recipient": "ALUTIIQ INTERNATIONAL SOLUTIONS, LLC",
+   "amount": 14031553.0,
+   "start": "2010-04-27",
+   "end": "2011-11-17",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CONSTRUCT TEMF",
+   "aid": "0003"
+  },
+  {
+   "recipient": "GREAT LAKES DREDGE & DOCK CO, LLC",
+   "amount": 13800335.95,
+   "start": "2019-11-07",
+   "end": "2020-02-16",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "FY20 TYBEE ISLAND BEACH RENOURISHMENT GA",
+   "aid": "W912HN20C5002"
+  },
+  {
+   "recipient": "GREAT LAKES DREDGE & DOCK CO, LLC",
+   "amount": 13736787.6,
+   "start": "2019-09-13",
+   "end": "2021-09-24",
+   "agency": "Department of Defense",
+   "naics": "237110",
+   "desc": "MOBILIZATION AND DEMOBILIZATION",
+   "aid": "W912EP19C0029"
+  },
+  {
+   "recipient": "DOMINGUEZ DESIGN-BUILD, INC",
+   "amount": 13559384.0,
+   "start": "2025-11-06",
+   "end": "2028-03-13",
+   "agency": "Department of Veterans Affairs",
+   "naics": "236220",
+   "desc": "CONSTRUCT 12 BED CLC- TRINKA DAVIS VETERAN'S VILLAGE - CARROLLTON, GA",
+   "aid": "36C77625C0124"
+  },
+  {
+   "recipient": "ALUTIIQ MANUFACTURING CONTRACTORS, LLC",
+   "amount": 13507024.0,
+   "start": "2015-09-21",
+   "end": "2017-09-23",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF TBUP BLDG 25708",
+   "aid": "0003"
+  },
+  {
+   "recipient": "NOVA GROUP, INC-UNDERGROUND CONSTRUCTION CO, INC, AJV",
+   "amount": 13503915.0,
+   "start": "2014-09-05",
+   "end": "2016-09-16",
+   "agency": "Department of Defense",
+   "naics": "237120",
+   "desc": "IGF::OT::IGF REPLACE FUEL ISLAND",
+   "aid": "W912HN14C0011"
+  },
+  {
+   "recipient": "SPEEGLE CONSTRUCTION, INC",
+   "amount": 13377887.0,
+   "start": "2017-08-15",
+   "end": "2019-12-09",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF  AUTOMATED QUALIFICATIONS TRAINING RANGE, PN 67029, FT. STEWART, GA; AWARD OF TOTAL BASE, ALL OPT",
+   "aid": "W912HN17F9004"
+  },
+  {
+   "recipient": "J & J MAINTENANCE INC",
+   "amount": 13358568.08,
+   "start": "2024-06-08",
+   "end": "2027-02-28",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "FT. EISENHOWER O&M",
+   "aid": "W9127824C0036"
+  },
+  {
+   "recipient": "TUTOR PERINI CORPORATION",
+   "amount": 13258124.82,
+   "start": "2020-08-06",
+   "end": "2022-03-31",
+   "agency": "Department of Homeland Security",
+   "naics": "236220",
+   "desc": "PROVIDE, INSTALL AND MAKE READY FOR USE SEVEN BUILDINGS COMPRISED OF MODULAR SECTIONS. FIVE(5) CLASSROOM BUILD",
+   "aid": "70LGLY20FSSB00089"
+  },
+  {
+   "recipient": "QBS INC",
+   "amount": 13223871.0,
+   "start": "2011-06-21",
+   "end": "2013-07-05",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "10TH ENGINEERING BATTALION COF AT FORT STEWART, GEORGIA (PN 71583)",
+   "aid": "0003"
+  },
+  {
+   "recipient": "MANSON CONSTRUCTION CO",
+   "amount": 13148817.25,
+   "start": "2021-12-07",
+   "end": "2022-05-25",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "NAVAL SUBMARINE BASE KINGS BAY - ENTRANCE CHANNEL, MAINTENANCE DREDGING - CUT - 1N THROUGH RANGE-E, 49,45, AND",
+   "aid": "W912EP22C0001"
+  },
+  {
+   "recipient": "GILBANE FEDERAL",
+   "amount": 13055627.28,
+   "start": "2018-09-25",
+   "end": "2021-04-09",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "MORAN HALL NORTH",
+   "aid": "W912HN18C3003"
+  },
+  {
+   "recipient": "4K GLOBAL-ACC JV, LLC",
+   "amount": 12943211.0,
+   "start": "2023-10-15",
+   "end": "2026-05-01",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CONSTRUCT BREAKROOM AND ADMIN AREA",
+   "aid": "W912HN23C3003"
+  },
+  {
+   "recipient": "CENTENNIAL CONTRACTORS ENTERPRISES, INC.",
+   "amount": 12942071.21,
+   "start": "2025-09-30",
+   "end": "2028-03-29",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "THE INTENT OF THIS PROJECT IS TO REPAIR THE EXISTING DAMAGE TO STRUCTURAL MEMBERS ON MULTIPLE LEVELS OF THE VI",
+   "aid": "W912DY25FA294"
+  },
+  {
+   "recipient": "GREAT LAKES DREDGE & DOCK CO, LLC",
+   "amount": 12648934.65,
+   "start": "2022-11-14",
+   "end": "2023-04-14",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "NAVAL SUBMARINE BASE KINGS BAY ENTRANCE CHANNEL, MAINTENANCE DREDGING CUT-1N THROUGH RANGE-E, 49, 45, AND 44-F",
+   "aid": "W912EP22C0013"
+  },
+  {
+   "recipient": "MEDVOLT LLC",
+   "amount": 12577245.59,
+   "start": "2018-07-25",
+   "end": "2022-04-30",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "CONSTRUCTION GRADING",
+   "aid": "FA850118C0602"
+  },
+  {
+   "recipient": "J & J MAINTENANCE INC",
+   "amount": 12569425.92,
+   "start": "2015-12-07",
+   "end": "2019-01-31",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF O&M MEDCOM - GORDON",
+   "aid": "0010"
+  },
+  {
+   "recipient": "J & J MAINTENANCE INC",
+   "amount": 12417903.41,
+   "start": "2014-09-30",
+   "end": "2023-12-29",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF REPAIR FISHER ARMY DENTAL LABORATORY, DWIGHT D. EISENHOWER ARMY MEDICAL CENTER, FORT GORDON, GEOR",
+   "aid": "0012"
+  },
+  {
+   "recipient": "SOCO-PIEDMONT J.V., LLC",
+   "amount": 12354339.75,
+   "start": "2010-09-16",
+   "end": "2012-11-06",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CONSTRUCTION OF ARC WINDER, GA",
+   "aid": "W912QR10C0082"
+  },
+  {
+   "recipient": "GREAT LAKES DREDGE & DOCK CO, LLC",
+   "amount": 12338459.75,
+   "start": "2020-12-07",
+   "end": "2021-06-07",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "NAVAL SUBMARINE BASE KINGS BAY ENTRANCE CHANNEL, MAINTENANCE DREDGING CUT-1N THROUGH RANGE-E, 49, 45, AND 44-F",
+   "aid": "W912EP21C0002"
+  },
+  {
+   "recipient": "STRUCTSURE PROJECTS INC",
+   "amount": 12334265.44,
+   "start": "2013-09-24",
+   "end": "2016-07-05",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF   CAMPUST MODERNIZATION; DESIGN&CONSTRUCT REPAIRS TO MEDICAL CLINIC, MOODY AIR FORCE BASE, VALDOS",
+   "aid": "CL06"
+  },
+  {
+   "recipient": "VENERGY GROUP LLC",
+   "amount": 12222486.63,
+   "start": "2025-05-05",
+   "end": "2027-02-26",
+   "agency": "Department of Veterans Affairs",
+   "naics": "236220",
+   "desc": "RENOVATE NFS KITCHEN FREEZERS PROJECT 508-22-102",
+   "aid": "36C24725C0057"
+  },
+  {
+   "recipient": "SEMPER TEK INC",
+   "amount": 12136489.84,
+   "start": "2021-07-26",
+   "end": "2024-12-24",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "PROJECT 150268 PLATING SHOP",
+   "aid": "FA850121F0118"
+  },
+  {
+   "recipient": "MICHELS CORP",
+   "amount": 12126506.25,
+   "start": "2021-07-14",
+   "end": "2022-08-07",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "MARSH RESTORATION AT DMCA 1S, PORT WENTWORTH, GA",
+   "aid": "W912HN21C5001"
+  },
+  {
+   "recipient": "C & C CONTRACTORS LLC",
+   "amount": 12096274.0,
+   "start": "2023-09-26",
+   "end": "2025-06-09",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "HH-28264-2J,SUBTERRANEAN TESTING",
+   "aid": "W912HN23F4025"
+  },
+  {
+   "recipient": "SOUTHERN DREDGING CO INC",
+   "amount": 11960887.82,
+   "start": "2016-04-08",
+   "end": "2016-12-12",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "MAINTENANCE DREDGING OF NAVY SUBMARINE BASE KINGS BAY AND THE MARINE CORPS SUPPORT FACILITY. IGF::CT::IGF",
+   "aid": "0005"
+  },
+  {
+   "recipient": "GEORGIA POWER COMPANY",
+   "amount": 11950000.0,
+   "start": "2022-09-01",
+   "end": "2024-09-30",
+   "agency": "Department of Defense",
+   "naics": "237130",
+   "desc": "ROBINS AFB SUBSTATION UPGRADE",
+   "aid": "FA850122C0008"
+  },
+  {
+   "recipient": "JBW GROUP LLC",
+   "amount": 11900000.0,
+   "start": "2025-09-29",
+   "end": "2028-10-19",
+   "agency": "Department of Defense",
+   "naics": "237110",
+   "desc": "TRF RECAP LIFT STATION REPLACEMENT - DESIGN BUILD RFP.",
+   "aid": "N6945025C1088"
+  },
+  {
+   "recipient": "ROUNDHOUSE-MV JV",
+   "amount": 11856802.0,
+   "start": "2023-09-22",
+   "end": "2026-03-20",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "DLA DISPOSITION ROBINS BLDG. 1602",
+   "aid": "W912HP23F6019"
+  },
+  {
+   "recipient": "GSC CONSTRUCTION, INC.",
+   "amount": 11837340.51,
+   "start": "2015-01-22",
+   "end": "2016-03-21",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "BUILDING 54 CONSTRUCTION OF HVAC&",
+   "aid": "0015"
+  },
+  {
+   "recipient": "FSI CONSTRUCTION, LLC",
+   "amount": 11815135.07,
+   "start": "2016-09-23",
+   "end": "2019-06-27",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF REPAIR AIR HANDING UNIT (AHU) 4W, DWIGHT D. EISENHOWER ARMY MEDICAL CENTER, FT. GORDON, GA.",
+   "aid": "0047"
+  },
+  {
+   "recipient": "COTTRELL CONTRACTING CORPORATION",
+   "amount": 11663054.3,
+   "start": "2019-01-23",
+   "end": "2019-11-30",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "ATLANTIC INTRACOASTAL WATERWAY JEKYLL CREEK BENEFICIAL USE OF DREDGED MATERIAL PILOT PROJECT AND SELECTED SITE",
+   "aid": "W912HN19C5001"
+  },
+  {
+   "recipient": "MILTON J. WOOD FIRE PROTECTION, INC.",
+   "amount": 11512814.0,
+   "start": "2023-11-14",
+   "end": "2026-09-30",
+   "agency": "Department of Defense",
+   "naics": "238210",
+   "desc": "FIRE ALARM REPAIRS - BUILDING 1121",
+   "aid": "N6945024F0043"
+  },
+  {
+   "recipient": "DON JONES CONSTRUCTION CO., INC.",
+   "amount": 11502476.17,
+   "start": "2021-09-07",
+   "end": "2026-08-17",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "LAAF DRAIN BASIN REPAIRS, PHASE I",
+   "aid": "W911SF21F0154"
+  },
+  {
+   "recipient": "BIRMINGHAM INDUSTRIAL CONSTRUCTION, LLC",
+   "amount": 11495391.0,
+   "start": "2025-10-01",
+   "end": "2029-09-30",
+   "agency": "Department of Veterans Affairs",
+   "naics": "236220",
+   "desc": "RENOVATE 5B NORTH AND EAST FOR SPECIALTY CLINIC",
+   "aid": "36C24725C0111"
+  },
+  {
+   "recipient": "LEEBCOR SERVICES LLC",
+   "amount": 11461951.74,
+   "start": "2016-09-23",
+   "end": "2018-08-19",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF REPAIRS TO BLDG 29718 (WINSHIP HALL)",
+   "aid": "CV01"
+  },
+  {
+   "recipient": "ACC CONSTRUCTION CO., INC.",
+   "amount": 11374658.66,
+   "start": "2019-02-22",
+   "end": "2022-03-31",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CONSTRUCTION OF AN AIR TRAFFIC CONTROL TOWER, FORT BENNING, GEORGIA",
+   "aid": "W912HN19C3003"
+  },
+  {
+   "recipient": "LIFECYCLE CONSTRUCTION SERVICES, LLC",
+   "amount": 11363590.42,
+   "start": "2012-09-29",
+   "end": "2017-04-29",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "BASE BID- CONSTRUCT BUILDING",
+   "aid": "0004"
+  },
+  {
+   "recipient": "SAUER CONSTRUCTION, LLC",
+   "amount": 11330519.11,
+   "start": "2022-05-20",
+   "end": "2024-12-30",
+   "agency": "General Services Administration",
+   "naics": "236220",
+   "desc": "CONTRACT AWARD FOR THE MARTIN LUTHER KING, JR. FEDERAL BUILDING  3RD THROUGH 7TH FLOOR HOUSING AND URBAN DEVEL",
+   "aid": "47PE0522F0024"
+  },
+  {
+   "recipient": "ALLEN-BATCHELOR CONSTRUCTION CO., INC.",
+   "amount": 11228918.42,
+   "start": "2020-04-30",
+   "end": "2022-11-04",
+   "agency": "Department of Defense",
+   "naics": "236115",
+   "desc": "PROJECT NUMBER: 87205, FAMILY HOUSING REPLACEMENT AT FORT GORDON, GA",
+   "aid": "W912HN20C3004"
+  },
+  {
+   "recipient": "ARTESIAN CONTRACTING COMPANY, INC.",
+   "amount": 11109688.0,
+   "start": "2019-02-11",
+   "end": "2021-06-14",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "REPAIR OF THE MOODY AFB AIRFIELD DRAINAGE. QSEU 13-0113.",
+   "aid": "FA483019FA016"
+  },
+  {
+   "recipient": "SOUTHERN DREDGING CO INC",
+   "amount": 10928779.61,
+   "start": "2018-02-27",
+   "end": "2019-02-16",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "MAINTENANCE DREDGING OF THE KINGS BAY INNER CHANNEL&BLOUNT ISLAND MARINE CORPS SUPPORT FACILITY IGF::CT::IGF",
+   "aid": "W912EP18C0009"
+  },
+  {
+   "recipient": "AQUATERRA CONTRACTING, LLC",
+   "amount": 10902967.8,
+   "start": "2016-05-27",
+   "end": "2021-04-30",
+   "agency": "Department of Transportation",
+   "naics": "237310",
+   "desc": "IGF::OT::IGF PROJECT:  FTNP-FOPU 10(3)  THE PURPOSE OF THIS AMENDMENT IS TO:  1) PROVIDE A SUMMARY OF RESPONSE",
+   "aid": "DTFH7116C00024"
+  },
+  {
+   "recipient": "RELIABLE CONTRACTING GROUP, LLC",
+   "amount": 10787376.83,
+   "start": "2016-09-19",
+   "end": "2019-03-01",
+   "agency": "Department of Defense",
+   "naics": "237120",
+   "desc": "IGF::OT::IGF TRUCKFILL STANDS AND PUMPHOUSE REPLACEMENT",
+   "aid": "W912HN16C0017"
+  },
+  {
+   "recipient": "POND CONSTRUCTORS INC.",
+   "amount": 10770901.0,
+   "start": "2021-06-29",
+   "end": "2023-10-02",
+   "agency": "Department of Defense",
+   "naics": "237120",
+   "desc": "REPAIR OF UEM NATURAL GAS PM",
+   "aid": "N6247321F5005"
+  },
+  {
+   "recipient": "SEMPER TEK INC",
+   "amount": 10743263.57,
+   "start": "2022-09-30",
+   "end": "2026-08-24",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "BASE CLIN 0001: STRUCTURUAL REPAIRS",
+   "aid": "W912HN22F4007"
+  },
+  {
+   "recipient": "J2 ENGINEERING, INC.",
+   "amount": 10709207.35,
+   "start": "2009-12-04",
+   "end": "2015-11-05",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "OPTION PERIOD FIRST YEAR",
+   "aid": "0002"
+  },
+  {
+   "recipient": "ARTESIAN CONTRACTING COMPANY, INC.",
+   "amount": 10679547.0,
+   "start": "2015-08-27",
+   "end": "2018-08-27",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::CT::IGF AFLD PAVEMENT CONSTRUCTION",
+   "aid": "2002"
+  },
+  {
+   "recipient": "R. C. CONSTRUCTION CO., INC.",
+   "amount": 10599519.0,
+   "start": "2013-09-29",
+   "end": "2015-11-27",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "BASE BID",
+   "aid": "0007"
+  },
+  {
+   "recipient": "CALL ASSOCIATES, INC.",
+   "amount": 10573365.1,
+   "start": "2019-09-25",
+   "end": "2025-05-09",
+   "agency": "Department of Defense",
+   "naics": "238220",
+   "desc": "RENOVATION OF SOUTH END B645",
+   "aid": "FA850119FA211"
+  },
+  {
+   "recipient": "TUTOR PERINI CORPORATION",
+   "amount": 10554684.28,
+   "start": "2016-06-03",
+   "end": "2017-01-30",
+   "agency": "Department of Homeland Security",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF  CONSTRUCTION TSA MODULAR BUILDINGS",
+   "aid": "HSFLGL16J00327"
+  },
+  {
+   "recipient": "RCA CONTRACTING, INC.",
+   "amount": 10550033.06,
+   "start": "2023-09-29",
+   "end": "2025-11-24",
+   "agency": "Department of Defense",
+   "naics": "238220",
+   "desc": "CHILLERS 5&6 BLDG 177",
+   "aid": "FA850123F0118"
+  },
+  {
+   "recipient": "DUTRA DREDGING COMPANY",
+   "amount": 10529158.1,
+   "start": "2016-09-12",
+   "end": "2017-04-30",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "IGF::OT::IGF MAINTENANCE DREDGING AT BRUNSWICK AND SAVANNAH HARBORS",
+   "aid": "CV01"
+  },
+  {
+   "recipient": "RELIABLE CONTRACTING GROUP, LLC",
+   "amount": 10492576.24,
+   "start": "2023-10-10",
+   "end": "2025-10-19",
+   "agency": "Department of Defense",
+   "naics": "237120",
+   "desc": "TANK 4302 MAINTENANCE (M)",
+   "aid": "W9128F23F0242"
+  },
+  {
+   "recipient": "DON JONES CONSTRUCTION CO., INC.",
+   "amount": 10437910.57,
+   "start": "2016-09-17",
+   "end": "2019-10-30",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF REPAIR BARRACKS BUILDINGS 2937, 2938, AND 2939 AT FT. BENNING, GA.",
+   "aid": "0003"
+  },
+  {
+   "recipient": "GILBANE FEDERAL JV",
+   "amount": 10391910.0,
+   "start": "2019-02-08",
+   "end": "2022-03-24",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CONSTRUCT NEW BLOOD PROCESSING CENTER",
+   "aid": "W912HN19C3002"
+  },
+  {
+   "recipient": "SKINNER DEVELOPMENT INC",
+   "amount": 10376739.99,
+   "start": "2021-09-29",
+   "end": "2025-05-30",
+   "agency": "Environmental Protection Agency",
+   "naics": "236220",
+   "desc": "ATHENS LABORATORY CONSOLIDATION (ALC) PHASE 3B MAIN LAB BUILDING CONSTRUCTION-PHASE 1 FOR EPA ENVIRONMENTAL RE",
+   "aid": "68HERC21F0453"
+  },
+  {
+   "recipient": "WINDAMIR DEVELOPMENT INC",
+   "amount": 10269196.74,
+   "start": "2019-08-06",
+   "end": "2022-05-04",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "P643 RESERVE TRAINING CENTER, FORT BENNING, GEORGIA",
+   "aid": "N6945019F0864"
+  },
+  {
+   "recipient": "DON JONES CONSTRUCTION CO., INC.",
+   "amount": 10208802.38,
+   "start": "2016-09-30",
+   "end": "2019-10-21",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF   OLD CUSSETTA ROAD BRIDGE",
+   "aid": "0006"
+  },
+  {
+   "recipient": "COTTRELL CONTRACTING CORPORATION",
+   "amount": 10130513.59,
+   "start": "2021-03-11",
+   "end": "2022-06-07",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "NAVAL SUBMARINE BASE KINGS BAY, MAINTENANCE DREDGING 44, 45, AND 47-FOOT PROJECT, CAMDEN COUNTY, GEORGIA",
+   "aid": "W912EP21C0008"
+  },
+  {
+   "recipient": "DAWSON SOLUTIONS, INC.",
+   "amount": 10092933.28,
+   "start": "2019-12-23",
+   "end": "2023-08-02",
+   "agency": "Department of Defense",
+   "naics": "238210",
+   "desc": "CONSTRUCT EARLY SITE PACKAGE FOR CONSTRUCTION MANAGEMENT OFFICE",
+   "aid": "N6945020C0009"
+  },
+  {
+   "recipient": "SOUTHERN DREDGING CO INC",
+   "amount": 10039861.18,
+   "start": "2020-02-07",
+   "end": "2021-03-26",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "U.S. NAVAL SUBMARINE BASE KINGS BAY, MAINTENANCE DREDGING, 44, 45 AND 47-FOOT PROJECT, CAMDEN COUNTY, GEORGIA",
+   "aid": "W912EP20F0058"
+  },
+  {
+   "recipient": "SOUTHERN DREDGING CO INC",
+   "amount": 9997351.87,
+   "start": "2019-03-06",
+   "end": "2020-01-27",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "IGF::CT::TGF MAINTENANCE DREDGING KING BAY SUBMARINE BASE",
+   "aid": "W912EP19C0013"
+  },
+  {
+   "recipient": "HENSEL PHELPS CONSTRUCTION CO",
+   "amount": 9983956.0,
+   "start": "2020-05-20",
+   "end": "2021-12-12",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CONSTRUCTION",
+   "aid": "W912HN20F4009"
+  },
+  {
+   "recipient": "MANN MECHANICAL CO., INC.",
+   "amount": 9981798.24,
+   "start": "2017-04-21",
+   "end": "2019-11-01",
+   "agency": "Department of Transportation",
+   "naics": "236220",
+   "desc": "MAJOR MECHANICAL SUSTAIN AND CONTROL WING BASEMENT (MMS/CWB) PROJECT ZTL IGF::OT::IGF",
+   "aid": "DTFASA17C00389"
+  },
+  {
+   "recipient": "SEMPER TEK INC",
+   "amount": 9978693.0,
+   "start": "2025-07-31",
+   "end": "2026-06-26",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "REQUEST CONTRACT TO INDUSTRIAL SEWER SYSTEM SURCHARGED PIPING, SEWER MAIN, 8320 PROJECT: UHHZ210338 THIS TASK ",
+   "aid": "FA850125F0134"
+  },
+  {
+   "recipient": "COLLINS CONSTRUCTION SERVICES, INC",
+   "amount": 9961723.11,
+   "start": "2018-09-29",
+   "end": "2022-05-07",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CONSTRUCT DPW ADDITION BLDG 14600",
+   "aid": "W912HN18C4006"
+  },
+  {
+   "recipient": "E.Z. MECHANICAL, INC.",
+   "amount": 9854211.48,
+   "start": "2017-04-17",
+   "end": "2018-08-28",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "COMMISSARY ARCHITECTURAL&REFRIGERATION UPGRADE PROJECT  IGF::CT::IGF",
+   "aid": "0005"
+  },
+  {
+   "recipient": "AMERICAN CONTRACTOR AND TECHNOLOGY INC.",
+   "amount": 9813288.47,
+   "start": "2017-09-29",
+   "end": "2021-11-08",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF  PN 90580, REPAIR/RENOVATE BLDG 21606 707TH MI BN HQS, FT. GORDON, GA",
+   "aid": "W912HN17F9011"
+  },
+  {
+   "recipient": "NISOU LGC JV II LLC",
+   "amount": 9796733.8,
+   "start": "2023-05-01",
+   "end": "2026-05-13",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "FUNDING FOR BLDG 231 2ND FLOOR",
+   "aid": "W912HN23C4001"
+  },
+  {
+   "recipient": "GOLDBELT OPERATIONS SUPPORT SERVICES LLC",
+   "amount": 9713605.98,
+   "start": "2025-08-01",
+   "end": "2027-06-04",
+   "agency": "Department of Justice",
+   "naics": "236220",
+   "desc": "FCI ATLANTA_ REPAIR UNICOR ROOF-HURRICANE_ PROJ 25Z3AE6",
+   "aid": "15BFA025C00000030"
+  },
+  {
+   "recipient": "SOUTHERN CONTRACTING, LLC",
+   "amount": 9683645.17,
+   "start": "2020-10-10",
+   "end": "2025-08-17",
+   "agency": "Department of Defense",
+   "naics": "237110",
+   "desc": "DEMOLITION AND RECONSTRUCTION OF STORMWATER OUTFALL X",
+   "aid": "W912HN20C3010"
+  },
+  {
+   "recipient": "WEBB CONSTRUCTION GROUP INC",
+   "amount": 9648902.0,
+   "start": "2019-09-25",
+   "end": "2021-08-28",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "PROJECT REPAIRS TO THE FAILED AND FAILING COMPONENTS OF THE EXISTING BUILDING 5500, TRAINING AID/SUPPORT CENTE",
+   "aid": "W912HN19F3002"
+  },
+  {
+   "recipient": "ACC CONSTRUCTION CO., INC.",
+   "amount": 9529792.94,
+   "start": "2014-09-27",
+   "end": "2016-06-15",
+   "agency": "Department of Homeland Security",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF CONSTRUCT MULTI-PURPOSE FACILITY, BLDG. 912 FORMERLY TITLED, AUDITORIUM BLDG 912, FLETC, GLYNCO, ",
+   "aid": "HSFLGL14C00013"
+  },
+  {
+   "recipient": "BRISTOL DESIGN BUILD SERVICES, LLC",
+   "amount": 9332979.53,
+   "start": "2025-05-14",
+   "end": "2026-11-20",
+   "agency": "Department of Homeland Security",
+   "naics": "236220",
+   "desc": "OUTDOOR RANGE ROOFS REPAIR AND REPLACEMENT FOR BUILDINGS 157, 159, 161, 163, 165, 167, 125, AND 127. FY25 EXCL",
+   "aid": "70LGLY25FSSB00053"
+  },
+  {
+   "recipient": "J & J MAINTENANCE INC",
+   "amount": 9331303.1,
+   "start": "2013-09-20",
+   "end": "2016-10-11",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF REPAIR CONNELLY HEALTH CLINIC FOR SOLDIER CENTERED MEDICAL HOME (SCMH), DWIGHT D. EISENHOWER ARMY",
+   "aid": "CK18"
+  },
+  {
+   "recipient": "DRACE CONSTRUCTION CORP",
+   "amount": 9307027.16,
+   "start": "2017-09-21",
+   "end": "2020-10-09",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF CONSTRUCTION OF NEW FIRE STATION AT DOBB",
+   "aid": "W912QR17C0038"
+  },
+  {
+   "recipient": "GILBANE FEDERAL",
+   "amount": 9139998.23,
+   "start": "2012-09-30",
+   "end": "2017-06-21",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "RENOVATION OF BLDG 21718 FT. GORDON, GA",
+   "aid": "0012"
+  },
+  {
+   "recipient": "COTTRELL CONTRACTING CORPORATION",
+   "amount": 9110163.3,
+   "start": "2025-04-25",
+   "end": "2026-05-09",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "NAVAL SUBMARINE BASE KINGS BAY MAINTENANCE DREDGING, CAMDEN COUNTY, GEORGIA",
+   "aid": "W912EP25CA001"
+  },
+  {
+   "recipient": "TEYA ENTERPRISES LLC",
+   "amount": 9069521.0,
+   "start": "2022-08-19",
+   "end": "2024-10-10",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "WETLAND MITIGATION AND SLOPE STABILIZATION",
+   "aid": "N6945022C0052"
+  },
+  {
+   "recipient": "BILLY W. JARRETT CONSTRUCTION COMPANY, INC.",
+   "amount": 8986505.95,
+   "start": "2016-09-29",
+   "end": "2019-08-28",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF  OPTION 1 - REPAIR BUILDING 2940",
+   "aid": "0002"
+  },
+  {
+   "recipient": "SES ENERGY SERVICES LLC",
+   "amount": 8937879.54,
+   "start": "2018-09-29",
+   "end": "2023-08-11",
+   "agency": "Department of Defense",
+   "naics": "237310",
+   "desc": "12TH STREET TRAFFIC MITIGATION",
+   "aid": "W912HN18C4004"
+  },
+  {
+   "recipient": "PUYENPA SERVICES, LLC",
+   "amount": 8848288.0,
+   "start": "2021-06-30",
+   "end": "2023-01-26",
+   "agency": "Department of Defense",
+   "naics": "237110",
+   "desc": "HEAVY PAVEMENT , PHASE 2 AND 3",
+   "aid": "N6945021C0027"
+  },
+  {
+   "recipient": "BRANTLEY CONSTRUCTION SERVICES, LLC",
+   "amount": 8826862.0,
+   "start": "2017-03-14",
+   "end": "2019-01-20",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF SPECIAL OPERATIONS FORCES&COMPANY OPERATIONS FORCES AT HUNTER ARMY AIRFIELD, GA; AWARD OF BASE CL",
+   "aid": "W912HN17C0006"
+  },
+  {
+   "recipient": "OLD VETERAN CONSTRUCTION INC",
+   "amount": 8808607.44,
+   "start": "2014-11-18",
+   "end": "2017-07-29",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF DESIGN AND REPLACEMENT OF NATURAL GAS DISTRIBUTION",
+   "aid": "0004"
+  },
+  {
+   "recipient": "STRUCTURAL BUILDERS, INC.",
+   "amount": 8807147.0,
+   "start": "2016-06-27",
+   "end": "2020-08-31",
+   "agency": "Department of Veterans Affairs",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF CONSTRUCTION - CONSTRUCT NEW MENTAL HEALTH FACILITY AT THE CARL VINSON VA MEDICAL CENTER, DUBLIN,",
+   "aid": "VA24716C0150"
+  },
+  {
+   "recipient": "ALEUT DEMOLITION SERVICES LLC",
+   "amount": 8773286.33,
+   "start": "2022-09-29",
+   "end": "2024-07-30",
+   "agency": "Department of Defense",
+   "naics": "238910",
+   "desc": "DEMOLISH CELLS 5-8, SHP ACFT GEN PURP, B181",
+   "aid": "FA850122C0009"
+  },
+  {
+   "recipient": "SOUTHERN DREDGING CO INC",
+   "amount": 8721380.56,
+   "start": "2024-05-30",
+   "end": "2025-05-25",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "NAVAL SUBMARINE BASE KINGS BAY, MAINTENANCE DREDGING, 44, 45 AND 47-FOOT PROJECT, CAMDEN COUNTY, GEORGIA",
+   "aid": "W912EP24C0010"
+  },
+  {
+   "recipient": "SES ENERGY SERVICES LLC",
+   "amount": 8664658.15,
+   "start": "2018-09-28",
+   "end": "2021-06-17",
+   "agency": "Department of Defense",
+   "naics": "237310",
+   "desc": "LANE AVE PAVING FROM 15TH - 19TH STREET",
+   "aid": "W912HN18C4003"
+  },
+  {
+   "recipient": "DESBUILD INCORPORATED",
+   "amount": 8660591.0,
+   "start": "2018-09-06",
+   "end": "2020-07-26",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF REPAIR CONCRETE CAISSON",
+   "aid": "N6945018F0730"
+  },
+  {
+   "recipient": "BSL GALBREATH INC.",
+   "amount": 8657752.66,
+   "start": "2016-09-26",
+   "end": "2018-05-31",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CONSTRUCT C-130 SQUADRON OPS FACILITY IGF::OT::IGF",
+   "aid": "W912JM16C0013"
+  },
+  {
+   "recipient": "MGC ROOFING & CONSTRUCTION, INC.",
+   "amount": 8648328.81,
+   "start": "2014-12-12",
+   "end": "2017-08-29",
+   "agency": "Department of Defense",
+   "naics": "238160",
+   "desc": "ROOF BUILDING 368",
+   "aid": "0007"
+  },
+  {
+   "recipient": "A-VET/MGC II A JOINT VENTURE, LLC",
+   "amount": 8647939.4,
+   "start": "2016-12-22",
+   "end": "2019-03-24",
+   "agency": "Department of Defense",
+   "naics": "238160",
+   "desc": "IGF::OT::IGF RPR/RPL ROOFING AND STRUCTURE BLDG 364",
+   "aid": "FA850117F0006"
+  },
+  {
+   "recipient": "AHTNA MARINE & CONSTRUCTION COMPANY, LLC",
+   "amount": 8647465.7,
+   "start": "2022-05-03",
+   "end": "2023-05-11",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "NAVAL SUBMARINE BASE KINGS BAY, MAINTENANCE DREDGING 44, 45, AND 47-FOOT PROJECT, CAMDEN COUNTY, GEORGIA",
+   "aid": "W912EP22C0003"
+  },
+  {
+   "recipient": "PAUL S. AKINS COMPANY, INC.",
+   "amount": 8607333.9,
+   "start": "2017-09-15",
+   "end": "2020-02-07",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF RENOVATE BLDG 620 \"K\" WORK",
+   "aid": "W9124M17C0003"
+  },
+  {
+   "recipient": "MACHIS MID-ATLANTIC, INC.",
+   "amount": 8560493.31,
+   "start": "2021-09-30",
+   "end": "2024-02-16",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "BLDG 5085 REPAIR HULL SHOP",
+   "aid": "N6945021C0041"
+  },
+  {
+   "recipient": "YORK-BRAWLEY II JV LLC",
+   "amount": 8506976.0,
+   "start": "2023-09-29",
+   "end": "2026-08-10",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CEMACC III TASK ORDER PROJECT 170280, CONSTRUCT PAINT/DEPAINT FACIITY",
+   "aid": "FA850123F0152"
+  },
+  {
+   "recipient": "MA-CHIS C & C CONTRACTORS LLC",
+   "amount": 8410173.0,
+   "start": "2020-09-29",
+   "end": "2023-04-30",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "WINDY HILL WCR BLDG 1114",
+   "aid": "W912HP20C3006"
+  },
+  {
+   "recipient": "WELLS GLOBAL, LLC",
+   "amount": 8362360.14,
+   "start": "2020-06-18",
+   "end": "2027-03-18",
+   "agency": "Department of Transportation",
+   "naics": "238210",
+   "desc": "ZTL ACEPS II PHASE 2 STANDBY POWER SYSTEM MODIFICATION, DESIGN AND INSTALLATION",
+   "aid": "6973GH20F01180"
+  },
+  {
+   "recipient": "SOUTHERN DREDGING CO INC",
+   "amount": 8313300.38,
+   "start": "2015-03-06",
+   "end": "2015-10-09",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "MAINTENANCE DREDGING OF U.S. NAVY KINGS BAY INNER CHANNEL AND THE MARINE CORPS TERMINAL. \"OTHER FUNCTION\" - IG",
+   "aid": "0004"
+  },
+  {
+   "recipient": "BILLY W. JARRETT CONSTRUCTION COMPANY, INC.",
+   "amount": 8309190.51,
+   "start": "2017-09-29",
+   "end": "2019-01-12",
+   "agency": "Department of Veterans Affairs",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF - PARKING DECK TRINKA DAVIS PARKING GARAGE",
+   "aid": "VA24717C0179"
+  },
+  {
+   "recipient": "STRUCTSURE PROJECTS INC",
+   "amount": 8301889.0,
+   "start": "2015-09-30",
+   "end": "2017-07-03",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF  MEDICAL REPAIR/RENEWAL - RENEW STEWART DENTAL CLINIC 1",
+   "aid": "0005"
+  },
+  {
+   "recipient": "SEMPER TEK INC",
+   "amount": 8200267.0,
+   "start": "2025-08-22",
+   "end": "2026-07-09",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "PROJECT TITLE: CIVIL ENGINEERING MULTIPLE AWARD CONSTRUCTION CONTRACT: CEMACC III IDIQ",
+   "aid": "FA850125F0115"
+  },
+  {
+   "recipient": "RESTORATION SPECIALISTS, LLC",
+   "amount": 8199283.95,
+   "start": "2012-03-13",
+   "end": "2015-10-30",
+   "agency": "Department of Veterans Affairs",
+   "naics": "236220",
+   "desc": "DESIGN/BUILD A NEW PARKING DECK/GARAGE",
+   "aid": "VA24712C0035"
+  },
+  {
+   "recipient": "SAND POINT SERVICES, LLC",
+   "amount": 8195859.77,
+   "start": "2019-09-29",
+   "end": "2022-08-10",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "DESIGN AND RENO AND REPAIR OF BLDG 24404, FORT GORDON, GA",
+   "aid": "W912HN19F3000"
+  },
+  {
+   "recipient": "LEEBCOR SERVICES LLC",
+   "amount": 8188374.0,
+   "start": "2015-03-31",
+   "end": "2016-11-28",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGFBASE PERIOD - NFL/SGA IDIQ MACC THIS PROJECT WILL REPAIR THE TRIDENT REFIT  FACILITY WHARF 2 AT US",
+   "aid": "0003"
+  },
+  {
+   "recipient": "J & J MAINTENANCE INC",
+   "amount": 8094652.32,
+   "start": "2017-09-30",
+   "end": "2021-01-03",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF CONSTRUCTION, REPAIR / RENEWAL",
+   "aid": "W912DY17F0675"
+  },
+  {
+   "recipient": "JK LOCKWOOD CONSTRUCTION COMPANY, INC.",
+   "amount": 8047241.25,
+   "start": "2014-04-07",
+   "end": "2018-05-31",
+   "agency": "General Services Administration",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF FOR OTHER FUNCTIONS DESIGN BUILD FOR RENOVATION OF SECURITY IMPROVEMENTS AT THE FRANK M. SCARLETT",
+   "aid": "GS04P13BVC0003"
+  },
+  {
+   "recipient": "MANSON CONSTRUCTION CO",
+   "amount": 8020821.9,
+   "start": "2018-09-14",
+   "end": "2019-03-31",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "U.S. NAVAL STATION KINGS BAY, MAINTENANCE DREDGING, ENTRANCE CHANNEL, CUT 1N THROUGH RANGE-E, 49, 45 AND 44-FO",
+   "aid": "W912EP18C0024"
+  },
+  {
+   "recipient": "STRUCTURAL BUILDERS, INC.",
+   "amount": 8001324.18,
+   "start": "2017-09-25",
+   "end": "2020-03-30",
+   "agency": "Department of Veterans Affairs",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF - PARKING DECKS K&L ADDITIONAL PARKING LEVELS",
+   "aid": "VA24717C0119"
+  },
+  {
+   "recipient": "BERING STRAITS GLOBAL INNOVATIONS, LLC",
+   "amount": 7955696.37,
+   "start": "2024-09-30",
+   "end": "2026-07-10",
+   "agency": "Department of Defense",
+   "naics": "237310",
+   "desc": "FORT STEWART GATE 1 AVB INSTALLATION",
+   "aid": "W912DY24C0046"
+  },
+  {
+   "recipient": "CHENEGA SYSTEMS, LLC",
+   "amount": 7907244.34,
+   "start": "2020-08-07",
+   "end": "2021-03-19",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "SYNERGY INNOVATION PROJECT",
+   "aid": "FA857120C0038"
+  },
+  {
+   "recipient": "NEUBER ENVIRONMENTAL SERVICE INC",
+   "amount": 7893452.03,
+   "start": "2022-09-26",
+   "end": "2026-01-08",
+   "agency": "Department of Defense",
+   "naics": "238910",
+   "desc": "BLDG. 9200 MAIN HOSPITAL BUILDING",
+   "aid": "W912DY22F0525"
+  },
+  {
+   "recipient": "BLUE CORD DESIGN AND CONSTRUCTION, LLC",
+   "amount": 7854434.58,
+   "start": "2023-06-12",
+   "end": "2026-09-01",
+   "agency": "Department of Veterans Affairs",
+   "naics": "236220",
+   "desc": "RENOVATE 4B FOR HEMODIALYSIS",
+   "aid": "36C24823C0040"
+  },
+  {
+   "recipient": "P & S CONSTRUCTION INC.",
+   "amount": 7804194.28,
+   "start": "2023-07-31",
+   "end": "2024-10-28",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "P682 ARMORY EXPANSION",
+   "aid": "N6945023F0703"
+  },
+  {
+   "recipient": "GILBANE FEDERAL",
+   "amount": 7729488.51,
+   "start": "2014-09-30",
+   "end": "2019-08-15",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "REPAIR/RENEW - FORT GORDON",
+   "aid": "0003"
+  },
+  {
+   "recipient": "OK2 CONSTRUCTION, LLC",
+   "amount": 7681115.17,
+   "start": "2018-09-24",
+   "end": "2021-04-09",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "RPR/RPL UNIT SUBSTATION B140",
+   "aid": "FA850118F0249"
+  },
+  {
+   "recipient": "RCA CONTRACTING, INC.",
+   "amount": 7621471.79,
+   "start": "2014-09-19",
+   "end": "2019-09-05",
+   "agency": "Department of Defense",
+   "naics": "238210",
+   "desc": "IGF::OT::IGF  HVAC AND OTHER APPLICABLE WORK BAY D, IGF::OT::IGF",
+   "aid": "0031"
+  },
+  {
+   "recipient": "SAND POINT SERVICES, LLC",
+   "amount": 7530392.24,
+   "start": "2020-10-15",
+   "end": "2023-01-07",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "REPAIR NCOA BUILDINGS 24406, 24407, 24412 AND 24413, FORT GORDON, GA",
+   "aid": "W912HN20F3006"
+  },
+  {
+   "recipient": "DONLEY-KIRLIN JV",
+   "amount": 7529541.0,
+   "start": "2014-09-30",
+   "end": "2018-10-13",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF  REPLACE NURSE CALL SYSTEM",
+   "aid": "0054"
+  },
+  {
+   "recipient": "SOUTHEAST CHEROKEE CONSTRUCTION, INC.",
+   "amount": 7510874.13,
+   "start": "2017-03-22",
+   "end": "2019-02-23",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF, GROUND SOURCE HEAT PUMPS, ALBANY,GEORGIA.",
+   "aid": "WE01"
+  },
+  {
+   "recipient": "COTTRELL CONTRACTING CORPORATION",
+   "amount": 7501765.56,
+   "start": "2023-06-10",
+   "end": "2024-05-02",
+   "agency": "Department of Defense",
+   "naics": "237990",
+   "desc": "NAVAL SUBMARINE BASE KINGS BAY, MAINTENANCE DREDGING 44, 45 AND 47-FOOT PROJECT, CAMDEN COUNTY, GEORGIA",
+   "aid": "W912EP23C0015"
+  },
+  {
+   "recipient": "OCS-NCS JV II, LLC",
+   "amount": 7481631.77,
+   "start": "2025-07-02",
+   "end": "2027-02-22",
+   "agency": "Department of the Interior",
+   "naics": "236220",
+   "desc": "MALU - 293291 REHABILITATE THE VISITOR CENTER AND HEADQUARTERS  MARTIN LUTHER KING JR. NHP, ATLANTA, GA",
+   "aid": "140P2025C0002"
+  },
+  {
+   "recipient": "EDGEWATER CONSTRUCTION SERVICES, LLC",
+   "amount": 7459372.0,
+   "start": "2015-08-25",
+   "end": "2018-03-04",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF VA URGENT CARE FACILITY, DACATUR, GA",
+   "aid": "CK01"
+  },
+  {
+   "recipient": "COLLINS CONSTRUCTION SERVICES, INC",
+   "amount": 7384018.0,
+   "start": "2024-11-22",
+   "end": "2026-12-05",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CONSTRUCTION ARNG WTC ADMIN BUILDING",
+   "aid": "W912HN25F4000"
+  },
+  {
+   "recipient": "VALIANT GOVERNMENT SERVICES LLC",
+   "amount": 7360511.67,
+   "start": "2013-09-10",
+   "end": "2016-11-11",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "REPAIR/RENEWAL/CONSTRUCTION",
+   "aid": "0002"
+  },
+  {
+   "recipient": "TURNER CONSTRUCTION COMPANY",
+   "amount": 7198702.0,
+   "start": "2025-09-30",
+   "end": "2026-11-17",
+   "agency": "Department of Health and Human Services",
+   "naics": "238150",
+   "desc": "ROYBAL CAMPUS WINDOW AND FACADE REPAIRS",
+   "aid": "75D30125C20701"
+  },
+  {
+   "recipient": "ADVON CORPORATION",
+   "amount": 7175470.0,
+   "start": "2016-09-29",
+   "end": "2018-08-31",
+   "agency": "Department of Veterans Affairs",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF CONSTRUCTION PROJECT \"EXPAND 10A CLC\"",
+   "aid": "VA24716C0262"
+  },
+  {
+   "recipient": "FSI CONSTRUCTION, LLC",
+   "amount": 7133621.67,
+   "start": "2013-09-12",
+   "end": "2016-11-11",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF WORK PLAN   REPAIR COMMUNITY CARE CLINIC (CCC) AND INTERNAL MEDICINE CLINIC (IMC) FOR PATIENT CEN",
+   "aid": "0243"
+  },
+  {
+   "recipient": "IAP-DESIGN BUILD, LLC",
+   "amount": 7133100.0,
+   "start": "2015-02-02",
+   "end": "2017-03-21",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "IGF::OT::IGF, DLA DISTRIBUTION COMPLEX RENOVATION.",
+   "aid": "0004"
+  },
+  {
+   "recipient": "C.E. GARBUTT CONSTRUCTION COMPANY",
+   "amount": 7100771.56,
+   "start": "2014-11-13",
+   "end": "2017-03-22",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "CONSTRUCTION",
+   "aid": "0001"
+  },
+  {
+   "recipient": "REEVES YOUNG, LLC",
+   "amount": 7060350.0,
+   "start": "2025-08-25",
+   "end": "2027-11-30",
+   "agency": "Department of Justice",
+   "naics": "236220",
+   "desc": "SHOP-PR-25-002609 - MALETA RANGE CONSTRUCTION",
+   "aid": "15F06725C0000915"
+  },
+  {
+   "recipient": "NACCI CONSTRUCTION SERVICES, INC",
+   "amount": 7041791.46,
+   "start": "2024-04-29",
+   "end": "2026-11-20",
+   "agency": "Department of Veterans Affairs",
+   "naics": "236220",
+   "desc": "RENOVATE FOR PATIENT PRIVACY B801, WING 6C",
+   "aid": "36C24724N0535"
+  },
+  {
+   "recipient": "D7, LLC",
+   "amount": 6966520.04,
+   "start": "2022-08-18",
+   "end": "2024-12-21",
+   "agency": "Department of Defense",
+   "naics": "237120",
+   "desc": "ALBANY ANG FUELING FACILITY - ALBANY,GA",
+   "aid": "W9128F22C0031"
+  },
+  {
+   "recipient": "U-SMC/DEMARIA JV1, LLC",
+   "amount": 6938625.77,
+   "start": "2022-06-14",
+   "end": "2026-09-30",
+   "agency": "Department of Defense",
+   "naics": "236220",
+   "desc": "MODIFICATION OF MFSC ADMINISTRATIVE HQ, BLDG. 1121",
+   "aid": "N6945022F0543"
+  },
+  {
+   "recipient": "SECOND AVENUE CONTRACTORS, LLC",
+   "amount": 6920206.53,
+   "start": "2021-09-27",
+   "end": "2025-09-01",
+   "agency": "Department of Justice",
+   "naics": "238210",
+   "desc": "REPLACE THE FIRE ALARMS AT USP ATLANTA IN ACCORDANCE WITH THE STATEMENT OF WORK AND ALL ATTACHMENTS.",
+   "aid": "15B30121CW3W30001"
+  },
+  {
+   "recipient": "THE CONSTRUCTION SERVICES GROUP INC",
+   "amount": 6871607.82,
+   "start": "2022-02-21",
+   "end": "2025-02-11",
+   "agency": "Department of Veterans Affairs",
+   "naics": "236220",
+   "desc": "EO14042 - VISN 7 MATOC IDIQ BASE AWARD.  TASK ORDERS WILL BE AWARDED OFF THIS CONTRACT AT ALL VISN7 MEDICAL FA",
+   "aid": "36C24722N0148"
+  },
+  {
+   "recipient": "TEPA CONSTRUCTION SOLUTIONS, LLC",
+   "amount": 6870616.56,
+   "start": "2017-06-20",
+   "end": "2019-03-22",
+   "agency": "Department of Defense",
+   "naics": "238220",
+   "desc": "IGF::OT::IGF B905 HVAC AND NEW ROOF",
+   "aid": "FA850117C0013"
+  },
+  {
+   "recipient": "KITUWAH SERVICES, LLC",
+   "amount": 6830026.9,
+   "start": "2024-01-04",
+   "end": "2025-01-03",
+   "agency": "Department of Defense",
+   "naics": "237110",
+   "desc": "P504U - NEW DRINKING WATER SYSTEM, TOWNSEND BOMBING RANGE, TOWNSEND, GA",
+   "aid": "N4008524C0003"
+  }
+ ],
+ "eastern": {
+  "profiles": [
+   {
+    "name": "NOAH ENTERPRISES INC AND MID EASTERN BUILDERS INC JV1",
+    "amount": 0.0,
+    "uei": "MZ7ZNZFK9AT9",
+    "duns": "962613142"
+   },
+   {
+    "name": "EASTERN BUILDERS, INC.",
+    "amount": 0.0,
+    "uei": null,
+    "duns": null
+   },
+   {
+    "name": "EASTERN BUILDERS INC",
+    "amount": 0.0,
+    "uei": "UJ7ZZ7H7MCU3",
+    "duns": "067184366"
+   },
+   {
+    "name": "EASTERN BUILDERS INC",
+    "amount": 0.0,
+    "uei": "UJ7ZZ7H7MCU3",
+    "duns": "067184366"
+   },
+   {
+    "name": "SOUTHEASTERN BUILDERS INC",
+    "amount": 0.0,
+    "uei": null,
+    "duns": null
+   },
+   {
+    "name": "EASTERN BUILDERS",
+    "amount": 0.0,
+    "uei": null,
+    "duns": null
+   }
+  ],
+  "awards": [
+   {
+    "recipient": "MEB GENERAL CONTRACTORS INC",
+    "amount": 16567793.0,
+    "start": "2015-08-19",
+    "agency": "Department of Defense",
+    "aid": "W912HN15C0016",
+    "desc": "IGF::OT::IGF REPLACE HYDRANT HYDRANT FUEL SYSTEM AT ROBINS AFB, GA"
+   }
+  ]
+ }
+}

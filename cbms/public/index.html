@@ -243,6 +243,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px}
     <nav class="nav" id="nav">
       <a href="#dashboard" data-nav="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Executive Dashboard</a>
       <a href="#analytics" data-nav="analytics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Bid Analytics</a>
+      <a href="#market" data-nav="market"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14l3-3 2 2 3-4"/></svg>Georgia Market Intel<span class="tag">NEW</span></a>
       <a href="#subcontractors" data-nav="subcontractors"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Subcontractors</a>
       <a href="#bids" data-nav="bids"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>Bid Register</a>
       <a href="#risk" data-nav="risk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Risk Analytics</a>
@@ -398,7 +399,62 @@ function bindBanner(){ const b = $('[data-dismiss-banner]'); if (b) b.onclick = 
 const SAMPLE_NOTE = 'Project facts — names, locations, letting dates, engineer estimates, contractor names and bid amounts — are <b>real public TxDOT bid tabulation records</b> (Texas Open Data Portal). Contacts, ratings and bid-desk workflow statuses are <b>synthetic demo values</b> layered on top.';
 
 /* ---------------- router ---------------- */
-const TITLES = { dashboard:'Executive Dashboard', analytics:'Bid Analytics', subcontractors:'Subcontractor Management', bids:'Bid Register', risk:'Risk Analytics', decisions:'Decision Support', data:'Data Management & Tests' };
+const TITLES = { dashboard:'Executive Dashboard', analytics:'Bid Analytics', market:'Georgia Market Intelligence — Eastern Builders Region', subcontractors:'Subcontractor Management', bids:'Bid Register', risk:'Risk Analytics', decisions:'Decision Support', data:'Data Management & Tests' };
+async function renderMarket(){
+  const d = await api('/market/ga');
+  const m = d.meta, ot = d.over_time, aw = d.awards, east = d.eastern;
+  const agg = {};
+  aw.forEach((a) => agg[a.recipient] = (agg[a.recipient] || 0) + a.amount);
+  const topR = Object.entries(agg).sort((a,b) => b[1]-a[1]).slice(0,15);
+  const agAgg = {};
+  aw.forEach((a) => agAgg[a.agency] = (agAgg[a.agency] || 0) + a.amount);
+  const agTop = Object.entries(agAgg).sort((a,b) => b[1]-a[1]);
+  const agMain = agTop.slice(0,6), agOther = agTop.slice(6).reduce((s2,x)=>s2+x[1],0);
+  const naAgg = {};
+  aw.forEach((a) => { const p3 = (a.naics || '').slice(0,3); if (['236','237','238'].includes(p3)) naAgg[p3] = (naAgg[p3] || 0) + a.amount; });
+  const naLbl = {'236':'236 Buildings', '237':'237 Heavy & Civil', '238':'238 Specialty Trades'};
+  const naTop = Object.entries(naAgg).sort((a,b) => b[1]-a[1]);
+  const fy25 = (ot.find((x) => x.fy === 2025) || {}).amount || 0;
+  const total10 = ot.reduce((s2,x) => s2 + x.amount, 0);
+  const eastAmt = east.awards.reduce((s2,x) => s2 + x.amount, 0);
+  const card = (k,v) => '<div style="border:1px solid #e3e9ee;border-radius:8px;padding:10px 12px;background:#fff"><div class="form-hint" style="font-size:11px">' + k + '</div><div style="font:700 19px var(--font-disp);color:var(--navy)">' + v + '</div></div>';
+  viewEl.innerHTML =
+    '<div class="banner"><span><b>Observed federal contract data (USASpending.gov).</b> Georgia place-of-performance construction contracts (NAICS 23), FY2016-2025. Recipient shares come from a top-300 sample by amount. State DOT (GDOT) lettings are not included.</span></div>' +
+    '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0">' +
+      card('FY2025 GA construction awards', '$' + (fy25/1e9).toFixed(2) + 'B') +
+      card('10-year total (FY16-25)', '$' + (total10/1e9).toFixed(1) + 'B') +
+      card('Contracts sampled', aw.length) +
+      card('"Eastern" recipient profiles', east.profiles.length) +
+      card('Eastern-name award volume', '$' + (eastAmt/1e6).toFixed(1) + 'M') +
+    '</div>' +
+    '<div class="grid-2" style="grid-template-columns:1.5fr 1fr;align-items:start;margin-bottom:15px">' +
+      '<div class="card" style="margin:0"><div class="card-head"><h3>GA construction awards by fiscal year</h3><span class="hint">observed · $M</span></div><div class="card-body" style="position:relative;height:280px"><canvas id="chTrend"></canvas></div></div>' +
+      '<div class="card" style="margin:0"><div class="card-head"><h3>By trade subsector</h3><span class="hint">NAICS 3-digit</span></div><div class="card-body" style="position:relative;height:280px"><canvas id="chNaics"></canvas></div></div>' +
+    '</div>' +
+    '<div class="grid-2" style="grid-template-columns:1fr 1fr;align-items:start;margin-bottom:15px">' +
+      '<div class="card" style="margin:0"><div class="card-head"><h3>Top prime contractors</h3><span class="hint">top-300 sample · aggregated</span></div><div class="card-body" style="position:relative;height:340px"><canvas id="chTop"></canvas></div></div>' +
+      '<div class="card" style="margin:0"><div class="card-head"><h3>Awarding agencies</h3><span class="hint">share of sampled $</span></div><div class="card-body" style="position:relative;height:340px"><canvas id="chAgency"></canvas></div></div>' +
+    '</div>' +
+    '<div class="card" style="margin-bottom:15px"><div class="card-head"><h3>Eastern Builders — federal footprint (GA)</h3><span class="hint">recipient search + fuzzy name matches</span></div><div class="card-body">' +
+      (east.profiles.length ? '<table class="tbl" style="margin-bottom:10px"><thead><tr><th>Recipient profile</th><th class="mono">UEI / DUNS</th><th class="mono">GA total (all time)</th></tr></thead><tbody>' +
+        east.profiles.map((p) => '<tr><td class="cell-main">' + esc(p.name) + '</td><td class="mono">' + esc(p.uei || p.duns || '—') + '</td><td class="mono">$' + p.amount.toLocaleString('en-US') + '</td></tr>').join('') + '</tbody></table>' : '<div class="empty">No recipient profiles matched "eastern builders" in GA.</div>') +
+      (east.awards.length ? '<table class="tbl"><thead><tr><th>Matched award</th><th class="mono">Amount</th><th>Agency</th><th class="mono">Start</th></tr></thead><tbody>' +
+        east.awards.slice(0,12).map((a) => '<tr><td class="cell-main">' + esc(a.recipient) + '<span class="mono form-hint"> ' + esc(a.aid) + '</span><div class="form-hint">' + esc(a.desc || '') + '</div></td><td class="mono">$' + Math.round(a.amount).toLocaleString('en-US') + '</td><td>' + esc(a.agency) + '</td><td class="mono">' + esc(a.start || '—') + '</td></tr>').join('') + '</tbody></table>' : '') +
+      '<p class="form-hint">Matches are fuzzy token matches — verify each name before business use. If Eastern Builders holds no federal prime awards in GA, its work is likely subcontracted (federal subcontract data is not public).</p>' +
+    '</div></div>' +
+    '<div class="card" style="margin-bottom:15px"><div class="card-head"><h3>Largest recent GA construction contracts</h3><span class="hint">top of sample</span></div><div class="table-wrap"><table class="tbl"><thead><tr><th>Contractor</th><th class="mono">Amount</th><th>Agency</th><th>Description</th><th class="mono">Start</th></tr></thead><tbody>' +
+      aw.slice(0,12).map((a) => '<tr><td class="cell-main">' + esc(a.recipient) + '</td><td class="mono">$' + Math.round(a.amount).toLocaleString('en-US') + '</td><td>' + esc(a.agency) + '</td><td>' + esc(a.desc || '') + '</td><td class="mono">' + esc(a.start || '—') + '</td></tr>').join('') +
+      '</tbody></table></div></div>' +
+    '<p class="form-hint">Sources: USASpending.gov API — federal contracts, place of performance Georgia, NAICS 23. Time series FY2016-2025; distributions from the top-300-by-amount sample. Fuzzy matches are not verified identities.</p>';
+  const MC = window.__mch = window.__mch || {};
+  Object.values(MC).forEach((c) => c && c.destroy && c.destroy());
+  if (!window.Chart) return;
+  MC.trend = new Chart($('#chTrend'), { type:'bar', data:{ labels:ot.map((x) => 'FY' + x.fy), datasets:[{ label:'obligations ($M)', data:ot.map((x) => Math.round(x.amount/1e6)), backgroundColor:'#16395c', borderRadius:2 }] }, options:{ plugins:{ legend:{ display:false } }, scales:{ x:{ ticks:{ font:{ size:9 } } }, y:{ beginAtZero:true } }, maintainAspectRatio:false } });
+  MC.naics = new Chart($('#chNaics'), { type:'bar', data:{ labels:naTop.map(([k]) => naLbl[k] || k), datasets:[{ label:'$M (sample)', data:naTop.map(([,v]) => Math.round(v/1e6)), backgroundColor:['#16395c','#0e7c7b','#f0b429'], borderRadius:2 }] }, options:{ plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true } }, maintainAspectRatio:false } });
+  MC.top = new Chart($('#chTop'), { type:'bar', data:{ labels:topR.map(([r]) => r.length > 34 ? r.slice(0,34) + '…' : r), datasets:[{ label:'$M (sample)', data:topR.map(([,v]) => Math.round(v/1e6)), backgroundColor:'#0e7c7b', borderRadius:2 }] }, options:{ indexAxis:'y', plugins:{ legend:{ display:false } }, scales:{ x:{ beginAtZero:true } }, y:{ ticks:{ font:{ size:9 } } }, maintainAspectRatio:false } });
+  MC.agency = new Chart($('#chAgency'), { type:'doughnut', data:{ labels:agMain.map(([k]) => k).concat(agOther ? ['Other'] : []), datasets:[{ data:agMain.map(([,v]) => v).concat(agOther ? [agOther] : []), backgroundColor:['#16395c','#0e7c7b','#f0b429','#b3261e','#e07b2a','#8fa3ad','#d9e2ea'], borderWidth:0 }] }, options:{ cutout:'58%', plugins:{ legend:{ position:'right', labels:{ boxWidth:10, font:{ size:9 } } } }, maintainAspectRatio:false } });
+}
+
 async function route(){
   killCharts(); closeModal();
   const raw = (location.hash || '#dashboard').slice(1);
@@ -1101,7 +1157,7 @@ async function renderBidAnalytics(){
 }
 
 /* ---------------- boot ---------------- */
-const VIEWS = { dashboard:renderDashboard, analytics:renderBidAnalytics, subcontractors:renderSubs, bids:renderBids, risk:renderRisk, decisions:renderDecisions, data:renderData };
+const VIEWS = { market:renderMarket, dashboard:renderDashboard, analytics:renderBidAnalytics, subcontractors:renderSubs, bids:renderBids, risk:renderRisk, decisions:renderDecisions, data:renderData };
 route();
 })();
 </script>

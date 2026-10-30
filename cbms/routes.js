@@ -34,6 +34,10 @@ const logHistory = db.prepare(`INSERT INTO status_history
   VALUES (?,?,?,?,?,?,?,?)`);
 
 // ---------- meta ----------
+router.get('/market/ga', api((req, res) => {
+  res.json(require('./data-real/ga_market.json'));
+}));
+
 router.get('/meta', api((req, res) => {
   res.json({
     name: 'Construction Bid Management System',
