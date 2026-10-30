@@ -563,13 +563,13 @@ async function renderEnergy(){
     '<p class="form-hint">Sources: VIIRS DNB nightly radiance (user research bundle, as_daily_ntl.json) · Sentinel-2 L2A PV detections (samoa_pv_detections.csv) · DOE/EIA documented facilities (official_nodes.csv). Radiance unit: nW/cm²/sr, weekly means.</p>';
   if (!window.Chart) return;
   const evBand = { type:'bar', label:'nadir week', data:ntl.week_start_dates.map((_, i) => i === ntl.event_week ? 1 : null), backgroundColor:'rgba(224,123,42,.20)', yAxisID:'y2', borderWidth:0, barPercentage:1, categoryPercentage:1 };
-  const terrDs = { label:'Territorial average', data:ntl.territorial, borderColor:'#0f2a43', backgroundColor:'rgba(15,42,67,.06)', tension:.25, pointRadius:0, borderWidth:2 };
+  const terrDs = { type:'line', label:'Territorial average', data:ntl.territorial, borderColor:'#0f2a43', backgroundColor:'rgba(15,42,67,.06)', tension:.25, pointRadius:0, borderWidth:2 };
   const sel = $('#eSel');
   sel.innerHTML = '<option value="">(territorial average only)</option>' + ntl.series.map((s) => '<option>' + esc(s.name) + '</option>').join('');
   const drawTraj = () => {
     const n = sel.value ? byName[sel.value] : null;
     const sets = [evBand, terrDs];
-    if (n) sets.push({ label:n.name + ' (observed)', data:n.weekly, borderColor:'#b3261e', backgroundColor:'rgba(179,38,30,.07)', tension:.25, pointRadius:0, borderWidth:2 });
+    if (n) sets.push({ type:'line', label:n.name + ' (observed)', data:n.weekly, borderColor:'#b3261e', backgroundColor:'rgba(179,38,30,.07)', tension:.25, pointRadius:0, borderWidth:2 });
     if (charts.tra) charts.tra.destroy();
     charts.tra = new Chart($('#chTraj'), { data:{ labels:ntl.week_start_dates, datasets:sets }, options:{ plugins:{ legend:{ labels:{ boxWidth:10, font:{ size:10 } } }, tooltip:{ mode:'index', intersect:false } }, scales:{ x:{ ticks:{ maxTicksLimit:9, font:{ size:9 } } }, y:{ beginAtZero:true, title:{ display:true, text:'nW/cm²/sr (weekly mean)', font:{ size:9 } } }, y2:{ display:false, min:0, max:1 } }, maintainAspectRatio:false } });
   };

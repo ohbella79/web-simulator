@@ -58,6 +58,17 @@ async function runTests(baseUrl) {
       }
     }],
 
+    ['Every Chart.js config declares a top-level type (prevents undefined-controller crash)', async () => {
+      const html = fs.readFileSync(path.join(__dirname, '..', 'public', 'index.html'), 'utf8');
+      const re = /new Chart\(\s*\$\([^)]+\)\s*,\s*\{/g;
+      let m, count = 0;
+      while ((m = re.exec(html))) {
+        count++;
+        const next = html.slice(m.index, m.index + 160);
+        assert(/type:\s*['"]/.test(next), 'Chart config #' + count + ' missing type:');
+      }
+      assert(count >= 5, 'expected chart configs found (got ' + count + ')');
+    }],
     ['Every indicator row carries a provenance status from the allowed list', async () => {
       const rows = db.prepare('SELECT DISTINCT data_status FROM village_indicators').all();
       for (const r of rows) assert(PROVENANCE.includes(r.data_status), `provenance ${r.data_status} not allowed`);
