@@ -571,7 +571,7 @@ async function renderEnergy(){
     const sets = [evBand, terrDs];
     if (n) sets.push({ type:'line', label:n.name + ' (observed)', data:n.weekly, borderColor:'#b3261e', backgroundColor:'rgba(179,38,30,.07)', tension:.25, pointRadius:0, borderWidth:2 });
     if (charts.tra) charts.tra.destroy();
-    charts.tra = new Chart($('#chTraj'), { data:{ labels:ntl.week_start_dates, datasets:sets }, options:{ plugins:{ legend:{ labels:{ boxWidth:10, font:{ size:10 } } }, tooltip:{ mode:'index', intersect:false } }, scales:{ x:{ ticks:{ maxTicksLimit:9, font:{ size:9 } } }, y:{ beginAtZero:true, title:{ display:true, text:'nW/cm²/sr (weekly mean)', font:{ size:9 } } }, y2:{ display:false, min:0, max:1 } }, maintainAspectRatio:false } });
+    charts.tra = new Chart($('#chTraj'), { type:'line', data:{ labels:ntl.week_start_dates, datasets:sets }, options:{ plugins:{ legend:{ labels:{ boxWidth:10, font:{ size:10 } } }, tooltip:{ mode:'index', intersect:false } }, scales:{ x:{ ticks:{ maxTicksLimit:9, font:{ size:9 } } }, y:{ beginAtZero:true, title:{ display:true, text:'nW/cm²/sr (weekly mean)', font:{ size:9 } } }, y2:{ display:false, min:0, max:1 } }, maintainAspectRatio:false } });
   };
   sel.onchange = drawTraj; drawTraj();
   const tcol = ['#0e7c7b', '#1a7f79', '#e07b2a', '#8fa3ad'];
