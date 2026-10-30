@@ -1,4 +1,6 @@
 'use strict';
+const fs = require('fs');
+const path = require('path');
 
 // Phase 1 validation suite. Runs against a live server (accepts a base URL).
 // CLI:  npm test     In app: Governance -> Validation.
